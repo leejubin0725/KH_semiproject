@@ -138,6 +138,9 @@ Servers
 # *.iml
 # *.ipr
 
+# target folder
+target/
+
 # CMake
 cmake-build-*/
 
