@@ -39,6 +39,9 @@ local.properties
 .loadpath
 .recommenders
 
+## Server profile
+Servers
+
 # External tool builders
 .externalToolBuilders/
 
@@ -291,3 +294,4 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,eclipse,intellij,java
+
