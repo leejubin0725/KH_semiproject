@@ -139,7 +139,7 @@ Servers
 # *.ipr
 
 # target folder
-.target/
+target/
 
 # CMake
 cmake-build-*/
