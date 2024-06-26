@@ -12,7 +12,7 @@
 		<property name="username" value="C##SPRING2"/>
 		<property name="password" value="SPRING"/>
 	</bean>
-	-->
+	
 	
 	<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactory">
 		<property name="configLocation" value="classpath:mybatis-config.xml"/>
@@ -33,4 +33,5 @@
 	<bean class="org.mybatis.spring.SqlSessionTemplate" id="sqlSession">
 		<constructor-arg ref="sqlSessionFactory"/>
 	</bean>
+	-->
 </beans>
