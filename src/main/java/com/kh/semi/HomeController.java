@@ -6,15 +6,13 @@ import java.util.Locale;
 
 import javax.servlet.ServletContext;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -25,19 +23,42 @@ public class HomeController {
 	private final ServletContext application;
 	
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
-		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
-		String formattedDate = dateFormat.format(date);
-		
-		model.addAttribute("serverTime", formattedDate );
+	@GetMapping({"", "/", "/home"})
+	public String homePage() {
 		application.setAttribute("contextPath", application.getContextPath());
-		log.debug("{}" , application.getContextPath());
-		
 		return "home";
 	}
+	
+	
+	@GetMapping("/noticeboard")
+	public String boardPage() {
+		return "notice-board";
+	}
+	
+	@GetMapping("/customerservice")
+	public String customerPage() {
+		return "customer-service";
+	}
+	
+	@GetMapping("/mypage")
+	public String mypagerPage() {
+		return "mypage";
+	}
+	
+	@GetMapping("/signup")
+	public String signupPage() {
+		return "signup";
+	}
+	
+
+	@GetMapping("/personagree")
+	public String personagreePage() {
+		return "personagree";
+	}
+	
+	
+
+	
+	
 	
 }
