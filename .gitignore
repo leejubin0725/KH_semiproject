@@ -39,9 +39,6 @@ local.properties
 .loadpath
 .recommenders
 
-## Server profile
-Servers
-
 # External tool builders
 .externalToolBuilders/
 
@@ -65,6 +62,7 @@ Servers
 
 # sbteclipse plugin
 .target
+target
 
 # Tern plugin
 .tern-project
@@ -137,9 +135,6 @@ Servers
 # .idea/modules
 # *.iml
 # *.ipr
-
-# target folder
-Semiproject/target/**
 
 # CMake
 cmake-build-*/
