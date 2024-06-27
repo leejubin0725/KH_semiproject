@@ -40,10 +40,11 @@
                 
                 위와 같은 내용에 대해 동의하시면, 아래의 동의 버튼을 클릭해 주세요.<br><br> 동의하지 않을 경우 서비스 이용에 제한을 받을 수 있습니다.</p>
             <p>동의하시면 아래 버튼을 클릭해 주세요.</p>
-            <button id="agreeBtn" href="${contextPath}/home" style="text-decoration: none; color: inherit;"> 동의합니다</button>
+            <button id="agreeBtn" style="text-decoration: none; color: inherit;"> 동의합니다</button>
         </div>
     </div>
 
-     <script src="${contextPath }/resources/js/person-agree.js"></script>
+	<script src="${contextPath }/resources/js/person-agree.js"></script>
+    
 </body>
 </html>

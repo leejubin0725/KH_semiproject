@@ -8,12 +8,12 @@
     <meta name="author" content="htmlGenerator">
     <link href="https://fonts.googleapis.com/css?family=Sigmar+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/resources/css/styles.css">
+    <link rel="stylesheet" href="${contextPath }/resources/css/styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
 </head>
 <body>
-	<%@ include file="header.jsp" %>
+	<%@ include file="/WEB-INF/views/common/header.jsp" %>
     <main>
         <section class="hero">
            
@@ -80,7 +80,7 @@
             </div>
         </section>
     </main>
-    <%@ include file="footer.jsp" %>
+    <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 
 </body>
 </html>

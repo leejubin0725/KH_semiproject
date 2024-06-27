@@ -48,7 +48,7 @@
                   <div class="label-text">라이더</div>
                 </label>
               </div>
-             
+             </div>
 
 
 
@@ -84,7 +84,7 @@
 
 
 
-        <a href="${contextPath}/personagree" class="tooltip">
+        <a href="${contextPath}/member/personagree" class="tooltip">
             다음
             <div class="tooltiptext">개인정보 수집 페이지로 이동합니다.</div>
         </a>

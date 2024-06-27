@@ -6,11 +6,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>마이페이지</title>
-    <link rel="stylesheet" href="${contextPath}/resources/css/styles.css">
+    <link rel="stylesheet" href="${contextPath }/resources/css/styles.css">
 </head>
 
 <body>
-	<%@ include file="header.jsp" %>
+	<%@ include file="/WEB-INF/views/common/header.jsp" %>
 	<div class = "mypage-body">
     <div class="mypage-container">
         <h1>마이페이지</h1>
@@ -40,7 +40,7 @@
     </div>
     	</div>
 
-    <%@ include file="footer.jsp" %>
+    <%@ include file="/WEB-INF/views/common/footer.jsp" %>
     <script src="${contextPath }/resources/js/mypage-script.js"></script>
 </body>
 </html>
