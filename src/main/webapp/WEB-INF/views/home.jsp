@@ -16,7 +16,7 @@
 	<%@ include file="header.jsp" %>
     <div class="main-content">
         <div class="image-container">
-            <img src="${contextPath }/resources/images/cut.png">
+            <img src="${contextPath }/resources/images/ddd.png">
             <div class="title">delivery</div>
             <div class="title2">service</div>
         </div>
@@ -29,13 +29,7 @@
         </div>
         <button class="button-plus">더보기...</button>
     </div>
-    <div class="footer"></div>
 
-    <script>
-        $(document).ready(function(){
-            $(".footer").load("footer.jsp");
-        });
-    </script>
     <%@ include file="footer.jsp" %>
 </body>
 </html>
