@@ -13,7 +13,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-	<%@ include file="header.jsp" %>
+	<%@ include file="/WEB-INF/views/common/header.jsp" %>
     <div class="main-content">
         <div class="image-container">
             <img src="${contextPath }/resources/images/ddd.png">
@@ -30,7 +30,7 @@
         <button class="button-plus">더보기...</button>
     </div>
 
-    <%@ include file="footer.jsp" %>
+    <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 </body>
 </html>
 

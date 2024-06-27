@@ -30,5 +30,5 @@ var agreeBtn = document.getElementById("agreeBtn");
 agreeBtn.onclick = function() {
     alert("개인정보 수집에 동의하셨습니다.");
     modal.style.display = "none"; // Close the modal after agreement
-    window.location.href = "/semi/home";
+    window.location.href = "/semi";
 }
