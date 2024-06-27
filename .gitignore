@@ -139,7 +139,7 @@ Servers
 # *.ipr
 
 # target folder
-*/target/**
+Semiproject/target/**
 
 # CMake
 cmake-build-*/
@@ -298,3 +298,5 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,eclipse,intellij,java
 
+#.github
+.github
