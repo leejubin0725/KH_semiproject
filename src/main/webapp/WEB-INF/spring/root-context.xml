@@ -5,12 +5,11 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
-	<!-- DB 설정후 재 설정 필요
 	<bean class="org.apache.commons.dbcp.BasicDataSource" id="realDataSource" destroy-method="close">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
 		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
-		<property name="username" value="C##SPRING2"/>
-		<property name="password" value="SPRING"/>
+		<property name="username" value="C##SEMITEST"/>
+		<property name="password" value="SEMITEST"/>
 	</bean>
 	
 	
@@ -33,5 +32,5 @@
 	<bean class="org.mybatis.spring.SqlSessionTemplate" id="sqlSession">
 		<constructor-arg ref="sqlSessionFactory"/>
 	</bean>
-	-->
+
 </beans>
