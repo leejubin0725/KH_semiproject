@@ -1,15 +1,15 @@
-package com.kh.semi.user.model.dao;
+package com.kh.semi.user.model.service;
 
 import com.kh.semi.user.model.vo.Rider;
 import com.kh.semi.user.model.vo.User;
 import com.kh.semi.user.model.vo.Vehicle;
 
-public interface UserDao {
-
+public interface UserService {
+	
 	int insertUser(User u);
-
+	
 	int insertRider(Rider r);
 
 	int insertVehicle(Vehicle v);
-	
+
 }
