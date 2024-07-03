@@ -16,9 +16,9 @@
                 <span><a href="${contextPath}/board/customerservice" style="text-decoration: none; color: inherit;">고객문의</a></span>
             </div>
             <div class="nav2">
-                <span><a href="${contextPath}/member/mypage" style="text-decoration: none; color: inherit;">마이페이지</a></span>
+                <span><a href="${contextPath}/user/mypage" style="text-decoration: none; color: inherit;">마이페이지</a></span>
                 <span>로그인</span>
-                <span><a href="${contextPath}/member/signup" style="text-decoration: none; color: inherit;">회원가입</a></span>
+                <span><a href="${contextPath}/user/insert" style="text-decoration: none; color: inherit;">회원가입</a></span>
             </div>
         </div>
         </div>

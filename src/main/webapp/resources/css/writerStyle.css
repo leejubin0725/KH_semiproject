@@ -1,0 +1,140 @@
+body {
+    background: #E5E5E5;
+    font-family: Inter, Arial, sans-serif;
+}
+
+.container {
+    background-color: rgba(134, 193, 198, 1);
+    padding: 20px;
+    border-radius: 8px;
+    width: 70%;
+    margin: 20px auto;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.form-section {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.left-side, .right-side {
+    width: 48%;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+input[type="text"], select, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: none;
+    height: 100px;
+}
+
+#content {
+    height: 350px;
+}
+
+.checkbox-group {
+    margin-bottom: 20px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-label input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.checkbox-group label {
+    margin-left: 0;
+    font-weight: normal;
+}
+
+.checkbox-group p {
+    margin-left: 24px;
+    margin-top: 5px;
+    font-size: 14px;
+    color: #555;
+}
+
+.checkbox-group p.red {
+    color: red;
+}
+
+.red {
+    color: red;
+}
+
+.image-box, .map-box {
+    background-color: #f2f2f7;
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.image-box img, .map-box img {
+    height: 50px;
+    width: 50px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button[type="button"]:nth-child(1) {
+    background-color: #2f2f2f;
+    color: white;
+}
+
+button[type="button"]:nth-child(2) {
+    background-color: #b1b1b1;
+    color: #2f2f2f;
+}
+
+input[type="file"]{
+    padding-bottom: 10px;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    width: 20%;
+}
+
+.input-group input {
+    width: 70%;
+    margin: 0;
+}

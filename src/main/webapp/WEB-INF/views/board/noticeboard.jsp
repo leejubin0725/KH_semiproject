@@ -8,101 +8,84 @@
     <meta name="author" content="htmlGenerator">
     <link href="https://fonts.googleapis.com/css?family=Sigmar+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="${contextPath }/resources/css/styles.css">
+    <link rel="stylesheet" href="${contextPath}/resources/css/styles.css">
+    
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        #middle-img {
+            width: 100%; /* 이미지의 가로 크기를 컨테이너의 100%로 설정 */
+            max-width: 1500px; /* 이미지의 최대 가로 크기를 600px로 설정 */
+            height: auto; /* 이미지의 세로 비율을 유지하면서 크기 조정 */
+            display: block;
+            margin: 0 auto 20px; /* 이미지가 가운데 정렬되고 아래 여백 추가 */
+        }
+
+        .container {
+            margin-top: 20px; /* h2 태그 위쪽에 여백 추가 */
+        }
+    </style>
 </head>
 <body>
-	<%@ include file="/WEB-INF/views/common/header.jsp" %>
-    <main>
-        <section class="hero2">
-  
-            <br><br><br><br><br><br>
-       
-        </section>
+    <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
+    <img src="${contextPath}/resources/images/dd.jpg" id="middle-img">
+    
+    <div class="container">
+        <h2>배달 요청</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>제목</th>
+                    <th>글쓴이</th>
+                    <th>라이더</th>
+                    <th>시작위치</th>
+                    <th>끝위치</th>
+                    <th>작성시간</th>
+                    <th>조회수</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-url="postDetail.jsp?id=1">
+                    <td>1</td>
+                    <td>배달위탁</td>
+                    <td>홍길동</td>
+                    <td><span class="rider-status">라이더 모집중</span></td>
+                    <td>kh정보교육원</td>
+                    <td>강남역</td>
+                    <td>2023-12-17</td>
+                    <td>3</td>
+                </tr>
+                <!-- 추가 행들... -->
+            </tbody>
+        </table>
+    </div>
 
-        <section class="board">
-            <h1>자유게시판</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>제목</th>
-                        <th>글쓴이</th>
-                        <th>작성시간</th>
-                        <th>조회수</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>배달해줘</td>
-                        <td>이름숨김</td>
-                        <td>2023-12-17</td>
-                        <td>3</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>배달해줘</td>
-                        <td>이름숨김</td>
-                        <td>2023-12-17</td>
-                        <td>3</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>배달해줘</td>
-                        <td>이름숨김</td>
-                        <td>2023-12-17</td>
-                        <td>3</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>배달해줘</td>
-                        <td>이름숨김</td>
-                        <td>2023-12-17</td>
-                        <td>3</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>배달해줘</td>
-                        <td>이름숨김</td>
-                        <td>2023-12-17</td>
-                        <td>3</td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>배달해줘</td>
-                        <td>이름숨김</td>
-                        <td>2023-12-17</td>
-                        <td>3</td>
-                    </tr>
-                    <tr>
-                        <td>7</td>
-                        <td>배달해줘</td>
-                        <td>이름숨김</td>
-                        <td>2023-12-17</td>
-                        <td>3</td>
-                    </tr>
-                    <tr>
-                        <td>8</td>
-                        <td>배달해줘</td>
-                        <td>이름숨김</td>
-                        <td>2023-12-17</td>
-                        <td>3</td>
-                    </tr>
-                    <tr>
-                        <td>9</td>
-                        <td>배달해줘</td>
-                        <td>이름숨김</td>
-                        <td>2023-12-17</td>
-                        <td>3</td>
-                    </tr>
-                    <!-- 나머지 행들도 비슷한 구조로 추가 -->
-                </tbody>
-            </table>
-            <button class="write-btn">글쓰기</button>
-        </section>
-    </main>
-    	<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+    <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+
+    <script>
+        document.querySelectorAll('tbody tr').forEach(row => {
+            row.addEventListener('click', function(event) {
+                // 클릭된 요소가 라이더 상태 버튼이 아닌 경우에만 페이지 이동
+                if (!event.target.closest('.rider-status')) {
+                    // 행에 설정된 data-url 속성 값으로 이동
+                    const url = this.getAttribute('data-url');
+                    if (url) {
+                        window.location.href = url;
+                    }
+                }
+            });
+        });
+
+        // 라이더 상태 버튼에 대한 별도의 이벤트 리스너
+        document.querySelectorAll('.rider-status').forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.stopPropagation(); // 이벤트 버블링 방지
+                console.log('Rider status button clicked');
+                // 여기에 라이더 상태 버튼 클릭 시 수행할 동작을 추가하세요
+            });
+        });
+    </script>
 </body>
 </html>
