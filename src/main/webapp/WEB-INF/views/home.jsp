@@ -16,18 +16,17 @@
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
     <div class="main-content">
         <div class="image-container">
-            <img src="${contextPath }/resources/images/ddd.png">
+            <img src="${contextPath }/resources/images/dad.png">
             <div class="title">delivery</div>
             <div class="title2">service</div>
         </div>
-        <div class="card-title">배달 목록</div>
+        <div class="card-title">긴급 배송 게시글</div>
         <div class="content">
             <div class="card">배달 게시글 1</div>
             <div class="card">배달 게시글 2</div>
             <div class="card">배달 게시글 3</div>
-            <div class="card">배달 게시글 4</div>
         </div>
-        <button class="button-plus">더보기...</button>
+        <button class="button-plus">더보기..</button>
     </div>
 
     <%@ include file="/WEB-INF/views/common/footer.jsp" %>

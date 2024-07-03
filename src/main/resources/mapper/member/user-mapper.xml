@@ -9,43 +9,58 @@
     	SELECT SEQ_UNO.NEXTVAL FROM DUAL
     </selectKey>
 
-	INSERT INTO USERS VALUES (
-		{userNo},
-		{email},
-		{password},
-		{nickName},
-		{birth},
-		{gender},
-		{phone},
-		{address},
-		SYSDATE,
-		{role},
-		{profileImage},
-		'Y',
-		NULL
+	INSERT INTO USERS (
+		USER_NO,
+		EMAIL,
+		PASSWORD,
+		NICKNAME,
+		BIRTH,
+		GENDER,
+		PHONE,
+		ADDRESS,
+		CREATE_DATE,
+		ROLE,
+		STATUS
+	)
+	VALUES (
+		#{userNo},
+		#{email},
+		#{password},
+		#{nickname},
+		#{birth},
+		#{gender},
+		#{phone},
+		#{address},
+		DEFAULT,
+		#{role},
+		'Y'
 	)
 </insert>
 
 
 <insert id="insertRider">
 	<selectKey keyProperty="riderNo" resultType="int" order="BEFORE" >
-    	SELECT SEQ_BNO.NEXTVAL FROM DUAL
+    	SELECT SEQ_RNO.NEXTVAL FROM DUAL
     </selectKey>
     
-    INSERT INTO RIDER VALUES(
-    	{riderNo},
-    	{userNo},
-    	{vehicle}
+    INSERT INTO RIDERS (
+    	RIDER_NO,
+    	USER_NO
+    ) VALUES(
+    	#{riderNo},
+    	#{userNo}
     )
 	
 </insert>
 
 
-<insert id="inserVehicles">
-	INSERT INTO VEHICLES VALUES (
-		{riderNo},
-		{vehicle},
-		{maxDisrance}
+<insert id="insertVehicle">
+	INSERT INTO VEHICLES (
+		RIDER_NO,
+		VEHICLE
+	)VALUES (
+		#{riderNo},
+		#{vehicle}
 	)
 
 </insert>

@@ -1,0 +1,156 @@
+body {
+	background: white;
+	font-family: 'Poppins', sans-serif;
+  }
+  .container {
+	background-color: #FFF;
+	width: 1440px;
+	height: 1024px;
+	position: relative;
+	margin: 0 auto;
+	margin-top: -5%;
+
+  }
+  .login-box {
+	margin-top: 5%;
+	width: 480px;
+	height: 600px;
+	position: absolute;
+	left: 30px;
+	top: 230px;
+  }
+  .title {
+	font-weight: bold;
+	font-size: 32px;
+	color: #000;
+	margin-bottom: 20px;
+	font-weight: 10px;
+  }
+  .input-group {
+	margin-bottom: 20px;
+  }
+  .input-label {
+	font-size: 23px;
+	color: #000;
+	margin-bottom: 5px;
+  }
+  .input-field {
+	width: 100%;
+	height: 32px;
+	border: 1px solid #D9D9D9;
+	border-radius: 10px;
+	padding: 5px 10px;
+	font-size: 13px;
+	color: #D9D9D9;
+  }
+ 
+  .login-button {
+	width: 425px;
+	height: 40px;
+	font-weight: bold ;
+	background-color: #86C1C6;
+	border: 1px solid #86C1C6;
+	border-radius: 10px;
+	color: #FFF;
+	font-size: 13px;
+	text-align: center;
+	line-height: 32px;
+	margin-top: 50px;
+	margin-left: 13px;
+	cursor: pointer;
+  }
+  .divider {
+	width: 400px;
+	height: 2px;
+	background-color: #F5F5F5;
+	margin: 20px auto;
+  }
+  .image {
+	width: 700px;
+	height: 700px;
+	position: absolute;
+	left: 700px;
+	top: 148px;
+	background-image: url('images/cut_1.png');
+	background-repeat: no-repeat;
+	background-size: cover;
+  }
+  .find-ID{
+	width: 204px;
+	height: 40px;
+	font-weight: bold ;
+	background-color: #86C1C6;
+	border: 1px solid #86C1C6;
+	border-radius: 10px;
+	color: #FFF;
+	font-size: 13px;
+	text-align: center;
+	line-height: 32px;
+	margin-top: 20px;
+	margin-left: 15px;
+	cursor: pointer;
+  }
+
+  .find-PW{
+	width: 204px;
+	height: 40px;
+	font-weight: bold ;
+	background-color: #86C1C6;
+	border: 1px solid #86C1C6;
+	border-radius: 10px;
+	color: #FFF;
+	font-size: 13px;
+	text-align: center;
+	line-height: 32px;
+	margin-top: 20px;
+	margin-left: 10px;
+	cursor: pointer;
+  }
+  .button {
+	height: 3em;
+	width: 8em;
+	border: none;
+	border-radius: 10em;
+	background: #016DD9;
+	font-size: 17px;
+	color: #ffffff;
+	font-family: inherit;
+	font-weight: 500;
+   }
+   
+   button:hover {
+	animation: shake3856 0.3s linear infinite both;
+   }
+   
+   @keyframes shake3856 {
+	0% {
+	 -webkit-transform: translate(0);
+	 transform: translate(0);
+	}
+   
+	20% {
+	 -webkit-transform: translate(-2px, 2px);
+	 transform: translate(-2px, 2px);
+	}
+   
+	40% {
+	 -webkit-transform: translate(-2px, -2px);
+	 transform: translate(-2px, -2px);
+	}
+   
+	60% {
+	 -webkit-transform: translate(2px, 2px);
+	 transform: translate(2px, 2px);
+	}
+   
+	80% {
+	 -webkit-transform: translate(2px, -2px);
+	 transform: translate(2px, -2px);
+	}
+   
+	100% {
+	 -webkit-transform: translate(0);
+	 transform: translate(0);
+	}
+   }
+   
