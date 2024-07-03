@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="user">
+
+<insert id="insertUser">
+	<selectKey keyProperty="userNo" resultType="int" order="BEFORE" >
+    	SELECT SEQ_UNO.NEXTVAL FROM DUAL
+    </selectKey>
+
+	INSERT INTO USERS VALUES (
+		{userNo},
+		{email},
+		{password},
+		{nickName},
+		{birth},
+		{gender},
+		{phone},
+		{address},
+		SYSDATE,
+		{role},
+		{profileImage},
+		'Y',
+		NULL
+	)
+</insert>
+
+
+<insert id="insertRider">
+	<selectKey keyProperty="riderNo" resultType="int" order="BEFORE" >
+    	SELECT SEQ_BNO.NEXTVAL FROM DUAL
+    </selectKey>
+    
+    INSERT INTO RIDER VALUES(
+    	{riderNo},
+    	{userNo},
+    	{vehicle}
+    )
+	
+</insert>
+
+
+<insert id="inserVehicles">
+	INSERT INTO VEHICLES VALUES (
+		{riderNo},
+		{vehicle},
+		{maxDisrance}
+	)
+
+</insert>
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
