@@ -12,4 +12,6 @@ public interface UserService {
 
 	int insertVehicle(Vehicle v);
 
+	User login(User u);
+
 }

@@ -17,7 +17,7 @@
             </div>
             <div class="nav2">
                 <span><a href="${contextPath}/user/mypage" style="text-decoration: none; color: inherit;">마이페이지</a></span>
-                <span>로그인</span>
+                <span><a href="${contextPath}/user/login" style="text-decoration: none; color: inherit;">로그인</a></span>
                 <span><a href="${contextPath}/user/insert" style="text-decoration: none; color: inherit;">회원가입</a></span>
             </div>
         </div>

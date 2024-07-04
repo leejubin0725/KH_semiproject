@@ -29,5 +29,10 @@ public class UserServiceImpl implements UserService{
 	public int insertVehicle(Vehicle v) {
 		return dao.insertVehicle(v);
 	}
+
+	@Override
+	public User login(User u) {
+		return dao.login(u);
+	}
 	
 }

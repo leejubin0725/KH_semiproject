@@ -4,12 +4,13 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="user">
 
-<insert id="insertUser">
-	<selectKey keyProperty="userNo" resultType="int" order="BEFORE" >
-    	SELECT SEQ_UNO.NEXTVAL FROM DUAL
-    </selectKey>
+	<insert id="insertUser">
+		<selectKey keyProperty="userNo" resultType="int"
+			order="BEFORE">
+			SELECT SEQ_UNO.NEXTVAL FROM DUAL
+		</selectKey>
 
-	INSERT INTO USERS (
+		INSERT INTO USERS (
 		USER_NO,
 		EMAIL,
 		PASSWORD,
@@ -21,8 +22,8 @@
 		CREATE_DATE,
 		ROLE,
 		STATUS
-	)
-	VALUES (
+		)
+		VALUES (
 		#{userNo},
 		#{email},
 		#{password},
@@ -34,36 +35,45 @@
 		DEFAULT,
 		#{role},
 		'Y'
-	)
-</insert>
+		)
+	</insert>
 
 
-<insert id="insertRider">
-	<selectKey keyProperty="riderNo" resultType="int" order="BEFORE" >
-    	SELECT SEQ_RNO.NEXTVAL FROM DUAL
-    </selectKey>
-    
-    INSERT INTO RIDERS (
-    	RIDER_NO,
-    	USER_NO
-    ) VALUES(
-    	#{riderNo},
-    	#{userNo}
-    )
-	
-</insert>
+	<insert id="insertRider">
+		<selectKey keyProperty="riderNo" resultType="int"
+			order="BEFORE">
+			SELECT SEQ_RNO.NEXTVAL FROM DUAL
+		</selectKey>
 
-
-<insert id="insertVehicle">
-	INSERT INTO VEHICLES (
+		INSERT INTO RIDERS (
 		RIDER_NO,
-		VEHICLE
-	)VALUES (
+		USER_NO
+		) VALUES(
 		#{riderNo},
-		#{vehicle}
-	)
+		#{userNo}
+		)
 
-</insert>
+	</insert>
+
+
+	<insert id="insertVehicle">
+		INSERT INTO VEHICLES (
+		RIDER_NO,
+		VEHICLE,
+		MAX_DISTANCE
+		)VALUES (
+		#{riderNo},
+		#{vehicle},
+		#{maxDistance}
+		)
+
+	</insert>
+
+	<select id="login" resultType="User">
+		SELECT *
+		FROM USERS
+		WHERE EMAIL = #{email} AND STATUS = 'Y'
+	</select>
 
 
 
