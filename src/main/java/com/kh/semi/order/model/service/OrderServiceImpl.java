@@ -1,4 +1,4 @@
-package com.kh.semi.Orders.model.service;
+package com.kh.semi.order.model.service;
 
 import java.util.List;
 
@@ -6,8 +6,8 @@ import javax.servlet.ServletContext;
 
 import org.springframework.stereotype.Service;
 
-import com.kh.semi.Orders.model.dao.OrdersDao;
-import com.kh.semi.Orders.model.vo.Order;
+import com.kh.semi.order.model.dao.OrderDao;
+import com.kh.semi.order.model.vo.Order;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,9 +15,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class OrdersServiceImpl implements OrdersService {
+public class OrderServiceImpl implements OrderService {
 	
-	private final OrdersDao orderDao;
+	private final OrderDao orderDao;
 	private final ServletContext application;
 	
 //	@Override

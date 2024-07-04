@@ -1,11 +1,11 @@
-package com.kh.semi.Orders.model.service;
+package com.kh.semi.order.model.service;
 
 import java.util.List;
 
-import com.kh.semi.Orders.model.vo.Order;
+import com.kh.semi.order.model.vo.Order;
 
 
-public interface OrdersService {
+public interface OrderService {
 
 //	int insertOrder(Orders o, OrderImg oi);
 

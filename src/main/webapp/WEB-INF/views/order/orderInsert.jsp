@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="container">
-        <form class="form-section" action="${pageContext.request.contextPath}/Orders/orderInsert" method="post">
+        <form class="form-section" action="${pageContext.request.contextPath}/order/orderInsert" method="post">
             <div class="left-side">
                 <label for="title">제목</label>
                 <input type="text" id="title" name="title" placeholder="제목 입력">
