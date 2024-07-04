@@ -74,6 +74,17 @@
 		FROM USERS
 		WHERE EMAIL = #{email} AND STATUS = 'Y'
 	</select>
+	
+	<update id="updateUser">
+		 UPDATE USERS 
+		 SET 
+		 PASSWORD = #{password},
+		 NICKNAME = #{nickname},
+		 PHONE = #{phone},
+		 ADDRESS = #{address},
+		 UPDATE_DATE = SYSDATE
+		 WHERE EMAIL = #{email} AND STATUS = 'Y'
+	</update>
 
 
 

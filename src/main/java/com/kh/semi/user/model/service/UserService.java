@@ -14,4 +14,6 @@ public interface UserService {
 
 	User login(User u);
 
+	int updateUser(User u);
+
 }

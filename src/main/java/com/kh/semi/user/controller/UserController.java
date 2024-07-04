@@ -3,6 +3,7 @@ package com.kh.semi.user.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 public class UserController {
 
 	private final UserService uService;
+	private final BCryptPasswordEncoder encoder;
 
 	@GetMapping("/login")
 	public String loginPage() {
@@ -43,22 +45,21 @@ public class UserController {
 			RedirectAttributes ra
 			) {
 		
-		User loginUser = uService.login(u); 
-		
-		String viewName = "";
-		if(!(loginUser != null)) {
+		User loginUser = uService.login(u);
+		String url = "";
+		if(!(loginUser != null && encoder.matches(u.getPassword(), loginUser.getPassword()))) {
 			model.addAttribute("errorMsg" , "로그인 실패!");
-			viewName = "common/errorPage";
+			url = "common/errorPage";
 		} else {
 			ra.addFlashAttribute("alertMsg" , "로그인 성공");
 			model.addAttribute("loginUser" , loginUser);
 			
 			String nextUrl = (String) session.getAttribute("nextUrl");
 			
-			viewName = "redirect:" + (nextUrl != null ? nextUrl :"/");
+			url = "redirect:" + (nextUrl != null ? nextUrl :"/");
 			session.removeAttribute(nextUrl);
 		}
-		return viewName;
+		return url;
 	}
 
 	@GetMapping("/insert")
@@ -73,6 +74,9 @@ public class UserController {
 			@RequestParam("vehicle") Object vehicle,
 			RedirectAttributes ra
 			) {
+		String encPwd = encoder.encode(u.getPassword()); 
+		u.setPassword(encPwd); 
+		
 		int result = uService.insertUser(u);
 
 		if (u.getRole().equals("rider")) {
@@ -85,19 +89,15 @@ public class UserController {
 			v.setVehicle((String)vehicle);
 			switch ((String)vehicle) {
 			case "Walk":
-				v.setVehicle("Walk");
 				v.setMaxDistance(1000);
 				break;
 			case "Bicycle":
-				v.setVehicle("Bicycle");
 				v.setMaxDistance(2500);
 				break;
 			case "Motobike":
-				v.setVehicle("Motobike");
 				v.setMaxDistance(5000);
 				break;
 			case "Car":
-				v.setVehicle("Car");
 				v.setMaxDistance(10000);
 				break;
 			}
@@ -117,6 +117,32 @@ public class UserController {
 
 	@GetMapping("/mypage")
 	public String mypage() {
-		return "";
+		return "/user/mypage";
+	}
+	
+	@PostMapping("/update")
+	public String update(
+			User u, 
+			Model model, 
+			RedirectAttributes ra,
+			HttpSession session
+			) {
+		String encPwd = encoder.encode(u.getPassword()); 
+		u.setPassword(encPwd); 
+		int result = uService.updateUser(u);
+		
+		String url = "";
+		if(result > 0) {
+			User loginUser = uService.login(u);
+			model.addAttribute("loginUser", loginUser);
+			ra.addFlashAttribute("alertMsg" , "내정보수정 성공");
+			url = "redirect:/user/mypage";
+		} else {
+			model.addAttribute("errorMsg" , "내정보수정 실패");
+			url = "common/errorPage";
+			
+		}
+		
+		return url;
 	}
 }

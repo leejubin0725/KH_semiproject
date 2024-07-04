@@ -13,5 +13,7 @@ public interface UserDao {
 	int insertVehicle(Vehicle v);
 
 	User login(User u);
+
+	int updateUser(User u);
 	
 }
