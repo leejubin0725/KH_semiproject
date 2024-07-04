@@ -11,5 +11,9 @@ public interface UserDao {
 	int insertRider(Rider r);
 
 	int insertVehicle(Vehicle v);
+
+	User login(User u);
+
+	int updateUser(User u);
 	
 }
