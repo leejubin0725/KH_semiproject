@@ -13,8 +13,8 @@
         <div class="header-main">
             <div class="headerNav">
                 <span><a href="${contextPath}" style="text-decoration: none; color: inherit;">홈</a></span>
-                <span><a href="${contextPath}/Orders/noticeboard" style="text-decoration: none; color: inherit;">배달목록</a></span>
-                <span><a href="${contextPath}/Orders/customerservice" style="text-decoration: none; color: inherit;">고객문의</a></span>
+                <span><a href="${contextPath}/order/noticeboard" style="text-decoration: none; color: inherit;">배달목록</a></span>
+                <span><a href="${contextPath}/order/customerservice" style="text-decoration: none; color: inherit;">고객문의</a></span>
             </div>
             <div class="headerNav2">
                 <c:choose>

@@ -1,17 +1,17 @@
-package com.kh.semi.Orders.model.dao;
+package com.kh.semi.order.model.dao;
 
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import com.kh.semi.Orders.model.vo.Order;
+import com.kh.semi.order.model.vo.Order;
 
 import lombok.RequiredArgsConstructor;
 
 @Repository
 @RequiredArgsConstructor
-public class OrdersDaoImpl implements OrdersDao{
+public class OrderDaoImpl implements OrderDao{
 
 	private final SqlSession sqlSession;
 	

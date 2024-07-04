@@ -1,4 +1,4 @@
-package com.kh.semi.Orders.model.vo;
+package com.kh.semi.order.model.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
