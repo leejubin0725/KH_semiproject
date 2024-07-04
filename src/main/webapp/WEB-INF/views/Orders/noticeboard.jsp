@@ -8,7 +8,7 @@
     <meta name="author" content="htmlGenerator">
     <link href="https://fonts.googleapis.com/css?family=Sigmar+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="${contextPath}/resources/css/styles.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/styles.css">
     
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -24,6 +24,24 @@
         .container {
             margin-top: 20px; /* h2 태그 위쪽에 여백 추가 */
         }
+
+        .custom-button {
+            display: block;
+            width: 200px;
+            padding: 10px 20px;
+            margin: 0 auto 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .custom-button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -32,6 +50,7 @@
     <img src="${contextPath}/resources/images/dd.jpg" id="middle-img">
     
     <div class="container">
+        <button class="custom-button" id="customButton">새로운 페이지로 이동</button>
         <h2>배달 요청</h2>
         <table>
             <thead>
@@ -85,6 +104,12 @@
                 console.log('Rider status button clicked');
                 // 여기에 라이더 상태 버튼 클릭 시 수행할 동작을 추가하세요
             });
+        });
+
+        // 새로운 버튼에 대한 이벤트 리스너
+        document.getElementById('customButton').addEventListener('click', function() {
+            const url = 'orderInsert'; // URL을 설정하세요
+            window.location.href = url;
         });
     </script>
 </body>
