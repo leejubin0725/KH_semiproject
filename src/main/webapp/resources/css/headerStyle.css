@@ -1,0 +1,31 @@
+.headerContainer {
+    width: 100%;
+    background-color: rgba(255, 255, 255); /* 배경을 반투명하게 설정 */
+    position: fixed; /* 고정 위치 */
+    top: 0;
+    z-index: 1000; /* 다른 요소들 위에 표시되도록 설정 */
+}
+
+.header-main {
+    display: flex;
+    justify-content: center; /* 가운데 정렬 */
+    align-items: center;
+    padding: 30px 0; /* 상하 크기를 약간 늘림 */
+    width: 100%;
+    position: relative; /* 자식 요소의 절대 위치 지정을 위해 */
+}
+
+.headerNav {
+    display: flex;
+    gap: 150px; 
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.headerNav2 {
+    font-size: 12px;
+    display: flex;
+    gap: 20px;
+    position: absolute; /* 절대 위치로 설정하여 오른쪽 끝에 고정 */
+    right: 2%;
+}

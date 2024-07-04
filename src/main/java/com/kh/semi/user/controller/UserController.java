@@ -1,6 +1,5 @@
 package com.kh.semi.user.controller;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.semi.user.model.service.UserService;
@@ -20,13 +20,11 @@ import com.kh.semi.user.model.vo.User;
 import com.kh.semi.user.model.vo.Vehicle;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/user")
 @SessionAttributes({"loginUser"})
-@Slf4j
 public class UserController {
 
 	private final UserService uService;
@@ -144,5 +142,11 @@ public class UserController {
 		}
 		
 		return url;
+	}
+	
+	@GetMapping("/logout")
+	public String logout(SessionStatus status) {
+		status.setComplete();
+		return "redirect:/";
 	}
 }
