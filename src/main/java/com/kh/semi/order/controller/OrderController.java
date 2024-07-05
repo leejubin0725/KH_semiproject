@@ -70,7 +70,6 @@ public class OrderController {
 		}
 		
 		log.debug("Order : {}", o);
-		o.setWriter(String.valueOf(loginUser.getUserNo()));
 		
 		int result = 0;
 		try {
