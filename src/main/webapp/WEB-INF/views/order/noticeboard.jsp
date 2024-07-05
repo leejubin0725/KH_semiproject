@@ -62,21 +62,23 @@
                     <th>시작위치</th>
                     <th>끝위치</th>
                     <th>작성시간</th>
-                    <th>조회수</th>
+                    <th>가격</th>
                 </tr>
             </thead>
             <tbody>
-                <tr data-url="postDetail.jsp?id=1">
-                    <td>1</td>
-                    <td>배달위탁</td>
-                    <td>홍길동</td>
-                    <td><span class="rider-status">라이더 모집중</span></td>
-                    <td>kh정보교육원</td>
-                    <td>강남역</td>
-                    <td>2023-12-17</td>
-                    <td>3</td>
-                </tr>
-                <!-- 추가 행들... -->
+            
+        	   <c:forEach items="${list}" var="order">
+                   <tr class="clickable-row" data-id="${orderNo}">
+                      	<td>${order.orderTitle}</td>
+                    	<td>${order.writer}</td>
+                    	<td><span class="rider-status">${order.orderStatus}</span></td>
+                    	<td>${order.startPoint}</td>
+                    	<td>${order.endPoint}</td>
+                      	<td><fmt:formatDate value="${order.createDate}" pattern="yy-MM-dd" /></td>
+                      	<td>${order.price}</td>
+                   </tr>
+                </c:forEach>		
+                
             </tbody>
         </table>
     </div>
@@ -111,6 +113,17 @@
             const url = 'orderInsert'; // URL을 설정하세요
             window.location.href = url;
         });
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            var rows = document.querySelectorAll('.clickable-row');
+            rows.forEach(function(row) {
+                row.addEventListener('click', function() {
+                    const id = row.dataset.id;
+                    const url = `/semi/board/detailProduct?id=${id}`;
+                    window.location.href = url;
+                });
+            });
+        });;
     </script>
 </body>
 </html>

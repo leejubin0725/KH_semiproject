@@ -17,12 +17,17 @@ public class OrderDaoImpl implements OrderDao{
 	
 	@Override
 	public int insertOrder(Order o) {
-		return sqlSession.insert("order.insertOrder", o);
+		return sqlSession.insert("Orders.insertOrder", o);
 	}
 
 	@Override
 	public List<Order> selectOrderList() {
-		return sqlSession.selectList("order.selectOrderList");
+		return sqlSession.selectList("Orders.selectOrderList");
+	}
+
+	@Override
+	public Order selectOrderOne(int orderNo) {
+		return sqlSession.selectOne("Orders.selectOrderOne", orderNo);
 	}
 
 }

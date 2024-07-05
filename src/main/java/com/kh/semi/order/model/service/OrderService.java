@@ -13,4 +13,6 @@ public interface OrderService {
 
 	List<Order> selectOrderList();
 
+	Order selectOrderOne(int orderNo);
+
 }

@@ -230,7 +230,7 @@
             var price = document.getElementById('price').value;
 
             $.ajax({
-                url: '${pageContext.request.contextPath}/board/insert',
+                url: '${pageContext.request.contextPath}/order/orderInsert',
                 type: 'POST',
                 data: JSON.stringify({
                     title: title,
