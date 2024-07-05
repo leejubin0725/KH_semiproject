@@ -17,11 +17,8 @@
                 <span><a href="${contextPath}/order/customerservice" style="text-decoration: none; color: inherit;">고객문의</a></span>
             </div>
             <div class="headerNav2">
-<<<<<<< HEAD
-                <span><a href="${contextPath}/user/mypage" style="text-decoration: none; color: inherit;">마이페이지</a></span>
-                <span><a href="${contextPath}/user/login" style="text-decoration: none; color: inherit;">로그인</a></span>
-                <span><a href="${contextPath}/user/insert" style="text-decoration: none; color: inherit;">회원가입</a></span>
-=======
+
+
                 <c:choose>
                     <c:when test="${not empty loginUser}">
                         <span><a href="${contextPath}/user/mypage" style="text-decoration: none; color: inherit;">마이페이지</a></span>
@@ -32,7 +29,7 @@
                         <span><a href="${contextPath}/user/insert" style="text-decoration: none; color: inherit;">회원가입</a></span>
                     </c:otherwise>
                 </c:choose>
->>>>>>> jis
+
             </div>
         </div>
     </div>

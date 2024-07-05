@@ -97,6 +97,10 @@ public class OrderController {
 	public String customerPage() {
 		return "/order/customerservice";
 	}
+	@GetMapping("/detailProduct")
+	public String detailProduct() {
+		return "/order/detailProduct";
+	}
 	
 }
 

@@ -13,18 +13,12 @@ import lombok.RequiredArgsConstructor;
 public class BoardController {
 	
 	
-	@GetMapping("/customerservice")
-	public String customerPage() {
-		return "/board/customerservice";
-	}
+
 	@GetMapping("/myPost")
 	public String myPost() {
 		return "/board/myPost";
 	}
-	@GetMapping("/detailProduct")
-	public String detailProduct() {
-		return "/board/detailProduct";
-	}
+	
 	@GetMapping("/noticeboard")
 	public String noticeboard() {
 		return "/board/noticeboard";
@@ -41,10 +35,7 @@ public class BoardController {
 	public String insertUser() {
 		return "/board/insertUser";
 	}
-	@GetMapping("/login")
-	public String login() {
-		return "/board/login";
-	}
+	
 	@GetMapping("/mypage")
 	public String mypage() {
 		return "/board/mypage";
