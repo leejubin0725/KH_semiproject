@@ -93,9 +93,9 @@ public class OrderController {
 		return "/order/noticeboard";
 	}
 	
-	@GetMapping("/customerservice")
-	public String customerPage() {
-		return "/order/customerservice";
+	@GetMapping("/detailProduct")
+	public String detailProduct() {
+		return "/order/detailProduct";
 	}
 	
 }
