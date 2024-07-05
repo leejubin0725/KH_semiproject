@@ -11,20 +11,22 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("/board")
 public class BoardController {
-	
-	
 
 
-
-	@GetMapping("/inquiryInsert")
-	public String inquiryInsert() {
-		return "/board/inquiryInsert";
-	}
-	
-	@GetMapping("/customerservice")
-	public String customerPage() {
-		return "/order/customerservice";
-	}
+//	@GetMapping("/inquiryInsert")
+//	public String inquiryInsert() {
+//		return "/board/inquiryInsert";
+//	}
+//	
+//	@GetMapping("/customerservice")
+//	public String customerPage() {
+//		return "/board/customerservice";
+//	}
+//
+//	@GetMapping("/inquiryDetailView")
+//	public String inquiryDetailView() {
+//		return "/board/inquiryDetailView";
+//	}
 	
 }
 

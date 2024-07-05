@@ -14,6 +14,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class Order {
+	
+	
 	private int orderNo;
     private int userNo;
     private String orderTitle;
@@ -30,7 +32,5 @@ public class Order {
     private int price;
     private Date startDate;
     private Date endDate;
-    
-    private String writer;
  
 }

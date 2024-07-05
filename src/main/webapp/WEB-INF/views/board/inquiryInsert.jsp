@@ -10,15 +10,15 @@
 </head>
 <body>
     <div class="container">
-        <form>
+        <form action="${contextPath }/board/inquiryInsert" method="post">
             <div class="form-group">
                 <label for="title">1:1 문의 사항</label>
-                <input type="text" id="title" placeholder="제목 입력">
+                <input type="text" id="title" name="title" placeholder="제목 입력">
             </div>
 
             <div class="form-group">
                 <label for="content">상세 내용</label>
-                <textarea id="content" placeholder="내용 입력"></textarea>
+                <textarea id="content" name="content" placeholder="내용 입력"></textarea>
             </div>
 
             <div class="form-group">
@@ -28,7 +28,7 @@
 
             <div class="form-group">
                 <label for="category">대분류</label>
-                <select id="category">
+                <select id="category" name="category">
                     <option>Value</option>
                 </select>
             </div>
