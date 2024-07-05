@@ -118,13 +118,12 @@ public class UserController {
 	@GetMapping("/mypage")
 	public String mypage() {
 		return "/user/mypage";
-<<<<<<< HEAD
+
 	}
 	@GetMapping("/insertRequest")
 	public String insertRequest() {
 		return "/user/insertRequest";
-=======
->>>>>>> jis
+
 	}
 	
 	@PostMapping("/update")

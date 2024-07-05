@@ -5,11 +5,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD:src/main/webapp/WEB-INF/views/board/orderInsert.jsp
+
     <title>Document</title>
-=======
+
     <title>주문 작성</title>
->>>>>>> jis:src/main/webapp/WEB-INF/views/order/orderInsert.jsp
+
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/writerStyle.css">
 </head>
 <body>
