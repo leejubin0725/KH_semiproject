@@ -22,7 +22,7 @@ public class OrderDaoImpl implements OrderDao{
 
 	@Override
 	public List<Order> selectOrderList() {
-		return sqlSession.selectList("order.selectOrderList");
+		return sqlSession.selectList("Orders.selectOrderList");
 	}
 
 }
