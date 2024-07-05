@@ -3,6 +3,7 @@ package com.kh.semi.user.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -14,18 +15,20 @@ import com.kh.semi.user.model.vo.User;
 import com.kh.semi.user.model.vo.Vehicle;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/user")
+@RequestMapping("/member")
 @SessionAttributes({"loginUser"})
+@Slf4j
 public class UserController {
 	
 	private final UserService uService;
 	
-	@GetMapping("/login")
+	@GetMapping("/signup")
 	public String loginPage() {
-		return "";
+		return "/member/signup";
 	}
 	
 	@PostMapping("/login")
@@ -40,27 +43,18 @@ public class UserController {
 	
 	@PostMapping("/insert")
 	public String insert(
-			User u,
-			Rider r,
-			Vehicle v,
+			@ModelAttribute User u,
+			@ModelAttribute Rider R,
+			@ModelAttribute Vehicle V,
 			Model model,
 			RedirectAttributes ra
 			) {
-		int result = uService.insertUser(u);
-		if(model.getAttribute("riderselect") != null) {
-			result *= uService.insertRider(r);
-			result *= uService.insertVehicle(v);
-		} 
 		
-		String url = "";
-		if(result > 0) {
-			ra.addFlashAttribute("alertMsg" , "회원가입 성공");
-			url = "redirect:/"; // 재요청
-		} else {
-			model.addAttribute("errorMsg" , "회원가입 실패");
-			url = "common/errorPage"; // 에러 페이지
-		}
-		return url;
+		System.out.println(u);
+		System.out.println(R);
+		System.out.println(V);
+		
+		return "/home";
 	}
 	
 	@GetMapping("/mypage")
