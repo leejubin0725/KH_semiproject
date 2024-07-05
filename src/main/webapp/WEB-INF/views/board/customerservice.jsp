@@ -7,6 +7,7 @@
     <meta charset="utf-8">
     <meta name="description" content="Figma htmlGenerator">
     <meta name="author" content="htmlGenerator">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css?family=Sigmar+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/styles.css">
@@ -40,6 +41,7 @@
                     </tr>
                 </thead>
                 <tbody>
+<<<<<<< HEAD
                     <c:forEach items="${inquiryList}" var="inquiry">
 	                    <tr>
 	                        <td>${inquiry.inquiryNo}</td>
@@ -49,6 +51,22 @@
 	                        <td><span class="status completed">답변완료</span></td>
 	                    </tr>
                     </c:forEach>
+=======
+                    <tr class="clickable-row" data-id="5">
+                        <td>5</td>
+                        <td>배송 문의드립니다 문의</td>
+                        <td>홍길동</td>
+                        <td>2023-06-13</td>
+                        <td><span class="status pending">답변대기</span></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>환불 관련문의^^</td>
+                        <td>정민지</td>
+                        <td>2023-06-13</td>
+                        <td><span class="status completed">답변완료</span></td>
+                    </tr>
+>>>>>>> 92ae884c56af5cbe2ebeee08ce5cc4f397229e75
                 </tbody>
             </table>
             <div class="pagination">
@@ -62,6 +80,17 @@
 	        const url = 'inquiryInsert'; // URL을 설정하세요
 	        window.location.href = url;
 	    });
+	    
+	    document.addEventListener('DOMContentLoaded', function() {
+            var rows = document.querySelectorAll('.clickable-row');
+            rows.forEach(function(row) {
+                row.addEventListener('click', function() {
+                    const id = row.dataset.id;
+                    const url = `/semi/board/inquiryDetailView`; //  ?id=${id}
+                    window.location.href = url;
+                });
+            });
+        });;
     </script>
     <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 
