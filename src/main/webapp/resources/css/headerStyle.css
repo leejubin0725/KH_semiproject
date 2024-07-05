@@ -1,16 +1,18 @@
 .headerContainer {
     width: 100%;
-    background-color: rgba(255, 255, 255); /* 배경을 반투명하게 설정 */
+    background-color: rgba(255, 255, 255); /* 반투명 배경색 */
     position: fixed; /* 고정 위치 */
     top: 0;
+    left: 0; /* 왼쪽에 붙이기 */
     z-index: 1000; /* 다른 요소들 위에 표시되도록 설정 */
+    margin-bottom: 30px;
 }
 
 .header-main {
     display: flex;
     justify-content: center; /* 가운데 정렬 */
     align-items: center;
-    padding: 30px 0; /* 상하 크기를 약간 늘림 */
+    padding: 30px 0; /* 상하 패딩 조정 */
     width: 100%;
     position: relative; /* 자식 요소의 절대 위치 지정을 위해 */
 }

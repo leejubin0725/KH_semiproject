@@ -44,6 +44,10 @@ public class BoardController {
 	public String orderInsert() {
 		return "/board/orderInsert";
 	}
+	@GetMapping("/inquiryDetailView")
+	public String inquiryDetailView() {
+		return "/board/inquiryDetailView";
+	}
 }
 
 
