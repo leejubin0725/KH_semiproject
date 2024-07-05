@@ -32,5 +32,9 @@
 	<bean class="org.mybatis.spring.SqlSessionTemplate" id="sqlSession">
 		<constructor-arg ref="sqlSessionFactory"/>
 	</bean>
+	
+	<bean id='transactionManager' class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="realDataSource"/>
+	</bean>
 
 </beans>

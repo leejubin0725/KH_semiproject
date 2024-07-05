@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Orders">
+	<select id="selectOrderList" resultType="order">
+		SELECT 
+			ORDER_NO,
+			USER_NO,
+			ORDER_TITLE,
+			ORDER_CONTENT,
+			CATEGORY_MAIN,
+			ALERT_FRAGILE,
+			ALERT_VALUABLE,
+			ALERT_URGENT,
+			START_POINT,
+			END_POINT,
+			CREATE_DATE,
+			ORDER_STATUS,
+			DISTANCE,
+			PRICE,
+			START_DATE,
+			END_DATE
+		FROM ORDERS
+		ORDER BY ORDER_NO
+	</select>
+	
+	<insert id="insertOrder" parameterType="order" useGeneratedKeys="true">
+		<selectKey keyProperty="orderNo" resultType="int" order="BEFORE" >
+         	SELECT SEQ_ONO.NEXTVAL FROM DUAL
+      	</selectKey>
+		
+		INSERT INTO ORDERS
+		VALUES(
+			#{orderNo},
+			#{userNo},
+			#{orderTitle},
+			#{orderContent},
+			#{categoryMain},
+			#{alertFragile},
+			#{alertValuable},
+			#{alertUrgent},
+			#{startPoint},
+			#{endPoint},
+			SYSDATE,
+			'ING',
+			#{distance},
+			#{price},
+			NULL,
+			NULL
+		)
+		
+	</insert>
+	
+</mapper>

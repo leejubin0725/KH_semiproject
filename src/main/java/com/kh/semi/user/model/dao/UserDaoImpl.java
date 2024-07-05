@@ -30,4 +30,19 @@ public class UserDaoImpl implements UserDao{
 		return sqlSession.insert("user.insertVehicle" , v);
 	}
 
+	@Override
+	public User login(User u) {
+		return sqlSession.selectOne("user.login" , u);
+	}
+
+	@Override
+	public int updateUser(User u) {
+		return sqlSession.update("user.updateUser" , u);
+	}
+
+	@Override
+	public int idCheck(String email) {
+		return sqlSession.selectOne("user.idCheck", email);
+	}
+
 }
