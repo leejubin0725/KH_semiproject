@@ -43,30 +43,15 @@
                 <tbody>
 
                     <c:forEach items="${inquiryList}" var="inquiry">
-	                    <tr>
+	                    <tr class="clickable-row" data-id="${inquiryNo}">
 	                        <td>${inquiry.inquiryNo}</td>
 	                        <td>${inquiry.title}</td>
 	                        <td>${inquiry.userNo}</td>
 	                        <td><fmt:formatDate value="${inquiry.createDate}" pattern="yy-MM-dd" /></td>
-	                        <td><span class="status completed">답변완료</span></td>
+	                        <td><span class="status completed">답변대기</span></td>
 	                    </tr>
                     </c:forEach>
-
-                    <tr class="clickable-row" data-id="5">
-                        <td>5</td>
-                        <td>배송 문의드립니다 문의</td>
-                        <td>홍길동</td>
-                        <td>2023-06-13</td>
-                        <td><span class="status pending">답변대기</span></td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>환불 관련문의^^</td>
-                        <td>정민지</td>
-                        <td>2023-06-13</td>
-                        <td><span class="status completed">답변완료</span></td>
-                    </tr>
-
+                    
                 </tbody>
             </table>
             <div class="pagination">
@@ -86,7 +71,7 @@
             rows.forEach(function(row) {
                 row.addEventListener('click', function() {
                     const id = row.dataset.id;
-                    const url = `/semi/board/inquiryDetailView`; //  ?id=${id}
+                    const url = `/semi/board/inquiryDetailView?id=${id}`;
                     window.location.href = url;
                 });
             });

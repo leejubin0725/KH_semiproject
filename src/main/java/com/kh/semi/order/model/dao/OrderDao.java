@@ -11,4 +11,7 @@ public interface OrderDao {
 
 	List<Order> selectOrderList();
 
+	Order selectOrderOne(int orderNo);
+
+
 }

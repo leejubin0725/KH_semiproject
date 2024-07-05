@@ -74,8 +74,8 @@ public class InquiryController {
 	
 	@GetMapping("/inquiryDetailView")
 	public String inquiryDetailView() {
+		
 		return "/board/inquiryDetailView";
 	}
-	
 	
 }

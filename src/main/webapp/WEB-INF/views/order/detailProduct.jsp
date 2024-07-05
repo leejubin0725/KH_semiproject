@@ -23,13 +23,13 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <div class="frame">
     <div class="main-image"></div>
-    <h1 class="product-title">상품 제목!</h1>
-    <div class="author-nickname">작성자 닉네임</div>
-    <p class="product-description">본문 및 설명 자리 (가변적으로 늘어남)</p>
+    <h1 class="product-title">제목 : ${order.orderTitle }</h1>
+    <div class="author-nickname">작성자 닉네임 : ${order.writer} </div>
+    <p class="product-description"> ${order.orderContent} </p>
     <div id="map"></div> <!-- 지도를 표시할 div -->
-    <div class="category">대분류/소분류</div>
-    <div class="price">가격</div>
-    <div class="delivery-info">배송정보 ex)주소</div>
+    <div class="category">${order.alertFragile}/${order.alertValuable}/${order.alertUrgent}</div>
+    <div class="price">${order.orderContent}</div>
+    <div class="delivery-info">배송정보 ex)주소 ${order.startPoint}/${order.endPoint}<br/>${order.distance}/${order.price}<br/>${order.startDate}/${order.endDate}</div>
     <button class="map-button" onclick="expandMapImage()">지도 보기</button>
     <button class="restore-button" onclick="restoreMapImage()">복구</button>
     <button id="resetButton" onclick="clearMap()">초기화</button> <!-- 추가된 초기화 버튼 -->

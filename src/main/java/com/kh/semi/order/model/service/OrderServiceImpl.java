@@ -54,4 +54,9 @@ public class OrderServiceImpl implements OrderService {
 		return orderDao.selectOrderList();
 	}
 
+	@Override
+	public Order selectOrderOne(int orderNo) {
+		return orderDao.selectOrderOne(orderNo);
+	}
+
 }
