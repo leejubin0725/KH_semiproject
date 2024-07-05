@@ -25,6 +25,7 @@
         <section class="inquiry">
             <h2>1:1 문의</h2>
             <div class="breadcrumb">
+            	<button class="custom-button" id="customButton">새로운 페이지로 이동</button>
                 <span>홈</span> > <span>고객지원</span> > <span>1:1 문의</span>
             </div>
             <table>
@@ -80,6 +81,13 @@
             </div>
         </section>
     </main>
+    <script>
+	 	// 새로운 버튼에 대한 이벤트 리스너
+	    document.getElementById('customButton').addEventListener('click', function() {
+	        const url = 'inquiryInsert'; // URL을 설정하세요
+	        window.location.href = url;
+	    });
+    </script>
     <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 
 </body>

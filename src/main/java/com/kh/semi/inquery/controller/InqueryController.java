@@ -1,5 +1,11 @@
 package com.kh.semi.inquery.controller;
 
-public class InqueryController {
+import org.springframework.stereotype.Controller;
 
+@Controller
+public class InqueryController {
+	
+	
+	
+	
 }

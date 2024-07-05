@@ -11,10 +11,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("/board")
 public class BoardController {
-	
-	
-
-
 
 	@GetMapping("/inquiryInsert")
 	public String inquiryInsert() {
@@ -23,8 +19,9 @@ public class BoardController {
 	
 	@GetMapping("/customerservice")
 	public String customerPage() {
-		return "/order/customerservice";
+		return "/board/customerservice";
 	}
+
 	
 }
 
