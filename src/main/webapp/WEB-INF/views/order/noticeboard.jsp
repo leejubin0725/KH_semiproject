@@ -108,11 +108,7 @@
 
         // 새로운 버튼에 대한 이벤트 리스너
         document.getElementById('customButton').addEventListener('click', function() {
-<<<<<<< HEAD:src/main/webapp/WEB-INF/views/board/noticeboard.jsp
-            const url = 'insertBoard'; // URL을 설정하세요
-=======
             const url = 'orderInsert'; // URL을 설정하세요
->>>>>>> jis:src/main/webapp/WEB-INF/views/order/noticeboard.jsp
             window.location.href = url;
         });
     </script>

@@ -14,36 +14,18 @@ public class BoardController {
 	
 	
 
-	@GetMapping("/myPost")
-	public String myPost() {
-		return "/board/myPost";
-	}
-	
-	@GetMapping("/noticeboard")
-	public String noticeboard() {
-		return "/board/noticeboard";
-	}
-	@GetMapping("/insertBoard")
-	public String insertBoard() {
-		return "/board/insertBoard";
-	}
+
+
 	@GetMapping("/inquiryInsert")
 	public String inquiryInsert() {
 		return "/board/inquiryInsert";
 	}
-	@GetMapping("/insertUser")
-	public String insertUser() {
-		return "/board/insertUser";
+	
+	@GetMapping("/customerservice")
+	public String customerPage() {
+		return "/order/customerservice";
 	}
 	
-	@GetMapping("/mypage")
-	public String mypage() {
-		return "/board/mypage";
-	}
-	@GetMapping("/orderInsert")
-	public String orderInsert() {
-		return "/board/orderInsert";
-	}
 }
 
 

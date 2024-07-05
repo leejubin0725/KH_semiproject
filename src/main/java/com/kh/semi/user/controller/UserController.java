@@ -175,6 +175,9 @@ public class UserController {
        return ResponseEntity.ok(result); 
     }
 	
-	
+	@GetMapping("/myPost")
+	public String myPost() {
+		return "/board/myPost";
+	}
 	
 }
