@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <html lang="ko">
 <head>
     <meta charset="utf-8">
@@ -39,41 +40,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>5</td>
-                        <td>배송 문의드립니다 문의</td>
-                        <td>홍길동</td>
-                        <td>2023-06-13</td>
-                        <td><span class="status pending">답변대기</span></td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>결제 문의</td>
-                        <td>김철수</td>
-                        <td>2023-06-13</td>
-                        <td><span class="status pending">답변대기</span></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>라이더 문의드립니다</td>
-                        <td>박영희</td>
-                        <td>2023-06-13</td>
-                        <td><span class="status pending">답변대기</span></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>배송문의 드립니다</td>
-                        <td>이영수</td>
-                        <td>2023-06-13</td>
-                        <td><span class="status completed">답변완료</span></td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>환불 관련문의^^</td>
-                        <td>정민지</td>
-                        <td>2023-06-13</td>
-                        <td><span class="status completed">답변완료</span></td>
-                    </tr>
+                    <c:forEach items="${inquiryList}" var="inquiry">
+	                    <tr>
+	                        <td>${inquiry.inquiryNo}</td>
+	                        <td>${inquiry.title}</td>
+	                        <td>${inquiry.userNo}</td>
+	                        <td><fmt:formatDate value="${inquiry.createDate}" pattern="yy-MM-dd" /></td>
+	                        <td><span class="status completed">답변완료</span></td>
+	                    </tr>
+                    </c:forEach>
                 </tbody>
             </table>
             <div class="pagination">
