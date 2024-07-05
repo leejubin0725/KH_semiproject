@@ -16,7 +16,7 @@
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
     <div class="main-content">
         <div class="image-container">
-            <img src="${contextPath }/resources/images/dad.png">
+            <img src="${contextPath }/resources/images/rider.png">
             <div class="title">delivery</div>
             <div class="title2">service</div>
         </div>

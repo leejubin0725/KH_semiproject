@@ -3,10 +3,17 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<<<<<<< HEAD
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마이페이지</title>
+    <link rel="stylesheet" href="${contextPath }/resources/css/mypage.css">
+=======
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>마이페이지</title>
 <link rel="stylesheet" href="${contextPath }/resources/css/styles.css">
+>>>>>>> jis
 </head>
 
 <body>

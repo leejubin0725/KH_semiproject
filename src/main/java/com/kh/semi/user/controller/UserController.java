@@ -2,6 +2,7 @@ package com.kh.semi.user.controller;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -116,6 +118,12 @@ public class UserController {
 	@GetMapping("/mypage")
 	public String mypage() {
 		return "/user/mypage";
+
+	}
+	@GetMapping("/insertRequest")
+	public String insertRequest() {
+		return "/user/insertRequest";
+
 	}
 	
 	@PostMapping("/update")
@@ -149,4 +157,24 @@ public class UserController {
 		status.setComplete();
 		return "redirect:/";
 	}
+	
+	@GetMapping("/idCheck")
+    //@ResponseBody
+    public ResponseEntity<Integer> idCheck(@RequestParam String email) {
+       int result = uService.idCheck(email);
+      
+//      INFO : [SQL]SELECT COUNT(*)
+//		FROM USERS
+//		WHERE EMAIL = '2222'
+//		INFO : |---------|
+//		INFO : |COUNT(*) |
+//		INFO : |---------|
+//		INFO : |1        |
+//		INFO : |---------|
+//		WARN : org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.HttpMediaTypeNotAcceptableException: Could not find acceptable representation]
+       return ResponseEntity.ok(result); 
+    }
+	
+	
+	
 }

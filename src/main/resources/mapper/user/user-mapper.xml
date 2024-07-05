@@ -87,7 +87,11 @@
 	</update>
 
 
-
+	<select id="idCheck" resultType="int">
+		SELECT COUNT(*)
+		FROM USERS
+		WHERE EMAIL = #{email}
+	</select>
 
 
 
