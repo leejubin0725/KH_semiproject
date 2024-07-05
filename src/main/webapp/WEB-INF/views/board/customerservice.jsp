@@ -8,7 +8,7 @@
     <meta name="author" content="htmlGenerator">
     <link href="https://fonts.googleapis.com/css?family=Sigmar+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="${contextPath }/resources/css/styles.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
 </head>

@@ -1,0 +1,256 @@
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #86C1C6;
+}
+
+.frame {
+    box-sizing: border-box;
+    position: relative;
+    width: 70%; /* 너비를 70%로 설정 */
+    height: 2118px;
+    margin: 0 auto; /* margin-top을 없앰 */
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden; /* 내용이 넘칠 경우를 대비해 overflow hidden 설정 */
+}
+
+.main-image {
+    position: absolute;
+    width: calc(100% - 160px); /* 좌우 여백을 고려하여 너비 조정 */
+    height: 500px;
+    margin-top: 40px;
+    top: 0;
+    left: 80px; /* 좌우 여백을 동일하게 설정 */
+    background: black;
+    border-radius: 30px;
+}
+
+.product-image {
+    position: absolute;
+    width: 412px;
+    height: 379px;
+    left: 80px; /* 좌우 여백을 동일하게 설정 */
+    top: 1231px;
+    background: black;
+    border-radius: 30px;
+}
+
+.product-title {
+    position: absolute;
+    width: calc(100% - 160px); /* 좌우 여백을 고려하여 너비 조정 */
+    height: 95px;
+    left: 80px; /* 좌우 여백을 동일하게 설정 */
+    top: 560px;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 44px;
+    color: #000000;
+}
+
+.author-nickname {
+    position: absolute;
+    width: 320px;
+    height: 74px;
+    right: 80px; /* 우측 여백을 동일하게 설정 */
+    top: 590px;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    color: #000000;
+}
+
+.product-description {
+    position: absolute;
+    width: calc(100% - 160px); /* 좌우 여백을 고려하여 너비 조정 */
+    height: 171px;
+    left: 80px; /* 좌우 여백을 동일하게 설정 */
+    top: 750px;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 40px;
+    letter-spacing: 0.05em;
+    color: #000000;
+}
+
+.category {
+    position: absolute;
+    width: 259px;
+    height: 98px;
+    right: 280px; /* 우측 여백을 동일하게 설정 */
+    top: 1231px;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    color: #000000;
+}
+
+.price {
+    position: absolute;
+    width: 191px;
+    height: 55px;
+    right: 350px; /* 우측 여백을 동일하게 설정 */
+    top: 1329px;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    color: #000000;
+}
+
+.delivery-info {
+    position: absolute;
+    width: 259px;
+    height: 98px;
+    right: 280px; /* 우측 여백을 동일하게 설정 */
+    top: 1384px;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    color: #000000;
+}
+
+.map-image {
+    position: absolute;
+    width: 400px; /* 초기 너비 설정 */
+    height: 400px;
+    left: 80px;
+    top: 1231px;
+    background: grey;
+    border-radius: 30px;
+    transition: width 0.3s ease, height 0.3s ease; /* 애니메이션 추가 */
+}
+
+.map-button {
+    position: absolute;
+    width: 74px;
+    height: 73px;
+    right: 0px; /* 우측 여백을 동일하게 설정 */
+    top: 1537px;
+    background: #00AAFF;
+    color: #FFFFFF;
+    text-align: center;
+    line-height: 73px;
+    font-size: 13.3px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.restore-button {
+    display: none; /* 초기에는 보이지 않도록 설정 */
+    position: absolute;
+    width: 74px;
+    height: 73px;
+    right: 0px; /* 우측 여백을 동일하게 설정 */
+    top: 1600px;
+    background: #FF5733;
+    color: #FFFFFF;
+    text-align: center;
+    line-height: 73px;
+    font-size: 13.3px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+.comments-table {
+    position: absolute;
+    width: calc(100% - 160px); /* 좌우 여백을 고려하여 너비 조정 */
+    height: 90px;
+    left: 80px; /* 좌우 여백을 동일하게 설정 */
+    top: 1712px;
+    background: #FFFFFF;
+    z-index: 1; /* 테이블이 다른 요소 위로 올라가도록 설정 */
+}
+
+.comments-table th {
+    background: #F2F2F2;
+    border-bottom: 0.888889px solid #DDDDDD;
+    font-weight: 700;
+    font-size: 16px;
+    padding: 7px;
+}
+
+.comments-table td {
+    border-bottom: 0.888889px solid #DDDDDD;
+    padding: 7px;
+}
+
+.comments-table th:nth-child(1),
+.comments-table td:nth-child(1) {
+    width: 10%; /* 별점 */
+}
+
+.comments-table th:nth-child(2),
+.comments-table td:nth-child(2) {
+    width: 15%; /* 글쓴이 */
+}
+
+.comments-table th:nth-child(3),
+.comments-table td:nth-child(3) {
+    width: 50%; /* 댓글 내용 */
+}
+
+.comments-table th:nth-child(4),
+.comments-table td:nth-child(4) {
+    width: 15%; /* 작성시간 */
+}
+
+.comments-table th:nth-child(5),
+.comments-table td:nth-child(5) {
+    width: 10%; /* 조회수 */
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 74px; /* "배달해줘" 텍스트의 높이에 맞춤 */
+    z-index: 2; /* comments-table 위로 올라가도록 설정 */
+}
+
+.star {
+    font-size: 24px; /* 별의 크기를 키움 */
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    margin-right: 5px; /* 별 사이의 간격 추가 */
+}
+
+.star.checked,
+.star:hover {
+    color: gold;
+}
+
+#map {
+    position: absolute;
+    width: 400px; /* 초기 너비 설정 */
+    height: 400px;
+    left: 80px;
+    top: 1231px;
+    background: grey;
+    border-radius: 30px;
+    transition: width 0.3s ease, height 0.3s ease; /* 애니메이션 추가 */
+}
+
+#resetButton {
+    margin-top: 10px;
+}
+
+#address {
+    position: absolute;
+    width: 191px;
+    height: 55px;
+    right: 350px; /* 우측 여백을 동일하게 설정 */
+    top: 1529px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 29px;
+    color: #000000;
+}

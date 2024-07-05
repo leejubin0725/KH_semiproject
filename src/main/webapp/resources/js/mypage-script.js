@@ -1,6 +1,3 @@
-function showMyPosts() {
-    alert("내가 쓴 글 목록을 보여줍니다.");
-}
 
 function editInfo() {
     alert("개인정보 수정이 완료되었습니다.");

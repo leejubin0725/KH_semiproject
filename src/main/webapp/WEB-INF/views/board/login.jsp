@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -5,7 +7,7 @@
   <title>Login Page</title>
   <meta name="description" content="Login Page">
   <meta name="author" content="htmlGenerator">
-  <link href="./login.css" rel="stylesheet">
+  <link href="${pageContext.request.contextPath}/resources/css/login.css" rel="stylesheet">
  
  
  

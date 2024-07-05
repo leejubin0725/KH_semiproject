@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -5,7 +7,7 @@
     <title>회원가입</title>
     <meta name="description" content="Signup Form">
     <meta name="author" content="htmlGenerator">
-    <link rel="stylesheet" href="./insertUser.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/insertUser.css">
     <script>
        document.addEventListener('DOMContentLoaded', function() {
     const memberTypeRadios = document.querySelectorAll('input[name="member-type"]');

@@ -74,6 +74,10 @@ public class UserController {
 	
 	@GetMapping("/mypage")
 	public String mypage() {
-		return "";
+		return "/user/mypage";
+	}
+	@GetMapping("/insertRequest")
+	public String insertRequest() {
+		return "/user/insertRequest";
 	}
 }
