@@ -17,7 +17,7 @@ public class OrderDaoImpl implements OrderDao{
 	
 	@Override
 	public int insertOrder(Order o) {
-		return sqlSession.insert("order.insertOrder", o);
+		return sqlSession.insert("Orders.insertOrder", o);
 	}
 
 	@Override

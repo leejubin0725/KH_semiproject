@@ -43,12 +43,10 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public int insertOrder(Order o) {
-		String orderTitle = o.getOrderTitle();
-		String orderContent = o.getOrderContent();
 		
-		int result = orderDao.insertOrder(o);
+		return orderDao.insertOrder(o);
 		
-		return result;
+
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import java.util.List;
 import com.kh.semi.order.model.vo.Order;
 
 public interface OrderDao {
+	
 
 	int insertOrder(Order o);
 
