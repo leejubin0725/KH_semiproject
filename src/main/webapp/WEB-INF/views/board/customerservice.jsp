@@ -41,7 +41,7 @@
                     </tr>
                 </thead>
                 <tbody>
-<<<<<<< HEAD
+
                     <c:forEach items="${inquiryList}" var="inquiry">
 	                    <tr>
 	                        <td>${inquiry.inquiryNo}</td>
@@ -51,7 +51,7 @@
 	                        <td><span class="status completed">답변완료</span></td>
 	                    </tr>
                     </c:forEach>
-=======
+
                     <tr class="clickable-row" data-id="5">
                         <td>5</td>
                         <td>배송 문의드립니다 문의</td>
@@ -66,7 +66,7 @@
                         <td>2023-06-13</td>
                         <td><span class="status completed">답변완료</span></td>
                     </tr>
->>>>>>> 92ae884c56af5cbe2ebeee08ce5cc4f397229e75
+
                 </tbody>
             </table>
             <div class="pagination">
