@@ -72,7 +72,7 @@
                 </div>
                 
                 <div class="input-group">
-                    <label for="price" class="red">예상금액</label>
+                    <label for="price" class="red" value=1000>예상금액</label>
                     <input type="text" id="price" name="price" placeholder="예상금액" readonly>
                 </div>
                 

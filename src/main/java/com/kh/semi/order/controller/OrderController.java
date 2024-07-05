@@ -49,10 +49,9 @@ public class OrderController {
 	public String insertOrder(
 			Order o,
 			Model model,
-			@RequestParam("title") String title,
 			@RequestParam(value="upfile", required=false) MultipartFile upfile
 			) {
-		System.out.println(title);
+		System.out.println(o.getOrderTitle());
 		OrdersImg oi = null;
 		if(upfile != null && !upfile.isEmpty()) {
 			String webPath = "resources/images/Orders/";

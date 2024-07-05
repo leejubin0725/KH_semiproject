@@ -40,4 +40,9 @@ public class UserDaoImpl implements UserDao{
 		return sqlSession.update("user.updateUser" , u);
 	}
 
+	@Override
+	public int idCheck(String email) {
+		return sqlSession.selectOne("user.idCheck", email);
+	}
+
 }

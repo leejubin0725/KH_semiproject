@@ -39,5 +39,10 @@ public class UserServiceImpl implements UserService{
 	public int updateUser(User u) {
 		return dao.updateUser(u);
 	}
+
+	@Override
+	public int idCheck(String email) {
+		return dao.idCheck(email);
+	}
 	
 }

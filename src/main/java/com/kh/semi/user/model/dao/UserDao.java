@@ -15,5 +15,7 @@ public interface UserDao {
 	User login(User u);
 
 	int updateUser(User u);
+
+	int idCheck(String email);
 	
 }

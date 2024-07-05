@@ -16,4 +16,6 @@ public interface UserService {
 
 	int updateUser(User u);
 
+	int idCheck(String email);
+
 }
