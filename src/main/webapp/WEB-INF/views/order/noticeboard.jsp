@@ -108,7 +108,7 @@
 
         // 새로운 버튼에 대한 이벤트 리스너
         document.getElementById('customButton').addEventListener('click', function() {
-            const url = 'inquiryInsert'; // URL을 설정하세요
+            const url = 'orderInsert'; // URL을 설정하세요
             window.location.href = url;
         });
     </script>

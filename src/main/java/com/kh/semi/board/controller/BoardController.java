@@ -21,7 +21,12 @@ public class BoardController {
 	public String customerPage() {
 		return "/board/customerservice";
 	}
+	
 
+	@GetMapping("/inquiryDetailView")
+	public String inquiryDetailView() {
+		return "/board/inquiryDetailView";
+	}
 	
 }
 
