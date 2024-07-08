@@ -69,7 +69,7 @@
         )
     </insert>
     
-    <insert id="insertInquiryImg" parameterType="InquiryImg" useGeneratedKeys="true">
+    <insert id="insertOrdersImg" parameterType="OrdersImg" useGeneratedKeys="true">
         <selectKey keyProperty="imgNo" resultType="int" order="BEFORE">
             SELECT SEQ_OINO.NEXTVAL FROM DUAL
         </selectKey>
@@ -81,7 +81,7 @@
         	CHANGE_NAME
         ) VALUES (
           #{imgNo},
-          #{inquiryNo},
+          #{orderNo},
           #{originName},
           #{changeName}
         )

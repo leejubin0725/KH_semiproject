@@ -171,7 +171,7 @@ public class UserController {
 		return "redirect:/";
 	}
 
-	@PostMapping("/idCheck")
+	@GetMapping("/idCheck")
 	@ResponseBody
 	public int idCheck(@RequestParam String email) {
 		int result = uService.idCheck(email);
