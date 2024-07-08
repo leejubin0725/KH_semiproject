@@ -13,27 +13,27 @@ import lombok.RequiredArgsConstructor;
 @Repository
 @RequiredArgsConstructor
 public class InquiryDaoImpl implements InquiryDao{
-	
-	private final SqlSessionTemplate sqlSession;
+   
+   private final SqlSessionTemplate sqlSession;
 
-	@Override
-	public int insertInquiry(Inquiry i) {
-		return sqlSession.insert("inquiry.insertInquiry", i);
-	}
+   @Override
+   public int insertInquiry(Inquiry i) {
+      return sqlSession.insert("inquiry.insertInquiry", i);
+   }
 
-	@Override
-	public List<Inquiry> inquiryList() {
-		return sqlSession.selectList("inquiry.inquiryList");
-	}
+   @Override
+   public List<Inquiry> inquiryList() {
+      return sqlSession.selectList("inquiry.inquiryList");
+   }
 
-	@Override
-	public List<InquiryCategory> inquiryCategoryList() {
-		return sqlSession.selectList("inquiry.inquiryCategoryList");
-	}
+   @Override
+   public List<InquiryCategory> inquiryCategoryList() {
+      return sqlSession.selectList("inquiry.inquiryCategoryList");
+   }
 
-	@Override
-	public Inquiry getInquiryById(int id) {
-		return sqlSession.selectOne("inquiry.getInquiryById", id);
-	}
+   @Override
+   public Inquiry selectInquiryNo(int inquiryNo) {
+      return sqlSession.selectOne("inquiry.selectInquiryNo", inquiryNo);
+   }
 
 }

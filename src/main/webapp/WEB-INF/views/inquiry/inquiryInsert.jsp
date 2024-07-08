@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="container">
-        <form action="${contextPath }/board/inquiryInsert" method="post">
+        <form action="${contextPath }/inquiry/inquiryInsert" method="post">
             <div class="form-group">
                 <label for="title">1:1 문의 사항</label>
                 <input type="text" id="title" name="title" placeholder="제목 입력">

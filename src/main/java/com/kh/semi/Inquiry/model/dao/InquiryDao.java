@@ -7,12 +7,12 @@ import com.kh.semi.Inquiry.model.vo.InquiryCategory;
 
 public interface InquiryDao {
 
-	int insertInquiry(Inquiry i);
+   int insertInquiry(Inquiry i);
 
-	List<Inquiry> inquiryList();
+   List<Inquiry> inquiryList();
 
-	List<InquiryCategory> inquiryCategoryList();
+   List<InquiryCategory> inquiryCategoryList();
 
-	Inquiry getInquiryById(int id);
+   Inquiry selectInquiryNo(int inquiryNo);
 
 }

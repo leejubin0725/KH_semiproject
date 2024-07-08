@@ -13,26 +13,26 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class InquiryServiceImpl implements InquiryService{
-	private final InquiryDao dao;
+   private final InquiryDao dao;
 
-	@Override
-	public int insertInquiry(Inquiry i) {
-		return dao.insertInquiry(i);
-	}
-	
-	@Override
-	public List<Inquiry> inquiryList() {
-		return dao.inquiryList();
-	}
+   @Override
+   public int insertInquiry(Inquiry i) {
+      return dao.insertInquiry(i);
+   }
+   
+   @Override
+   public List<Inquiry> inquiryList() {
+      return dao.inquiryList();
+   }
 
-	@Override
-	public List<InquiryCategory> inquiryCategoryList() {
-		return dao.inquiryCategoryList();
-	}
+   @Override
+   public List<InquiryCategory> inquiryCategoryList() {
+      return dao.inquiryCategoryList();
+   }
 
-	@Override
-	public Inquiry getInquiryById(int id) {
-		return dao.getInquiryById(id);
-	}
-	
+   @Override
+   public Inquiry selectInquiryNo(int inquiryNo) {
+      return dao.selectInquiryNo(inquiryNo);
+   }
+   
 }
