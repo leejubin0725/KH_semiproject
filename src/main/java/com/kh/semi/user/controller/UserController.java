@@ -187,21 +187,10 @@ public class UserController {
       return "redirect:/";
    }
    
-   @PostMapping("/idCheck")
+   @GetMapping("/idCheck")
     @ResponseBody
     public int idCheck(@RequestParam String email) {
        int result = uService.idCheck(email);
-      
-//      INFO : [SQL]SELECT COUNT(*)
-//      FROM USERS
-//      WHERE EMAIL = '2222'
-//      INFO : |---------|
-//      INFO : |COUNT(*) |
-//      INFO : |---------|
-//      INFO : |1        |
-//      INFO : |---------|
-//      WARN : org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.HttpMediaTypeNotAcceptableException: Could not find acceptable representation]
-
        
        return result;
     }
