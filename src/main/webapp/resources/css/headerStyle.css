@@ -31,3 +31,20 @@
     position: absolute; /* 절대 위치로 설정하여 오른쪽 끝에 고정 */
     right: 2%;
 }
+
+body{
+	margin-top : 87px;
+	
+}
+.headerNav2 a {
+    font-size: 16px; /* 예시로 16px로 설정 */
+     font-weight: bold;
+}
+.headerLogo {
+    position: absolute; /* 절대 위치 지정 */
+    top:-3px; /* 위쪽 여백 설정 */
+    left: 350px; /* 왼쪽 여백 설정 */
+    width: 90px; /* 로고 너비 설정 */
+    height: auto; /* 자동 높이 설정 */
+   
+}
