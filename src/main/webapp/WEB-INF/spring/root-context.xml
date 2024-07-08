@@ -11,8 +11,7 @@
 		<property name="username" value="C##SEMITEST"/>
 		<property name="password" value="SEMITEST"/>
 	</bean>
-	
-	
+
 	<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactory">
 		<property name="configLocation" value="classpath:mybatis-config.xml"/>
 		<property name="dataSource" ref="dataSource"></property>
