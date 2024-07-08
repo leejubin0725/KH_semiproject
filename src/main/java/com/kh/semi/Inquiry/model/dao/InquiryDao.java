@@ -13,4 +13,6 @@ public interface InquiryDao {
 
 	List<InquiryCategory> inquiryCategoryList();
 
+	Inquiry getInquiryById(int id);
+
 }

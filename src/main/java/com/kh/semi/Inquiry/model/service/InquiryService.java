@@ -13,4 +13,6 @@ public interface InquiryService {
 
 	List<InquiryCategory> inquiryCategoryList();
 
+	Inquiry getInquiryById(int id);
+
 }
