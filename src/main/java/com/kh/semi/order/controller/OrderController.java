@@ -114,19 +114,19 @@ public class OrderController {
 	}
 	
 	@GetMapping("/detailProduct/{orderNo}")
-	public String detailProduct(
-			@PathVariable("orderNo") int orderNo,
-			Model model,
-			@ModelAttribute("loginUser") User loginUser,
-			HttpServletRequest req,
-			HttpServletResponse res
-			) {
-		Order o  = orderService.selectOrderOne(orderNo);
-		
-		model.addAttribute("order", o);
-		
-		return "/order/detailProduct";
-	}
+    public String detailProduct(
+          @PathVariable("orderNo") int orderNo,
+          Model model,
+          @ModelAttribute("loginUser") User loginUser,
+          HttpServletRequest req,
+          HttpServletResponse res
+          ) {
+       Order o  = orderService.selectOrderOne(orderNo);
+       
+       model.addAttribute("order", o);
+       
+       return "order/detailProduct";
+    }
 	
 
 }
