@@ -1,3 +1,9 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #86C1C6;
+    margin-top: 90px; /* 헤더의 높이만큼 여백 추가 */
+}
+
 .headerContainer {
     width: 100%;
     background-color: rgba(255, 255, 255); /* 반투명 배경색 */
@@ -15,6 +21,7 @@
     padding: 30px 0; /* 상하 패딩 조정 */
     width: 100%;
     position: relative; /* 자식 요소의 절대 위치 지정을 위해 */
+    background-color: white;
 }
 
 .headerNav {

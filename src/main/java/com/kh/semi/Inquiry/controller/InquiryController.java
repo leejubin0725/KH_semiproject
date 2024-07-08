@@ -72,7 +72,7 @@ public class InquiryController {
 		return url;
 	}
 	
-	@GetMapping("/inquiryDetailView")
+	@GetMapping("/board/inquiryDetailView")
 	public String inquiryDetailView() {
 		
 		return "/board/inquiryDetailView";
