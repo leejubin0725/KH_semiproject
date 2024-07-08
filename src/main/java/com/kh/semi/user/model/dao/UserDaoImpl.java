@@ -1,12 +1,14 @@
 package com.kh.semi.user.model.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kh.semi.order.model.vo.Order;
 import com.kh.semi.user.model.vo.Rider;
 import com.kh.semi.user.model.vo.User;
 import com.kh.semi.user.model.vo.Vehicle;
@@ -76,5 +78,10 @@ public class UserDaoImpl implements UserDao {
 		// MyBatis 매퍼 호출하여 SQL 실행
 		return sqlSession.update("user.pwupdate", parameters);
 	}
+
+	@Override
+    public List<Order> selectMyPostList(int userNo) {
+        return sqlSession.selectList("user.selectMyPostList", userNo);
+    }
 
 }

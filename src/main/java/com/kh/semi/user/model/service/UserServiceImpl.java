@@ -1,7 +1,10 @@
 package com.kh.semi.user.model.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
+import com.kh.semi.order.model.vo.Order;
 import com.kh.semi.user.model.dao.UserDao;
 import com.kh.semi.user.model.vo.Rider;
 import com.kh.semi.user.model.vo.User;
@@ -59,5 +62,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int updatepw(String encPwd, String email) {
 		return dao.updatepw(encPwd, email);
+	}
+
+	@Override
+	public List<Order> selectMyPostList(int userNo) {
+		return dao.selectMyPostList(userNo);
 	}
 }

@@ -115,6 +115,11 @@
 		SET PASSWORD = #{encPwd}
 		WHERE EMAIL = #{email}
 	</update>
+	
+	
+	<select id="selectMyPostList" resultType="Order">
+        SELECT * FROM ORDERS WHERE USER_NO = #{userNo}
+    </select>
 
 
 

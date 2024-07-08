@@ -2,8 +2,10 @@ package com.kh.semi.user.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import org.apache.http.HttpResponse;
@@ -33,6 +35,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kh.semi.order.model.vo.Order;
 import com.kh.semi.user.model.service.UserService;
 import com.kh.semi.user.model.vo.Rider;
 import com.kh.semi.user.model.vo.User;
@@ -45,6 +48,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/user")
 @SessionAttributes({ "loginUser" })
 public class UserController {
+	private final ServletContext application;
 
 	@Value("${kakao.client.id}")
 	private String clientId;
@@ -222,7 +226,6 @@ public class UserController {
 
 		session.setAttribute("email", email);
 
-
 		if (password != null) {
 			// 비밀번호가 발견되면 모델에 추가하고 성공 페이지로 이동
 			model.addAttribute("password", password);
@@ -253,6 +256,15 @@ public class UserController {
 			// 비밀번호가 일치하지 않을 경우
 			return "redirect:/"; // 실패 페이지로 리다이렉트
 		}
+	}
+
+	@GetMapping("/mypost")
+	public String boardPage(Model model, @ModelAttribute("loginUser") User loginUser) {
+		int userNo = loginUser.getUserNo();
+		List<Order> list = uService.selectMyPostList(userNo);
+		model.addAttribute("list", list);
+
+		return "/user/myPost";
 	}
 
 	/* 카카오로그인 */
