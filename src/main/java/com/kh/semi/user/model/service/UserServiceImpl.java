@@ -11,10 +11,10 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
 	private final UserDao dao;
-	
+
 	@Override
 	public int insertUser(User u) {
 		return dao.insertUser(u);
@@ -44,5 +44,20 @@ public class UserServiceImpl implements UserService{
 	public int idCheck(String email) {
 		return dao.idCheck(email);
 	}
-	
+
+	@Override
+	public String idfind(String phone) {
+		return dao.idfind(phone);
+
+	}
+
+	@Override
+	public String pwfind(String birth, String email) {
+		return dao.pwfind(birth, email);
+	}
+
+	@Override
+	public int updatepw(String encPwd, String email) {
+		return dao.updatepw(encPwd, email);
+	}
 }

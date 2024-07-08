@@ -17,5 +17,11 @@ public interface UserDao {
 	int updateUser(User u);
 
 	int idCheck(String email);
-	
+
+	String idfind(String phone);
+
+	String pwfind(String birth, String email);
+
+	int updatepw(String encPwd, String email);
+
 }

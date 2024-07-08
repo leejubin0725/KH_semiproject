@@ -69,7 +69,7 @@
                 type: 'POST',
                 url: '${pageContext.request.contextPath}/user/idfind',
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-                data: { phone: encodeURIComponent(콜) },
+                data: { phone: encodeURIComponent(phone) },
                 success: function(response) {
                     $('#foundId').text(response);
                 },

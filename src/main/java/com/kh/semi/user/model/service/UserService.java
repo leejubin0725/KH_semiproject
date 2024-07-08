@@ -5,9 +5,9 @@ import com.kh.semi.user.model.vo.User;
 import com.kh.semi.user.model.vo.Vehicle;
 
 public interface UserService {
-	
+
 	int insertUser(User u);
-	
+
 	int insertRider(Rider r);
 
 	int insertVehicle(Vehicle v);
@@ -17,5 +17,11 @@ public interface UserService {
 	int updateUser(User u);
 
 	int idCheck(String email);
+
+	String idfind(String phone);
+
+	String pwfind(String birth, String email);
+
+	int updatepw(String encPwd, String email);
 
 }

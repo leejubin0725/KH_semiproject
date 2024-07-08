@@ -6,6 +6,7 @@
 	<select id="selectOrderList" resultType="order">
 		SELECT 
 			ORDER_NO,
+			USERNICKNAME,
 			USER_NO,
 			ORDER_TITLE,
 			ORDER_CONTENT,
