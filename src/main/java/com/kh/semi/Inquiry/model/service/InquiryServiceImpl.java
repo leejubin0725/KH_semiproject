@@ -31,8 +31,8 @@ public class InquiryServiceImpl implements InquiryService{
 	}
 
 	@Override
-	public Inquiry getInquiryById(int id) {
-		return dao.getInquiryById(id);
+	public Inquiry selectInquiryNo(int inquiryNo) {
+		return dao.selectInquiryNo(inquiryNo);
 	}
 	
 }

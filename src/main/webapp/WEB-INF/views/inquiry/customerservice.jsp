@@ -41,17 +41,24 @@
                     </tr>
                 </thead>
                 <tbody>
-
-                   <c:forEach items="${inquiryList}" var="inquiry">
-				        <tr class="clickable-row" data-id="${inquiry.inquiryNo}">
-				            <td>${inquiry.inquiryNo}</td>
-				            <td>${inquiry.title}</td>
-				            <td>${inquiry.userNo}</td>
-				            <td><fmt:formatDate value="${inquiry.createDate}" pattern="yy-MM-dd" /></td>
-				            <td><span class="status completed">답변대기</span></td>
-				        </tr>
-			    	</c:forEach>
-                    
+				<c:choose>
+	            	<c:when test="${empty inquiryList}">
+			            <tr>
+			            	<td colspan="5">게시글이 없습니다</td>
+			            </tr>            	
+	            	</c:when>
+				<c:otherwise>
+	                   <c:forEach items="${inquiryList}" var="inquiry">
+					        <tr class="clickable-row" <%-- data-id="${inquiry.inquiryNo}" --%> onclick="movePage(${inquiry.inquiryNo})">
+					            <td>${inquiry.inquiryNo}</td>
+					            <td>${inquiry.title}</td>
+					            <td>${inquiry.userNo}</td>
+					            <td><fmt:formatDate value="${inquiry.createDate}" pattern="yy-MM-dd" /></td>
+					            <td><span class="status completed">답변대기</span></td>
+					        </tr>
+				    	</c:forEach>
+			    	</c:otherwise>
+                  </c:choose>  
                 </tbody>
             </table>
             <div class="pagination">
@@ -66,16 +73,24 @@
 	        window.location.href = url;
 	    });
 	    
-	    document.addEventListener('DOMContentLoaded', function() {
+/* 	    document.addEventListener('DOMContentLoaded', function() {
 	        var rows = document.querySelectorAll('.clickable-row');
 	        rows.forEach(function(row) {
 	            row.addEventListener('click', function() {
 	                const id = this.getAttribute('data-id');
-	                const url = `/semi/board/inquiryDetailView?id=${id}`;
-	                window.location.href = url;
+	                if (id) {
+	                    const url = `${pageContext.request.contextPath}/board/inquiryDetailView/${inquiryNo}`;
+	                    window.location.href = url;
+	                } else {
+	                    console.error('ID not found');
+	                }
 	            });
 	        });
-	    });
+	    }); */
+	    
+	    function movePage(ino) {
+    		location.href = "${contextPath}/inquiry/inquiryDetailView/"+ino
+    	}
 	</script>
     <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.semi.Inquiry.model.vo.Inquiry;
 import com.kh.semi.order.model.service.OrderService;
 import com.kh.semi.order.model.vo.Order;
 import com.kh.semi.order.model.vo.OrdersImg;
@@ -102,7 +103,7 @@ public class OrderController {
 		
 		application.setAttribute("list", list);
 		
-		return "/order/noticeboard";
+		return "order/noticeboard";
 	}
 	
 	@GetMapping("/detailProduct/{orderNo}")
@@ -117,8 +118,10 @@ public class OrderController {
 		
 		model.addAttribute("order", o);
 		
-		return "/order/detailProduct";
+		return "order/detailProduct";
 	}
+	
+
 	
 }
 

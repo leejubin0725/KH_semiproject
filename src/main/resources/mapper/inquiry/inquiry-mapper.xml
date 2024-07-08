@@ -38,7 +38,7 @@
 		)
 	</insert>
 	
-	<select id="getInquiryById" resultType="Inquiry">
+	<select id="selectInquiryNo" resultType="Inquiry">
 			SELECT *
 			FROM INQUIRIES
 			WHERE INQUIRY_NO = #{inquiryNo}

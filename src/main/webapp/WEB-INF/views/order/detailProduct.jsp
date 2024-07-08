@@ -24,7 +24,7 @@
 <div class="frame">
     <div class="main-image"></div>
     <h1 class="product-title">제목 : ${order.orderTitle }</h1>
-    <div class="author-nickname">작성자 닉네임 : ${order.writer} </div>
+    <div class="author-nickname">작성자 닉네임 : ${order.orderNo} </div>
     <p class="product-description"> ${order.orderContent} </p>
     <div id="map"></div> <!-- 지도를 표시할 div -->
     <div class="category">${order.alertFragile}/${order.alertValuable}/${order.alertUrgent}</div>
