@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kh.semi.Inquiry.model.vo.Inquiry;
 import com.kh.semi.Inquiry.model.vo.InquiryCategory;
+import com.kh.semi.Inquiry.model.vo.InquiryImg;
 
 public interface InquiryDao {
 
@@ -14,5 +15,11 @@ public interface InquiryDao {
 	List<InquiryCategory> inquiryCategoryList();
 
 	Inquiry selectInquiryNo(int inquiryNo);
+
+	int insertInquiryImg(InquiryImg ii);
+
+	Inquiry selectInquiryOne(int orderNo);
+
+	InquiryImg selectInquiryImg(int inquiryNo);
 
 }

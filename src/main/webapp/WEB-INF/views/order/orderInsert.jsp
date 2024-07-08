@@ -46,8 +46,8 @@
 				</div>
 			</div>
 			<div class="right-side">
-				<label for="file">파일 선택</label> <input type="file" id="file">
-				<span>선택된 파일 없음</span>
+				<label for="file">파일 선택</label> <input type="file" id="file"
+					name="file">
 				<div id="map" style="width: 100%; height: 400px;"></div>
 				<div style="display: flex; justify-content: center;">
 					<button class="map-button" onclick="expandMapImage()">지도
@@ -269,7 +269,6 @@
        	 var contextPath = "${pageContext.request.contextPath}";
 
            var order = {
-               userNo: 1, // 예시 값, 실제로는 로그인한 사용자의 ID를 사용해야 합니다.
                orderTitle: document.getElementById('title').value,
                orderContent: document.getElementById('content').value,
                categoryMain: document.getElementById('category').value,
@@ -281,18 +280,32 @@
                orderStatus: '대기중', // 초기 상태
                distance: parseFloat(document.getElementById('dis').value),
                price: parseInt(document.getElementById('price').value.replace('원', '')),
-               
-          		
            };
+           
+           var formData = new FormData();
+
+           // order 객체의 데이터 추가
+           for (var key in order) {
+               if (order.hasOwnProperty(key)) {
+                   formData.append(key, order[key]);
+               }
+           }
+           
+        	// 파일 추가
+           var fileInput = document.getElementById('file');
+           if (fileInput.files.length > 0) {
+               formData.append('file', fileInput.files[0]);
+           }
 
            // 콘솔에 데이터 출력 (디버깅용)
            console.log('Sending order data:', order);
 
            $.ajax({
            	url: `${contextPath}/order/orderInsert`,
-               type: 'POST',
-               contentType: 'application/json',
-               data: JSON.stringify(order),
+	           	type: 'POST',
+	            processData: false, // 데이터를 일반적인 쿼리 문자열로 처리하지 않음
+	            contentType: false, // jQuery가 요청에 적절한 Content-Type 헤더를 설정하지 않도록 함
+	            data: formData,
                success: function(response) {
                    console.log('Order sent successfully');
                    console.log(response);

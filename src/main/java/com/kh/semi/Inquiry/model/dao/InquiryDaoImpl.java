@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.semi.Inquiry.model.vo.Inquiry;
 import com.kh.semi.Inquiry.model.vo.InquiryCategory;
+import com.kh.semi.Inquiry.model.vo.InquiryImg;
 
 import lombok.RequiredArgsConstructor;
 
@@ -34,6 +35,21 @@ public class InquiryDaoImpl implements InquiryDao{
 	@Override
 	public Inquiry selectInquiryNo(int inquiryNo) {
 		return sqlSession.selectOne("inquiry.selectInquiryNo", inquiryNo);
+	}
+
+	@Override
+	public int insertInquiryImg(InquiryImg ii) {
+		return sqlSession.insert("inquiry.insertInquiryImg", ii);
+	}
+
+	@Override
+	public Inquiry selectInquiryOne(int inquiryNo) {
+		return sqlSession.selectOne("inquiry.selectInquiryOne", inquiryNo);
+	}
+
+	@Override
+	public InquiryImg selectInquiryImg(int inquiryNo) {
+		return sqlSession.selectOne("inquiry.selectInquiryImg", inquiryNo);
 	}
 
 }

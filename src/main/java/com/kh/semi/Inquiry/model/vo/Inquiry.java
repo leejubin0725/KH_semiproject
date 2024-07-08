@@ -12,9 +12,12 @@ import lombok.NoArgsConstructor;
 public class Inquiry {
 	private int inquiryNo;
 	private int userNo;
+	private String writer;
 	private int categoryNo;
 	private String title;
 	private String content;
 	private Date createDate;
 	private Date updateDate;
+	
+	private InquiryImg inquiryImg;
 }

@@ -13,6 +13,27 @@
 		SELECT *
 		FROM INQ_CATEGORY
 	</select>
+	
+	<select id="selectInquiryOne" resultType="Inquiry">
+		SELECT
+			INQUIRY_NO,
+			U.USER_NO,
+			U.NICKNAME AS WRITER,
+			CATEGORY_NO,
+			TITLE,
+			CONTENT,
+			I.CREATE_DATE,
+			I.UPDATE_DATE
+		FROM INQUIRIES I
+		JOIN USERS U ON (U.USER_NO = I.USER_NO)
+		WHERE INQUIRY_NO = #{inquiryNo}
+	</select>
+	
+	<select id="selectInquiryImg" resultType="InquiryImg">
+		SELECT *
+		FROM INQ_IMG
+		WHERE INQUIRY_NO = #{inquiryNo}
+	</select>
 
 	<insert id="insertInquiry" parameterType="Inquiry">
 		<selectKey keyProperty="inquiryNo" resultType="int"
@@ -37,6 +58,24 @@
 		DEFAULT
 		)
 	</insert>
+	
+	<insert id="insertInquiryImg" parameterType="InquiryImg" useGeneratedKeys="true">
+        <selectKey keyProperty="imgNo" resultType="int" order="BEFORE">
+            SELECT SEQ_IINO.NEXTVAL FROM DUAL
+        </selectKey>
+
+        INSERT INTO INQ_IMG (
+        	IMG_NO,
+        	INQUIRY_NO,
+        	ORIGIN_NAME,
+        	CHANGE_NAME
+        ) VALUES (
+          #{imgNo},
+          #{inquiryNo},
+          #{originName},
+          #{changeName}
+        )
+    </insert>
 	
 	<select id="selectInquiryNo" resultType="Inquiry">
 			SELECT *
