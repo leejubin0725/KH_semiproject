@@ -14,8 +14,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class Order {
-	
-	
 	private int orderNo;
     private int userNo;
     private String orderTitle;

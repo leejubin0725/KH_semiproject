@@ -70,7 +70,6 @@
         	   <c:forEach items="${list}" var="order">
                    <tr class="clickable-row" data-id="${orderNo}">
                       	<td>${order.orderTitle}</td>
-                    	<td>${order.writer}</td>
                     	<td><span class="rider-status">${order.orderStatus}</span></td>
                     	<td>${order.startPoint}</td>
                     	<td>${order.endPoint}</td>

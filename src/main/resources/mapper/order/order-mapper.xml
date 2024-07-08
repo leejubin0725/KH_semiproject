@@ -62,8 +62,8 @@
             #{orderStatus},
             #{distance},
             #{price},
-            #{startDate},
-            #{endDate}
+           	SYSDATE,
+            SYSDATE
         )
     </insert>
 	
