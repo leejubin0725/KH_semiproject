@@ -42,15 +42,15 @@
                 </thead>
                 <tbody>
 
-                    <c:forEach items="${inquiryList}" var="inquiry">
-	                    <tr class="clickable-row" data-id="${inquiryNo}">
-	                        <td>${inquiry.inquiryNo}</td>
-	                        <td>${inquiry.title}</td>
-	                        <td>${inquiry.userNo}</td>
-	                        <td><fmt:formatDate value="${inquiry.createDate}" pattern="yy-MM-dd" /></td>
-	                        <td><span class="status completed">답변대기</span></td>
-	                    </tr>
-                    </c:forEach>
+                   <c:forEach items="${inquiryList}" var="inquiry">
+				        <tr class="clickable-row" data-id="${inquiry.inquiryNo}">
+				            <td>${inquiry.inquiryNo}</td>
+				            <td>${inquiry.title}</td>
+				            <td>${inquiry.userNo}</td>
+				            <td><fmt:formatDate value="${inquiry.createDate}" pattern="yy-MM-dd" /></td>
+				            <td><span class="status completed">답변대기</span></td>
+				        </tr>
+			    	</c:forEach>
                     
                 </tbody>
             </table>
@@ -59,24 +59,24 @@
             </div>
         </section>
     </main>
-    <script>
-	 	// 새로운 버튼에 대한 이벤트 리스너
+   <script>
+	    // 새로운 버튼에 대한 이벤트 리스너
 	    document.getElementById('customButton').addEventListener('click', function() {
 	        const url = 'inquiryInsert'; // URL을 설정하세요
 	        window.location.href = url;
 	    });
 	    
 	    document.addEventListener('DOMContentLoaded', function() {
-            var rows = document.querySelectorAll('.clickable-row');
-            rows.forEach(function(row) {
-                row.addEventListener('click', function() {
-                    const id = row.dataset.id;
-                    const url = `/semi/board/inquiryDetailView?id=${id}`;
-                    window.location.href = url;
-                });
-            });
-        });;
-    </script>
+	        var rows = document.querySelectorAll('.clickable-row');
+	        rows.forEach(function(row) {
+	            row.addEventListener('click', function() {
+	                const id = this.getAttribute('data-id');
+	                const url = `/semi/board/inquiryDetailView?id=${id}`;
+	                window.location.href = url;
+	            });
+	        });
+	    });
+	</script>
     <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 
 </body>

@@ -1,0 +1,53 @@
+diff a/src/main/webapp/WEB-INF/views/order/orderInsert.jsp b/src/main/webapp/WEB-INF/views/order/orderInsert.jsp	(rejected hunks)
+@@ -240,6 +240,51 @@
+                 }
+             });
+         }
++       */
++       function sendData() {
++    	    var order = {
++    	        userNo: 1, // 예시 값, 실제로는 로그인한 사용자의 ID를 사용해야 합니다.
++    	        orderTitle: document.getElementById('title').value,
++    	        orderContent: document.getElementById('content').value,
++    	        categoryMain: document.getElementById('category').value,
++    	        alertFragile: document.getElementById('fragile').checked ? 'Y' : 'N',
++    	        alertValuable: document.getElementById('valuable').checked ? 'Y' : 'N',
++    	        alertUrgent: document.getElementById('urgent').checked ? 'Y' : 'N',
++    	        startPoint: document.getElementById('start-point').value,
++    	        endPoint: document.getElementById('end-point').value,
++    	        orderStatus: '대기중', // 초기 상태
++    	        distance: parseFloat(document.getElementById('dis').value),
++    	        price: parseInt(document.getElementById('price').value.replace('원', ''))
++    	    };
++
++    	    // 콘솔에 데이터 출력 (디버깅용)
++    	    console.log('Sending order data:', order);
++
++    	    $.ajax({
++    	        url: contextPath + '/order/orderInsert',
++    	        type: 'POST',
++    	        contentType: 'application/json',
++    	        data: JSON.stringify(order),
++    	        success: function(response) {
++    	            console.log('Order sent successfully');
++    	            console.log(response);
++    	            // 성공 시 알림 창 띄우기
++    	            alert('주문이 성공적으로 전송되었습니다!');
++    	            window.location.href="${contextPath}/order/noticeboard";
++    	        },
++    	        error: function(error) {
++    	            console.error('Error sending order');
++    	            console.error(error);
++    	            // 오류 시 사용자에게 알림
++    	            alert('주문 전송 중 오류가 발생했습니다. 다시 시도해 주세요.');
++    	        }
++    	    });
++    	}
++    
++
++
++
++
+     </script>
+ </body>
+ </html>

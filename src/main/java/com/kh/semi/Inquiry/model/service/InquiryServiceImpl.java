@@ -29,5 +29,10 @@ public class InquiryServiceImpl implements InquiryService{
 	public List<InquiryCategory> inquiryCategoryList() {
 		return dao.inquiryCategoryList();
 	}
+
+	@Override
+	public Inquiry getInquiryById(int id) {
+		return dao.getInquiryById(id);
+	}
 	
 }

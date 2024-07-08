@@ -38,4 +38,12 @@
 		)
 	</insert>
 	
+	<select id="getInquiryById" resultType="Inquiry">
+			SELECT *
+			FROM INQUIRIES
+			WHERE INQUIRY_NO = #{inquiryNo}
+	</select>
+	
+	
+	
 </mapper>

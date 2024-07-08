@@ -1,6 +1,5 @@
 package com.kh.semi.order.controller;
 
-import java.io.File;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -22,7 +22,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.semi.order.model.service.OrderService;
 import com.kh.semi.order.model.vo.Order;
-import com.kh.semi.order.model.vo.OrdersImg;
 import com.kh.semi.user.model.vo.User;
 
 import lombok.RequiredArgsConstructor;
@@ -46,51 +45,60 @@ public class OrderController {
 	
 	@PostMapping("/orderInsert")
 	public String insertOrder(
-			Order o,
+			@RequestBody Order o,
 			Model model,
 			@ModelAttribute("loginUser") User loginUser,
 			RedirectAttributes ra,
 			@RequestParam(value="upfile", required=false) MultipartFile upfile
 			) {
 		o.setUserNo(loginUser.getUserNo());
-		System.out.println(o.getOrderTitle());
-		OrdersImg oi = null;
-		if(upfile != null && !upfile.isEmpty()) {
-			String webPath = "resources/images/Orders/";
-			String serverFolderPath = application.getRealPath(webPath);
-			
-			File dir = new File(serverFolderPath);
-			if(!dir.exists()) {
-				dir.mkdirs();
-			}
-			
-			oi = new OrdersImg();
-			oi.setChangeName("");
-			oi.setOriginName(upfile.getOriginalFilename());
-		}
 		
-		log.debug("Order : {}", o);
+		System.out.println(o.toString());
 		
-		int result = 0;
-		try {
-//			result = orderService.insertOrder(o, oi);
-			result = orderService.insertOrder(o);
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-		String url = "";
-		
-		if(result > 0) {
-			ra.addFlashAttribute("alerMsg", "글 작성 성공");
-			url = "redirct:/order/list";
-		}else {
-			model.addAttribute("errorMsg", "글 작성 실패");
-			url = "common/errorPage";
-		}
+		orderService.insertOrder(o);
 		
 		
-		return url;
+//		System.out.println(o.getOrderTitle());
+//		OrdersImg oi = null;
+		
+		
+		
+//		if(upfile != null && !upfile.isEmpty()) {
+//			String webPath = "resources/images/Orders/";
+//			String serverFolderPath = application.getRealPath(webPath);
+//			
+//			File dir = new File(serverFolderPath);
+//			if(!dir.exists()) {
+//				dir.mkdirs();
+//			}
+//			
+//			oi = new OrdersImg();
+//			oi.setChangeName("");
+//			oi.setOriginName(upfile.getOriginalFilename());
+//		}
+//		
+//		log.debug("Order : {}", o);
+//		
+//		int result = 0;
+//		try {
+////			result = orderService.insertOrder(o, oi);
+//			result = orderService.insertOrder(o);
+//		} catch(Exception e) {
+//			e.printStackTrace();
+//		}
+//		
+//		String url = "";
+//		
+//		if(result > 0) {
+//			ra.addFlashAttribute("alerMsg", "글 작성 성공");
+//			url = "redirct:/order/list";
+//		}else {
+//			model.addAttribute("errorMsg", "글 작성 실패");
+//			url = "common/errorPage";
+//		}
+		
+		
+		return "redirect:/";
 	}
 	
 	

@@ -27,7 +27,7 @@ public class OrderDaoImpl implements OrderDao{
 
 	@Override
 	public Order selectOrderOne(int orderNo) {
-		return sqlSession.selectOne("Orders.selectOrderOne", orderNo);
+		return sqlSession.selectOne("Orders.selectOrderOne" , orderNo);
 	}
 
 }
