@@ -255,15 +255,19 @@ body {
 			tableBody.innerHTML = ''; // tbody 내용을 비웁니다.
 		}
 		
-		document.querySelectorAll('tbody tr').forEach(row => {
+		window.onload = function() {
+			document.querySelectorAll('tbody tr').forEach(row => {
             row.addEventListener('click', function(event) {
-                    const url = "/semi/order/detailProduct/";
+            		const userNoCell = row.getElementsByTagName('td')[2];
+            		const userNo = userNoCell.textContent || userNoCell.innerText;
+                    const url = `/semi/order/detailProduct/\${userNo}`;
                     if (url) {
                         window.location.href = url;
                     }
                 
             });
         });
+		}
 	</script>
 </body>
 
