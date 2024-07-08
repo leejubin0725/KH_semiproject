@@ -45,12 +45,18 @@
 
 				<button type="submit" class="mypage-button" onclick="editInfo()">개인정보 수정</button>
 			</form>
-			<button class="mypage-button" onclick="showMyPosts()">내가 쓴 글</button>
+			<button class="mypage-button" onclick="redirectToMyPost();">내가 쓴 글</button>
 			<button class="mypage-button secondary" onclick="confirmDelete()">회원탈퇴</button>
 		</div>
 	</div>
 
 	<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 	<script src="${contextPath }/resources/js/mypage-script.js"></script>
+	<script>
+        function redirectToMyPost() {
+            var contextPath = "${pageContext.request.contextPath}";
+            window.location.href = contextPath + "/user/mypost";
+        }
+    </script>
 </body>
 </html>
