@@ -72,10 +72,15 @@ public class InquiryController {
 		return url;
 	}
 	
-	@GetMapping("/inquiryDetailView")
-	public String inquiryDetailView() {
+	@GetMapping("/inquiryDetailView/{id}")
+	public String inquiryDetailView(
+			@RequestParam("id") int id, 
+			Model model
+			) {
+		Inquiry inquiry = iService.getInquiryById(id);
+	    model.addAttribute("inquiry", inquiry);
 		
-		return "/board/inquiryDetailView";
+		return "board/inquiryDetailView";
 	}
 	
 }

@@ -31,4 +31,9 @@ public class InquiryDaoImpl implements InquiryDao{
 		return sqlSession.selectList("inquiry.inquiryCategoryList");
 	}
 
+	@Override
+	public Inquiry getInquiryById(int id) {
+		return sqlSession.selectOne("inquiry.getInquiryById", id);
+	}
+
 }
