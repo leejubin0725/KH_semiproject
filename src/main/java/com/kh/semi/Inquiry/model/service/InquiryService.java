@@ -10,6 +10,8 @@ public interface InquiryService {
 
 	int insertInquiry(Inquiry i, InquiryImg ii) throws Exception;
 	
+	int initCategory(InquiryCategory ic);
+	
 	List<Inquiry> inquiryList();
 
 	List<InquiryCategory> inquiryCategoryList();
@@ -19,5 +21,7 @@ public interface InquiryService {
 	Inquiry selectInquiryOne(int inquiryNo);
 
 	InquiryImg selectInquiryImg(int inquiryNo);
+
+	int selectInquiryCategory(String category);	
 
 }

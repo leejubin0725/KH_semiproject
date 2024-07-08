@@ -25,8 +25,6 @@ import com.kh.semi.Inquiry.model.vo.Inquiry;
 import com.kh.semi.Inquiry.model.vo.InquiryCategory;
 import com.kh.semi.Inquiry.model.vo.InquiryImg;
 import com.kh.semi.common.Utils;
-import com.kh.semi.order.model.vo.Order;
-import com.kh.semi.order.model.vo.OrdersImg;
 import com.kh.semi.user.model.vo.User;
 
 import lombok.RequiredArgsConstructor;
@@ -45,6 +43,14 @@ public class InquiryController {
         List<Inquiry> inquiryList = iService.inquiryList();
         List<InquiryCategory> inquiryCategoryList = iService.inquiryCategoryList();
         
+        if(inquiryCategoryList.isEmpty()) {
+        	iService.initCategory(new InquiryCategory(1,"분류1"));
+        	iService.initCategory(new InquiryCategory(2,"분류2"));
+        	iService.initCategory(new InquiryCategory(3,"분류3"));
+        	iService.initCategory(new InquiryCategory(4,"분류4"));
+        	iService.initCategory(new InquiryCategory(5,"분류5"));
+        }
+        
         application.setAttribute("inquiryList" , inquiryList);
         application.setAttribute("inquiryCategoryList" , inquiryCategoryList);
         
@@ -62,10 +68,11 @@ public class InquiryController {
             Model model,
             @ModelAttribute("loginUser") User loginUser,
             RedirectAttributes ra,
-            @RequestParam(value="file", required=false) MultipartFile upfile
+            @RequestParam(value="file", required=false) MultipartFile upfile,
+            @RequestParam("category") String category
             ) {
         i.setUserNo(loginUser.getUserNo());
-        i.setCategoryNo(1);
+        i.setCategoryNo(iService.selectInquiryCategory(category));
         
         InquiryImg ii = null;
 		if(upfile != null && !upfile.isEmpty()) {

@@ -90,7 +90,7 @@
                    <tr class="clickable-row" onclick="movePage(${order.orderNo})">
                          <td>${order.orderNo}</td>
                        <td>${order.orderTitle}</td>
-                       <td>${order.orderNo}</td>
+                       <td>${order.writer}</td>
                        <td><span class="rider-status">${order.orderStatus}</span></td>
                        <td>${order.startPoint}</td>
                        <td>${order.endPoint}</td>

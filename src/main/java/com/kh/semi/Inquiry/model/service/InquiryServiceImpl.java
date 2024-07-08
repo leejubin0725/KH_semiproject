@@ -25,6 +25,11 @@ public class InquiryServiceImpl implements InquiryService{
 	public List<InquiryCategory> inquiryCategoryList() {
 		return inquiryDao.inquiryCategoryList();
 	}
+	
+	@Override
+	public int initCategory(InquiryCategory ic) {
+		return inquiryDao.initCategory(ic);
+	}
 
 	@Override
 	public Inquiry selectInquiryNo(int inquiryNo) {
@@ -56,5 +61,12 @@ public class InquiryServiceImpl implements InquiryService{
 	public InquiryImg selectInquiryImg(int inquiryNo) {
 		return inquiryDao.selectInquiryImg(inquiryNo);
 	}
+
+	@Override
+	public int selectInquiryCategory(String category) {
+		return inquiryDao.selectInquiryCategory(category);
+	}
+
+	
 	
 }

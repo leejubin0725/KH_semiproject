@@ -254,6 +254,16 @@ body {
 			var tableBody = document.querySelector('.table tbody');
 			tableBody.innerHTML = ''; // tbody 내용을 비웁니다.
 		}
+		
+		document.querySelectorAll('tbody tr').forEach(row => {
+            row.addEventListener('click', function(event) {
+                    const url = "/semi/order/detailProduct/";
+                    if (url) {
+                        window.location.href = url;
+                    }
+                
+            });
+        });
 	</script>
 </body>
 

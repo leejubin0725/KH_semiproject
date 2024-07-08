@@ -9,6 +9,8 @@ import com.kh.semi.Inquiry.model.vo.InquiryImg;
 public interface InquiryDao {
 
 	int insertInquiry(Inquiry i);
+	
+	int initCategory(InquiryCategory ic);
 
 	List<Inquiry> inquiryList();
 
@@ -21,5 +23,9 @@ public interface InquiryDao {
 	Inquiry selectInquiryOne(int orderNo);
 
 	InquiryImg selectInquiryImg(int inquiryNo);
+
+	int selectInquiryCategory(String category);
+
+	
 
 }

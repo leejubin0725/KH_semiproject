@@ -9,9 +9,28 @@
 		FROM INQUIRIES
 	</select>
 	
+	<insert id="initCategory" parameterType="InquiryCategory">
+		INSERT INTO INQ_CATEGORY
+		(
+			CATEGORY_NO,
+			CATEGORY_NAME
+		)
+		VALUES
+		(
+			#{categoryNo},
+			#{categoryName}
+		)
+	</insert>
+	
 	<select id="inquiryCategoryList" resultType="InquiryCategory">
 		SELECT *
 		FROM INQ_CATEGORY
+	</select>
+	
+	<select id="selectInquiryCategory" resultType="int">
+		SELECT CATEGORY_NO
+		FROM INQ_CATEGORY
+		WHERE CATEGORY_NAME = #{category}
 	</select>
 	
 	<select id="selectInquiryOne" resultType="Inquiry">
