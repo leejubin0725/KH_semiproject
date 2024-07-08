@@ -127,7 +127,7 @@ body {
                </div>
             </div>
             <div class="form-group">
-               <label for="name">아이디</label> 
+               <label for="name">이메일</label> 
                <input type="text" id="email" name="email" placeholder="실제 사용하는 이메일을 입력하세요. ">
                <button type="button" onclick="idCheck();">email중복확인</button>
             </div>
@@ -145,12 +145,12 @@ body {
                   name="birth" placeholder="생년월일을 입력하세요. ex) 2000.02.17 - > 000217">
             </div>
             <div class="form-group">
-               <label for="password">전화번호</label> <input type="password"
+               <label for="password">전화번호</label> <input type="text"
                   id="phone" name="phone"
                   placeholder="휴대폰 번호를 입력하세요. ex)01030532345">
             </div>
             <div class="form-group">
-               <label for="password">주소</label> <input type="password"
+               <label for="password">주소</label> <input type="text"
                   id="address" name="address" placeholder="주소를 입력하세요.">
             </div>
             <div class="category-selector">
