@@ -1,5 +1,6 @@
 package com.kh.semi.order.model.vo;
 
+
 import java.sql.Date;
 
 import lombok.AllArgsConstructor;

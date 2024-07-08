@@ -32,8 +32,8 @@ public class InquiryDaoImpl implements InquiryDao{
 	}
 
 	@Override
-	public Inquiry getInquiryById(int id) {
-		return sqlSession.selectOne("inquiry.getInquiryById", id);
+	public Inquiry selectInquiryNo(int inquiryNo) {
+		return sqlSession.selectOne("inquiry.selectInquiryNo", inquiryNo);
 	}
 
 }
