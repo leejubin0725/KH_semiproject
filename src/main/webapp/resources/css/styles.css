@@ -50,7 +50,7 @@ body {
 }
 
 .image-container {
-	margin-top: 0px;
+   margin-top: 0px;
     position: relative;
     width: 100%;
 }
@@ -60,16 +60,17 @@ body {
     height: auto;
 }
 
+
 .title {
-    font-family: Sigmar One;
+  font-family: Sigmar One;
     font-size: 100px;
     color: rgba(255, 255, 255, 1);
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    text-align: left;
+    text-align: right;
     position: absolute;
-    top: 10%;
-    left: 20%;
-    transform: translate(-50%, -50%);
+    top: 0%;
+    left: 3%;
+    pointer-events: none;
 }
 
 .title2 {
@@ -79,11 +80,10 @@ body {
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     text-align: left;
     position: absolute;
-    top: 10%; /* .title과 같은 위치에 맞추기 위해 조정 */
-    left: 83%; /* 왼쪽에서 3% 위치에 배치 */
-    transform: translate(-50%, -50%);
+    top: 0%;
+    right: 3%;
+    pointer-events: none;
 }
-
 
 .content {
     display: flex;
@@ -378,7 +378,7 @@ th {
     margin-top: 40px; /* 원하는 여백 크기로 설정하세요 */
     background: url('/path/to/your/image.jpg') no-repeat top center;
     padding-top: 100px; /* 이미지 높이에 따라 조정하세요 */
-	}
+   }
     
     h2 {
         padding: 20px;
@@ -437,8 +437,10 @@ th {
         box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         overflow-x: auto; /* 테이블이 너무 넓을 경우 스크롤 가능하도록 */
     }
-    #middle-img{
-    	
-    }
+ 
+ .button-plus{
+ 	margin-bottom:22px;
+ }
+   
     
     

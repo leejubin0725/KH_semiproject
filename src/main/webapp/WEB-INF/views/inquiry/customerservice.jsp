@@ -18,6 +18,33 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <style>
+.hero {
+    margin-bottom: 20px; /* hero 섹션의 아래 여백 */
+    position: relative; /* 배너의 위치를 설정하기 위해 부모 요소에 relative를 지정합니다 */
+}
+
+.banner {
+    position: absolute; /* 배너를 절대 위치로 설정합니다 */
+    top: 0; /* 위쪽 여백을 0으로 설정하여 섹션의 맨 위에 배치합니다 */
+    left: 0; /* 왼쪽 여백을 0으로 설정하여 섹션의 맨 왼쪽에 배치합니다 */
+    width: 100%; /* 섹션 너비에 맞게 배너의 너비를 설정합니다 */
+    height: 150px; /* 배너의 높이를 설정합니다 */
+    background-color: #f0f0f0; /* 배너의 배경색을 설정합니다 */
+    display: flex; /* 내부 콘텐츠를 가로 정렬하기 위해 Flexbox 사용 */
+    align-items: center; /* 내부 콘텐츠를 세로 중앙 정렬합니다 */
+}
+
+.banner img {
+    max-width: 100%; /* 이미지가 부모 요소인 배너 너비를 넘지 않도록 설정합니다 */
+    max-height: 100%; /* 이미지가 부모 요소인 배너 높이를 넘지 않도록 설정합니다 */
+    margin: auto; /* 이미지를 가운데 정렬합니다 */
+}
+
+.banner-image {
+    width: 60%; /* 최대 너비 설정 */
+   
+    height: 150px; /* 원하는 최대 높이 설정 */
+}
 .custom-button {
 	display: block;
 	width: 150px;
@@ -58,7 +85,9 @@
 	<%@ include file="/WEB-INF/views/common/header.jsp"%>
 	<main>
 		<section class="hero">
-			<h1>빠른 퀵 서비스로 소비자를 사로잡다</h1>
+		  <div class="banner">
+        <img src="${contextPath }/resources/images/benner.jpg" alt="배너 이미지">
+    </div>
 			<br>
 			<br>
 		</section>
