@@ -437,10 +437,9 @@ th {
         box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         overflow-x: auto; /* 테이블이 너무 넓을 경우 스크롤 가능하도록 */
     }
- 
- .button-plus{
- 	margin-bottom:22px;
- }
+    #middle-img{
+       
+    }
    
     
     

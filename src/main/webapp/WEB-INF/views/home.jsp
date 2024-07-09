@@ -12,8 +12,9 @@
     <link rel="stylesheet" href="${contextPath }/resources/css/styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
-<body>
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
+<body>
+
     <div class="main-content">
         <div class="image-container">
             <img src="${contextPath }/resources/images/rider.png">

@@ -14,7 +14,7 @@
     <div class="headerContainer">
      <!-- 이미지를 클릭하면 contextPath로 이동하는 예제 -->
 
-    <img src="${contextPath}/resources/images/mainlogo.jpg" alt="작은 로고" class="headerLogo" >
+ <img src="${contextPath}/resources/images/mainlogo.jpg" alt="작은 로고" class="headerLogo" >
 
 
         <div class="header-main">
