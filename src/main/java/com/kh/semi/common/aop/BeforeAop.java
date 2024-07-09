@@ -21,4 +21,5 @@ public class BeforeAop {
 		log.debug("(" + Arrays.toString(jp.getArgs())+ ")");
 		
 	}
+
 }

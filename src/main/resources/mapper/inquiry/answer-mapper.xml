@@ -4,10 +4,17 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="InquiryAnswer">
 	<select id="selectAnswerList" resultType="InquiryAnswer">
-      SELECT I.ANSWER_NO, I.ANSWER_WRITER, I.INQUIRIE_NO, I.ANSWER_CONTENT, I.CREATE_DATE, I.USER_NICKNAME, I.STATUS
-      FROM INQUIRIES_ANSWERS I
+      SELECT
+      I.ANSWER_NO,
+      I.ANSWER_WRITER,
+      I.INQUIRY_NO,
+      I.ANSWER_CONTENT,
+      I.CREATE_DATE,
+      I.USER_NICKNAME,
+      I.STATUS
+      FROM INQ_ANS I
       JOIN USERS U ON U.NICKNAME = I.ANSWER_WRITER
-      WHERE I.INQUIRIE_NO = #{inquiryNo}
+      WHERE I.INQUIRY_NO = #{inquiryNo}
       	AND I.STATUS = 'Y'
    </select>
 
@@ -15,7 +22,7 @@
 	   <selectKey keyProperty="userNickname" resultType="String" order="BEFORE">
 	     SELECT NICKNAME FROM USERS WHERE NICKNAME = #{answerWriter}
 	   </selectKey>
-		   INSERT INTO INQUIRIES_ANSWERS
+		   INSERT INTO INQ_ANS
 		   VALUES(
 		     SEQ_ANO.NEXTVAL,
 		     #{answerWriter},
@@ -29,14 +36,14 @@
 
 
    <update id="updateAnswer">
-      UPDATE INQUIRIES_ANSWERS SET
+      UPDATE INQ_ANS SET
       ANSWER_CONTENT = #{answerContent},
       CREATE_DATE = SYSDATE
       WHERE ANSWER_NO = #{answerNo}
    </update>
 	
 	<update id="deleteAnswer">
-	  UPDATE INQUIRIES_ANSWERS SET
+	  UPDATE INQ_ANS SET
       	STATUS = 'N'
       WHERE ANSWER_NO = #{answerNo}
 	</update>

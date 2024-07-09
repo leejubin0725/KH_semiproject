@@ -6,4 +6,5 @@ public class CommonPointCut {
 	
 	@Pointcut("execution(* com.kh.semi..*Impl.*(..))")
 	public void implPointCut() {}
+
 }
