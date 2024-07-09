@@ -7,15 +7,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="${contextPath }/resources/css/headerStyle.css">
- 
-  
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery 라이브러리 추가 -->
 </head>
 <body>
+
     <div class="headerContainer">
-     <!-- 이미지를 클릭하면 contextPath로 이동하는 예제 -->
-
- <img src="${contextPath}/resources/images/mainlogo.jpg" alt="작은 로고" class="headerLogo" >
-
+        <!-- 이미지를 클릭하면 contextPath로 이동하는 예제 -->
+        <img src="${contextPath}/resources/images/mainlogo.jpg" alt="작은 로고" class="headerLogo">
 
         <div class="header-main">
             <div class="headerNav">
@@ -37,6 +35,13 @@
             </div>
         </div>
     </div>
-   
+    <script>
+        $(function() {
+            $(".headerLogo").click(function() {
+                var contextPath = "${contextPath}";
+                window.location.href = contextPath;
+            });
+        });
+    </script>
 </body>
 </html>

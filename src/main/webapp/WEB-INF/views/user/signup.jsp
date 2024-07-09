@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="${contextPath }/resources/css/Signup.css">
 
 <script>
+
        document.addEventListener('DOMContentLoaded', function() {
     const memberTypeRadios = document.querySelectorAll('input[name="role"]');
     const vehicleOptions = document.getElementById('vehicle-options');

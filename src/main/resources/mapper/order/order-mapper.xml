@@ -131,5 +131,12 @@
 		JOIN ORDERS O ON O.ORDER_NO=OI.ORDER_NO
 	</select>
 
+	<delete id="deleteOrder" parameterType="int">
+		DELETE FROM ORDERS WHERE ORDER_NO = #{orderNo}
+	</delete>
+
+	<delete id="deleteAllOrdersByUser" parameterType="int">
+		DELETE FROM ORDERS WHERE USER_NO = #{userNo}
+	</delete>
 
 </mapper>

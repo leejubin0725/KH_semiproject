@@ -4,124 +4,183 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="user">
 
-	<insert id="insertUser">
-		<selectKey keyProperty="userNo" resultType="int"
-			order="BEFORE">
-			SELECT SEQ_UNO.NEXTVAL FROM DUAL
-		</selectKey>
+   <insert id="insertUser">
+      <selectKey keyProperty="userNo" resultType="int"
+         order="BEFORE">
+         SELECT SEQ_UNO.NEXTVAL FROM DUAL
+      </selectKey>
 
-		INSERT INTO USERS (
-		USER_NO,
-		EMAIL,
-		PASSWORD,
-		NICKNAME,
-		BIRTH,
-		GENDER,
-		PHONE,
-		ADDRESS,
-		CREATE_DATE,
-		ROLE,
-		STATUS
-		)
-		VALUES (
-		#{userNo},
-		#{email},
-		#{password},
-		#{nickname},
-		#{birth},
-		#{gender},
-		#{phone},
-		#{address},
-		DEFAULT,
-		#{role},
-		'Y'
-		)
-	</insert>
-
-
-	<insert id="insertRider">
-		<selectKey keyProperty="riderNo" resultType="int"
-			order="BEFORE">
-			SELECT SEQ_RNO.NEXTVAL FROM DUAL
-		</selectKey>
-
-		INSERT INTO RIDERS (
-		RIDER_NO,
-		USER_NO
-		) VALUES(
-		#{riderNo},
-		#{userNo}
-		)
-
-	</insert>
+      INSERT INTO USERS (
+      USER_NO,
+      EMAIL,
+      PASSWORD,
+      NICKNAME,
+      BIRTH,
+      GENDER,
+      PHONE,
+      ADDRESS,
+      CREATE_DATE,
+      ROLE,
+      STATUS
+      )
+      VALUES (
+      #{userNo},
+      #{email},
+      #{password},
+      #{nickname},
+      #{birth},
+      #{gender},
+      #{phone},
+      #{address},
+      DEFAULT,
+      #{role},
+      'Y'
+      )
+   </insert>
 
 
-	<insert id="insertVehicle">
-		INSERT INTO VEHICLES (
-		RIDER_NO,
-		VEHICLE,
-		MAX_DISTANCE
-		)VALUES (
-		#{riderNo},
-		#{vehicle},
-		#{maxDistance}
-		)
+   <insert id="insertRider">
+      <selectKey keyProperty="riderNo" resultType="int"
+         order="BEFORE">
+         SELECT SEQ_RNO.NEXTVAL FROM DUAL
+      </selectKey>
 
-	</insert>
+      INSERT INTO RIDERS (
+      RIDER_NO,
+      USER_NO
+      ) VALUES(
+      #{riderNo},
+      #{userNo}
+      )
 
-	<select id="login" resultType="User">
-		SELECT *
-		FROM USERS
-		WHERE EMAIL =
-		#{email} AND STATUS = 'Y'
-	</select>
-
-	<update id="updateUser">
-		UPDATE USERS
-		SET
-		PASSWORD = #{password},
-		NICKNAME = #{nickname},
-		PHONE = #{phone},
-		ADDRESS = #{address},
-		UPDATE_DATE = SYSDATE
-		WHERE EMAIL = #{email} AND STATUS = 'Y'
-	</update>
+   </insert>
 
 
-	<select id="idCheck" resultType="int">
-		SELECT COUNT(*)
-		FROM USERS
-		WHERE
-		EMAIL = #{email}
-	</select>
+   <insert id="insertVehicle">
+      INSERT INTO VEHICLES (
+      RIDER_NO,
+      VEHICLE,
+      MAX_DISTANCE
+      )VALUES (
+      #{riderNo},
+      #{vehicle},
+      #{maxDistance}
+      )
 
-	<select id="idfind" resultType="string">
-		SELECT EMAIL
-		FROM USERS
-		WHERE PHONE = #{phone}
+   </insert>
 
-	</select>
+   <select id="login" resultType="User">
+      SELECT *
+      FROM USERS
+      WHERE EMAIL =
+      #{email} AND STATUS = 'Y'
+   </select>
 
-	<select id="pwfind" parameterType="map" resultType="string">
-		SELECT PASSWORD
-		FROM USERS
-		WHERE BIRTH = #{birth}
-		and EMAIL = #{email}
-	</select>
-
-
-	<update id="pwupdate">
-		UPDATE USERS
-		SET PASSWORD = #{encPwd}
-		WHERE EMAIL = #{email}
-	</update>
-	
-	
-	<select id="selectMyPostList" resultType="Order">
-        SELECT * FROM ORDERS WHERE USER_NO = #{userNo}
-    </select>
+   <update id="updateUser">
+      UPDATE USERS
+      SET
+      PASSWORD = #{password},
+      NICKNAME =
+      #{nickname},
+      PHONE = #{phone},
+      ADDRESS = #{address},
+      UPDATE_DATE =
+      SYSDATE
+      WHERE EMAIL = #{email} AND STATUS = 'Y'
+   </update>
 
 
+   <select id="idCheck" resultType="int">
+      SELECT COUNT(*)
+      FROM USERS
+      WHERE
+      EMAIL = #{email}
+   </select>
+
+   <select id="idfind" resultType="string">
+      SELECT EMAIL
+      FROM USERS
+      WHERE PHONE
+      = #{phone}
+
+   </select>
+
+   <select id="pwfind" parameterType="map" resultType="string">
+      SELECT
+      PASSWORD
+      FROM USERS
+      WHERE BIRTH = #{birth}
+      and EMAIL = #{email}
+   </select>
+
+
+   <update id="pwupdate">
+      UPDATE USERS
+      SET PASSWORD = #{encPwd}
+      WHERE EMAIL =
+      #{email}
+   </update>
+
+
+   <select id="selectMyPostList" resultType="Order">
+      SELECT ORDER_NO,
+      O.USER_NO,
+      ORDER_TITLE,
+      U.NICKNAME AS WRITER,
+      ORDER_CONTENT,
+      CATEGORY_MAIN,
+      ALERT_FRAGILE,
+      ALERT_VALUABLE,
+      ALERT_URGENT,
+      START_POINT,
+      END_POINT,
+      O.CREATE_DATE,
+      ORDER_STATUS,
+      DISTANCE,
+      PRICE,
+      START_DATE,
+      END_DATE
+      FROM ORDERS O
+      JOIN USERS U ON (U.USER_NO = O.USER_NO)
+      WHERE O.USER_NO = #{userNO}
+   </select>
+
+   <!-- 특정 USER_NO로 사용자 삭제 -->
+   <delete id="deleteUser" parameterType="int">
+      DELETE FROM USERS WHERE
+      USER_NO = #{userNo}
+   </delete>
+
+   <!-- 추가할 매퍼들 -->
+   <delete id="deleteAllChatRoomJoinsByUser" parameterType="int">
+      DELETE
+      FROM CHAT_ROOM_JOIN WHERE USER_NO = #{userNo}
+   </delete>
+
+   <delete id="deleteAllChatsByUser" parameterType="int">
+      DELETE FROM
+      CHAT_ROOM WHERE USER_NO = #{userNo}
+   </delete>
+
+   <delete id="deleteAllOrdersByUser" parameterType="int">
+      DELETE FROM
+      ORDERS WHERE USER_NO = #{userNo}
+   </delete>
+
+   <delete id="deleteAllChatRoomJoinsByChatRoom"
+      parameterType="int">
+      DELETE FROM CHAT_ROOM_JOIN WHERE CHAT_ROOM_NO IN (SELECT
+      CHAT_ROOM_NO FROM
+      CHAT_ROOM WHERE USER_NO = #{userNo})
+   </delete>
+
+   <delete id="deleteAllRidersByUser" parameterType="int">
+      DELETE FROM RIDERS WHERE USER_NO = #{userNo}
+   </delete>
+   
+   <delete id="deleteAllVehiclesByRider" parameterType="int">
+        DELETE FROM VEHICLES WHERE RIDER_NO IN (SELECT RIDER_NO FROM RIDERS WHERE USER_NO = #{userNo})
+    </delete>
 
 
 

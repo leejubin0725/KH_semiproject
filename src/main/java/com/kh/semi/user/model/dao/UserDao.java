@@ -9,24 +9,38 @@ import com.kh.semi.user.model.vo.Vehicle;
 
 public interface UserDao {
 
-	int insertUser(User u);
+   int insertUser(User u);
 
-	int insertRider(Rider r);
+   int insertRider(Rider r);
 
-	int insertVehicle(Vehicle v);
+   int insertVehicle(Vehicle v);
 
-	User login(User u);
+   User login(User u);
 
-	int updateUser(User u);
+   int updateUser(User u);
 
-	int idCheck(String email);
+   int idCheck(String email);
 
-	String idfind(String phone);
+   String idfind(String phone);
 
-	String pwfind(String birth, String email);
+   String pwfind(String birth, String email);
 
-	int updatepw(String encPwd, String email);
+   int updatepw(String encPwd, String email);
 
-	List<Order> selectMyPostList(int userNo);
+   List<Order> selectMyPostList(int userNo);
 
+   /* 삭제 기능 */
+   void deleteAllChatRoomJoinsByUser(int userNo);
+
+   void deleteAllOrdersByUser(int userNo);
+
+   void deleteAllChatRoomJoinsByChatRoom(int userNo);
+
+   void deleteAllChatsByUser(int userNo);
+
+   void deleteAllVehiclesByRider(int userNo);
+
+   void deleteAllRidersByUser(int userNo);
+
+   int deleteUser(int userNo);
 }

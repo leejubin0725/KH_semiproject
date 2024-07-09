@@ -30,6 +30,16 @@ public class OrderDaoImpl implements OrderDao{
 	public Order selectOrderOne(int orderNo) {
 		return sqlSession.selectOne("Orders.selectOrderOne" , orderNo);
 	}
+	
+    @Override
+    public int deleteOrder(int orderNo) {
+        return sqlSession.delete("Orders.deleteOrder", orderNo);
+    }
+
+    @Override
+    public int deleteAllOrdersByUser(int userNo) {
+        return sqlSession.delete("Orders.deleteAllOrdersByUser", userNo);
+    }
 
 	@Override
 	public int insertOrdersImg(OrdersImg oi) {

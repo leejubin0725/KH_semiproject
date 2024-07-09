@@ -15,9 +15,21 @@
     #resetButton {
         margin-top: 10px;
     }
+    .comments-actions {
+        margin-top: 20px; /* 수락하기 버튼 위 여백 추가 */
+    }
+    .comments-actions button {
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    .comments-actions button:hover {
+        background-color: #0056b3;
+    }
 </style>
 <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=66e04ef438990e6ab1d5d64f99a79f51&libraries=services"></script>
-
 </head>
 <body>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -31,19 +43,19 @@
     <p class="product-description">${order.orderContent}</p>
     <div id="map"></div>
     <div class="price">배송비: ${order.price}원</div>
-	
-	<div class="alert">
-    
-        <p><c:if test="${order.alertFragile == 'Y'}"><input type="checkbox" id="fragileCheckbox" checked disabled> 파손 주의 </c:if></p>
    
+   <div class="alert">
+    <c:if test="${order.alertFragile == 'Y'}">
+        <p><input type="checkbox" id="fragileCheckbox" checked disabled> 파손 주의</p>
+    </c:if>
+    <c:if test="${order.alertValuable == 'Y'}">
+        <p><input type="checkbox" id="valuableCheckbox" checked disabled> 귀중품 주의</p>
+    </c:if>
+    <c:if test="${order.alertUrgent == 'Y'}">
+        <p><input type="checkbox" id="urgentCheckbox" checked disabled> 긴급 배송 요청</p>
+    </c:if>
+   </div>
    
-        <p><c:if test="${order.alertValuable == 'Y'}"><input type="checkbox" id="valuableCheckbox" checked disabled> 귀중품 주의</c:if></p>
-    
-    
-        <p><c:if test="${order.alertUrgent == 'Y'}"><input type="checkbox" id="urgentCheckbox" checked disabled> 긴급 배송 요청</c:if></p>
-    
-	</div>
-	
     <div class="delivery-info">출발 위치: ${order.startPoint}<br/>배송 거리: ${order.distance}km<br/><br>주문일자: ${order.startDate}</div>
     <button class="map-button" onclick="expandMapImage()">지도 보기</button>
     <button class="restore-button" onclick="restoreMapImage()">복구</button>
@@ -60,7 +72,6 @@
                <th>글쓴이</th>
                <th>댓글 내용</th>
                <th>작성일</th>
-              
            </tr>
        </thead>
        <tbody>
@@ -77,6 +88,15 @@
                        <input type="text" id="commentContent" style="flex-grow: 1; padding: 3px; margin-right: 4px" />
                        <button type="button" onclick="submitComment()">댓글 달기</button>
                    </div>
+               </td>
+           </tr>
+           <tr>
+               <td colspan="5">
+               <c:if test="${sessionScope.loginUser.role == 'rider' || 'admin'}">
+                   <div class="comments-actions">
+                       <button onclick="accept()">수락하기</button>
+                   </div>
+                   </c:if>
                </td>
            </tr>
            <c:forEach var="reniew" items="${board.reniewList}">
@@ -122,19 +142,14 @@ function editStarRating() {
 function getStarRatingText(rating) {
     switch (rating) {
         case 1:
-        	currentRating = 1;
             return '★☆☆☆☆';
         case 2:
-        	currentRating = 2;
             return '★★☆☆☆';
         case 3:
-        	currentRating = 3;
             return '★★★☆☆';
         case 4:
-        	currentRating = 4;
             return '★★★★☆';
         case 5:
-        	currentRating = 5;
             return '★★★★★';
         default:
             return '별점 없음';
@@ -265,6 +280,10 @@ function findRouteAndDrawLine() {
     .catch(error => console.log('경로 요청 중 오류 발생:', error)); // 오류가 발생하면 콘솔에 출력합니다
 }
 
+function accept(){
+	alert('수락되었습니다.');
+	location.href = "${contextPath}"
+}
 function clearMap() {
     // 모든 마커 제거
     for (var i = 0; i < markers.length; i++) {
@@ -305,15 +324,16 @@ function expandMapImage() {
     elementsToHide.forEach(element => {
         element.classList.add('hidden');
     });
- // 맵 갱신을 위한 인터벌 설정
+    
+    // 맵 갱신을 위한 인터벌 설정
     const intervalId = setInterval(() => {
         map.relayout();
-    }, 1); // 
+    }, 1);
 
     // 일정 시간 후 인터벌 정지 (예: 1초 후 정지)
     setTimeout(() => {
         clearInterval(intervalId);
-    }, 300); // 1초 후에 인터벌 정지
+    }, 1000); // 1초 후에 인터벌 정지
 }
 
 function restoreMapImage() {
