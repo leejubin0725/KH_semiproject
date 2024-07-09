@@ -41,4 +41,9 @@ public class OrderDaoImpl implements OrderDao{
 		return sqlSession.selectOne("Orders.selectOrdersImg" , orderNo);
 	}
 
+	@Override
+	public List<String> selectOrdersImgList() {
+		return sqlSession.selectList("Orders.selectOrdersImgList");
+	}
+
 }

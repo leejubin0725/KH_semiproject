@@ -16,4 +16,6 @@ public interface OrderService {
 
 	OrdersImg selectOrdersImg(int orderNo);
 
+	List<String> selectOrdersImgList();
+
 }

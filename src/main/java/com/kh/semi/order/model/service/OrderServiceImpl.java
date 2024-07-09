@@ -53,4 +53,9 @@ public class OrderServiceImpl implements OrderService {
 		return orderDao.selectOrdersImg(orderNo);
 	}
 
+	@Override
+	public List<String> selectOrdersImgList() {
+		return orderDao.selectOrdersImgList();
+	}
+
 }

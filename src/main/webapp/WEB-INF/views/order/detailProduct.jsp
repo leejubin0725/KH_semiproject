@@ -112,14 +112,19 @@ function editStarRating() {
 function getStarRatingText(rating) {
     switch (rating) {
         case 1:
+        	currentRating = 1;
             return '★☆☆☆☆';
         case 2:
+        	currentRating = 2;
             return '★★☆☆☆';
         case 3:
+        	currentRating = 3;
             return '★★★☆☆';
         case 4:
+        	currentRating = 4;
             return '★★★★☆';
         case 5:
+        	currentRating = 5;
             return '★★★★★';
         default:
             return '별점 없음';

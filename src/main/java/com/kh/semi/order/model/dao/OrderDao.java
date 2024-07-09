@@ -18,4 +18,6 @@ public interface OrderDao {
 
 	OrdersImg selectOrdersImg(int orderNo);
 
+	List<String> selectOrdersImgList();
+
 }

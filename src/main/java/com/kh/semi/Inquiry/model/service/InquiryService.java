@@ -22,6 +22,8 @@ public interface InquiryService {
 
 	InquiryImg selectInquiryImg(int inquiryNo);
 
-	int selectInquiryCategory(String category);	
+	int selectInquiryCategory(String category);
+
+	List<String> selectInquiryImgList();	
 
 }

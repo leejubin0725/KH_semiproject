@@ -80,7 +80,7 @@ public class UserController {
 			model.addAttribute("loginUser", loginUser);
 
 			String nextUrl = (String) session.getAttribute("nextUrl");
-
+			System.out.println(nextUrl);
 			url = "redirect:" + (nextUrl != null ? nextUrl : "/");
 			session.removeAttribute(nextUrl);
 		}
