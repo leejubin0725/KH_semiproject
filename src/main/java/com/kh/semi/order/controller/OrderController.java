@@ -118,7 +118,7 @@ public class OrderController {
 			HttpServletResponse res
 			) {
 		Order o  = orderService.selectOrderOne(orderNo);
-		o.setOrdersImg(orderService.selectOrdersImg(orderNo));
+		//o.setOrdersImg(orderService.selectOrdersImg(orderNo));
 		
 		model.addAttribute("order", o);
 		
