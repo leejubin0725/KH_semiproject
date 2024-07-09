@@ -6,23 +6,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="${contextPath }/resources/css/headerStyle.css">
+    <link rel="stylesheet" href="${contextPath}/resources/css/headerStyle.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery 라이브러리 추가 -->
     <!-- alertify -->
-	<script
-	src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
-	<!-- alertify css -->
-	<link rel="stylesheet"
-	href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    <!-- alertify css -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
 </head>
 <body>
 
-	<c:if test="${ not empty alertMsg }">
-		<script>
-			alertify.alert("서비스 요청 성공", '${alertMsg}');
-		</script>
-		<c:remove var="alertMsg" />
-	</c:if>
+    <c:if test="${not empty alertMsg}">
+        <script>
+            alertify.alert("서비스 요청 성공", '${alertMsg}');
+        </script>
+        <c:remove var="alertMsg" />
+    </c:if>
 
     <div class="headerContainer">
         <!-- 이미지를 클릭하면 contextPath로 이동하는 예제 -->
@@ -33,6 +31,9 @@
                 <span><a href="${contextPath}" style="text-decoration: none; color: inherit;">홈</a></span>
                 <span><a href="${contextPath}/order/noticeboard" style="text-decoration: none; color: inherit;">배달목록</a></span>
                 <span><a href="${contextPath}/inquiry/customerservice" style="text-decoration: none; color: inherit;">고객문의</a></span>
+                <!-- 채팅방으로 이동하는 버튼 추가 -->
+                <span><a href="${contextPath}/chat" style="text-decoration: none; color: inherit;">채팅방</a></span>
+
             </div>
             <div class="headerNav2">
                 <c:choose>
