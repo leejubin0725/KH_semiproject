@@ -9,6 +9,7 @@
 <meta name="description" content="Signup Form">
 <meta name="author" content="htmlGenerator">
 <link rel="stylesheet" href="${contextPath }/resources/css/Signup.css">
+
 <script>
        document.addEventListener('DOMContentLoaded', function() {
     const memberTypeRadios = document.querySelectorAll('input[name="role"]');
@@ -151,7 +152,7 @@ body {
 				<div class="form-group">
 					<label for="name">아이디</label> <input type="text" id="email"
 						name="email" placeholder="실제 사용하는 이메일을 입력하세요." maxlength="100">
-					<button type="button" onclick="idCheck();">email중복확인</button>
+		
 				</div>
 				<div class="form-group">
 					<label for="name">비밀번호</label> <input type="password" id="password"

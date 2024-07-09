@@ -254,6 +254,20 @@ body {
 			var tableBody = document.querySelector('.table tbody');
 			tableBody.innerHTML = ''; // tbody 내용을 비웁니다.
 		}
+		
+		window.onload = function() {
+			document.querySelectorAll('tbody tr').forEach(row => {
+            row.addEventListener('click', function(event) {
+            		const userNoCell = row.getElementsByTagName('td')[0];
+            		const userNo = userNoCell.textContent || userNoCell.innerText;
+                    const url = `/semi/order/detailProduct/\${userNo}`;
+                    if (url) {
+                        window.location.href = url;
+                    }
+                
+            });
+        });
+		}
 	</script>
 </body>
 

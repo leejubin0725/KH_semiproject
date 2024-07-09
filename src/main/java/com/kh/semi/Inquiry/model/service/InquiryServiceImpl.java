@@ -7,32 +7,66 @@ import org.springframework.stereotype.Service;
 import com.kh.semi.Inquiry.model.dao.InquiryDao;
 import com.kh.semi.Inquiry.model.vo.Inquiry;
 import com.kh.semi.Inquiry.model.vo.InquiryCategory;
+import com.kh.semi.Inquiry.model.vo.InquiryImg;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class InquiryServiceImpl implements InquiryService{
-   private final InquiryDao dao;
+	private final InquiryDao inquiryDao;
 
-   @Override
-   public int insertInquiry(Inquiry i) {
-      return dao.insertInquiry(i);
-   }
-   
-   @Override
-   public List<Inquiry> inquiryList() {
-      return dao.inquiryList();
-   }
+	@Override
+	public List<Inquiry> inquiryList() {
+		return inquiryDao.inquiryList();
+	}
 
-   @Override
-   public List<InquiryCategory> inquiryCategoryList() {
-      return dao.inquiryCategoryList();
-   }
+	@Override
+	public List<InquiryCategory> inquiryCategoryList() {
+		return inquiryDao.inquiryCategoryList();
+	}
+	
+	@Override
+	public int initCategory(InquiryCategory ic) {
+		return inquiryDao.initCategory(ic);
+	}
 
-   @Override
-   public Inquiry selectInquiryNo(int inquiryNo) {
-      return dao.selectInquiryNo(inquiryNo);
-   }
-   
+	@Override
+	public Inquiry selectInquiryNo(int inquiryNo) {
+		return inquiryDao.selectInquiryNo(inquiryNo);
+	}
+
+	@Override
+	public int insertInquiry(Inquiry i, InquiryImg ii) throws Exception {
+		int result = inquiryDao.insertInquiry(i);
+		
+		if(ii != null) {
+			ii.setInquiryNo(i.getInquiryNo());
+			result *= inquiryDao.insertInquiryImg(ii);
+		}
+		
+		if(result == 0) {
+			throw new Exception("예외 발생");
+		}
+		
+		return result;
+	}
+
+	@Override
+	public Inquiry selectInquiryOne(int inquiryNo) {
+		return inquiryDao.selectInquiryOne(inquiryNo);
+	}
+
+	@Override
+	public InquiryImg selectInquiryImg(int inquiryNo) {
+		return inquiryDao.selectInquiryImg(inquiryNo);
+	}
+
+	@Override
+	public int selectInquiryCategory(String category) {
+		return inquiryDao.selectInquiryCategory(category);
+	}
+
+	
+	
 }

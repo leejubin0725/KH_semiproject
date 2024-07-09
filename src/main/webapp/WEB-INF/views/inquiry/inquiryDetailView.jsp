@@ -43,6 +43,7 @@
 </head>
 <body>
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
+    <c:set var="inquiryImageUploadPath" value="/resources/images/Inquiry/"></c:set>
     <main class="inquiry-page">
         <header>
 
@@ -50,16 +51,14 @@
         
         <section class="inquiry-content">
             <div class="description">
-                <p class="inquiry-title">상품 배송 문의</p>
-                <p class="author-nickname">작성자: 홍길동</p>
+                <p class="inquiry-title">${inquiry.title }</p>
+                <p class="author-nickname">작성자: ${inquiry.writer}</p>
             </div>
             
             <div class="product-info">
-                <img src="example-product.jpg" alt="상품 이미지" class="product-image">
+                <img src="${contextPath}${inquiryImageUploadPath}${inquiry.inquiryImg.changeName}" alt="상품 이미지" class="product-image">
                 <div class="info-details">
-                    <p class="category">전자제품 / 스마트폰</p>
-                    <p class="price">가격: 1,200,000원</p>
-                    <p class="shipping-info">배송정보: 서울특별시 강남구</p>
+                    <p class="content">${inquiry.content }</p>
                 </div>
             </div>
         </section>

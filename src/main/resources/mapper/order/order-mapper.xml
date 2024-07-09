@@ -4,80 +4,119 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Orders">
 	<select id="selectOrderList" resultType="order">
-		SELECT
-		ORDER_NO,
-		USER_NO,
-		ORDER_TITLE,
-		ORDER_CONTENT,
-		CATEGORY_MAIN,
-		ALERT_FRAGILE,
-		ALERT_VALUABLE,
-		ALERT_URGENT,
-		START_POINT,
-		END_POINT,
-		CREATE_DATE,
-		ORDER_STATUS,
-		DISTANCE,
-		PRICE,
-		START_DATE,
-		END_DATE
-		FROM ORDERS
+		SELECT 
+			ORDER_NO,
+			U.USER_NO,
+			U.NICKNAME AS WRITER,
+			ORDER_TITLE,
+			ORDER_CONTENT,
+			CATEGORY_MAIN,
+			ALERT_FRAGILE,
+			ALERT_VALUABLE,
+			ALERT_URGENT,
+			START_POINT,
+			END_POINT,
+			O.CREATE_DATE,
+			ORDER_STATUS,
+			DISTANCE,
+			PRICE,
+			START_DATE,
+			END_DATE
+		FROM ORDERS O
+		LEFT JOIN USERS U ON (O.USER_NO = U.USER_NO)
 		ORDER BY ORDER_NO
 	</select>
+	
+	    <insert id="insertOrder" parameterType="Order" useGeneratedKeys="true">
+        <selectKey keyProperty="orderNo" resultType="int" order="BEFORE">
+            SELECT SEQ_ONO.NEXTVAL FROM DUAL
+        </selectKey>
 
-	<insert id="insertOrder" parameterType="Order"
-		useGeneratedKeys="true">
-		<selectKey keyProperty="orderNo" resultType="int"
-			order="BEFORE">
-			SELECT SEQ_ONO.NEXTVAL FROM DUAL
-		</selectKey>
+        INSERT INTO ORDERS (
+           ORDER_NO,
+			USER_NO,
+			ORDER_TITLE,
+			ORDER_CONTENT,
+			CATEGORY_MAIN,
+			ALERT_FRAGILE,
+			ALERT_VALUABLE,
+			ALERT_URGENT,
+			START_POINT,
+			END_POINT,
+			CREATE_DATE,
+			ORDER_STATUS,
+			DISTANCE,
+			PRICE,
+			START_DATE,
+			END_DATE
+        ) VALUES (
+            #{orderNo},
+            #{userNo},
+            #{orderTitle},
+            #{orderContent},
+            #{categoryMain},
+            #{alertFragile},
+            #{alertValuable},
+            #{alertUrgent},
+            #{startPoint},
+            #{endPoint},
+            SYSDATE,
+            #{orderStatus},
+            #{distance},
+            #{price},
+           	SYSDATE,
+            SYSDATE
+        )
+    </insert>
+    
+    <insert id="insertOrdersImg" parameterType="OrdersImg" useGeneratedKeys="true">
+        <selectKey keyProperty="imgNo" resultType="int" order="BEFORE">
+            SELECT SEQ_OINO.NEXTVAL FROM DUAL
+        </selectKey>
 
-		INSERT INTO ORDERS (
-		ORDER_NO,
-		USER_NO,
-		ORDER_TITLE,
-		ORDER_CONTENT,
-		CATEGORY_MAIN,
-		ALERT_FRAGILE,
-		ALERT_VALUABLE,
-		ALERT_URGENT,
-		START_POINT,
-		END_POINT,
-		CREATE_DATE,
-		ORDER_STATUS,
-		DISTANCE,
-		PRICE,
-		START_DATE,
-		END_DATE
-		) VALUES (
-		#{orderNo},
-		#{userNo},
-		#{orderTitle},
-		#{orderContent},
-		#{categoryMain},
-		#{alertFragile},
-		#{alertValuable},
-		#{alertUrgent},
-		#{startPoint},
-		#{endPoint},
-		SYSDATE,
-		#{orderStatus},
-		#{distance},
-		#{price},
-		SYSDATE,
-		SYSDATE
-		)
-	</insert>
-
+        INSERT INTO ORDERS_IMG (
+        	IMG_NO,
+        	ORDER_NO,
+        	ORIGIN_NAME,
+        	CHANGE_NAME
+        ) VALUES (
+          #{imgNo},
+          #{orderNo},
+          #{originName},
+          #{changeName}
+        )
+    </insert>
+	
 	<select id="selectOrderOne" resultType="order">
-		SELECT O.ORDER_NO, O.USER_NO, O.ORDER_TITLE, O.ORDER_CONTENT,
-		O.CATEGORY_MAIN, O.ALERT_FRAGILE, O.ALERT_VALUABLE, O.ALERT_URGENT,
-		O.START_POINT, O.END_POINT, O.CREATE_DATE, O.ORDER_STATUS, O.DISTANCE,
-		O.PRICE, O.START_DATE, O.END_DATE
+		SELECT 
+			ORDER_NO,
+			U.USER_NO,
+			U.NICKNAME AS WRITER,
+			ORDER_TITLE,
+			ORDER_CONTENT,
+			CATEGORY_MAIN,
+			ALERT_FRAGILE,
+			ALERT_VALUABLE,
+			ALERT_URGENT,
+			START_POINT,
+			END_POINT,
+			O.CREATE_DATE,
+			ORDER_STATUS,
+			DISTANCE,
+			PRICE,
+			START_DATE,
+			END_DATE
 		FROM ORDERS O
-		LEFT JOIN USERS U ON O.USER_NO = U.USER_NO
+		LEFT JOIN USERS U ON (O.USER_NO = U.USER_NO)
 		WHERE O.ORDER_NO = #{orderNo}
+		ORDER BY ORDER_NO
 	</select>
-
-
+	
+	<select id="selectOrdersImg" resultType="ordersImg">
+		SELECT *
+		FROM ORDERS_IMG
+		WHERE ORDER_NO = #{orderNo}
+	</select>
+	
+	
 </mapper>

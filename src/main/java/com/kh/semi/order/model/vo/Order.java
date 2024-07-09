@@ -1,5 +1,6 @@
 package com.kh.semi.order.model.vo;
 
+
 import java.sql.Date;
 
 import lombok.AllArgsConstructor;
@@ -16,6 +17,7 @@ import lombok.NoArgsConstructor;
 public class Order {
 	private int orderNo;
     private int userNo;
+    private String writer;
     private String orderTitle;
     private String orderContent;
     private String categoryMain;
@@ -26,9 +28,11 @@ public class Order {
     private String endPoint;
     private Date createDate;
     private String orderStatus;
-    private int distance;
+    private Double distance;
     private int price;
     private Date startDate;
     private Date endDate;
+    
+    private OrdersImg ordersImg;
  
 }

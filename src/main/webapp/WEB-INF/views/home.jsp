@@ -21,16 +21,22 @@
             <div class="title">delivery</div>
             <div class="title2">service</div>
         </div>
-        <div class="card-title">긴급 배송 게시글</div>
+        <div class="card-title">최근 게시글</div>
         <div class="content">
             <div class="card">배달 게시글 1</div>
             <div class="card">배달 게시글 2</div>
             <div class="card">배달 게시글 3</div>
         </div>
-        <button class="button-plus">더보기..</button>
+        <button onclick="noticeboard()" class="button-plus">더보기</button>
     </div>
 
     <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+    <script>
+    	function noticeboard(){
+    		 location.href = '${contextPath}/order/noticeboard';
+    	}
+    </script>
 </body>
+
 </html>
 
