@@ -17,6 +17,7 @@ public class Order {
 	private int orderNo;
     private int userNo;
     private String orderTitle;
+    private String writer;
     private String orderContent;
     private String categoryMain;
     private String alertFragile;
@@ -30,5 +31,6 @@ public class Order {
     private int price;
     private Date startDate;
     private Date endDate;
+    private OrdersImg ordersImg;
  
 }

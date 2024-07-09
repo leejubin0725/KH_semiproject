@@ -9,13 +9,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Inquiry {
+public class InquirAnswer {
+	private int answerNo;
+	private String answerWriter;
+	private String answerContent;
 	private int inquiryNo;
-	private int userNo;
-	private int categoryNo;
-	private String title;
-	private String content;
 	private Date createDate;
-	private Date updateDate;
-	private String writer;
+	private String userNickname;
+	private String status;
 }

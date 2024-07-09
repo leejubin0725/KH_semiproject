@@ -9,24 +9,25 @@ import com.kh.semi.user.model.vo.Vehicle;
 
 public interface UserService {
 
-	int insertUser(User u);
+   int insertUser(User u);
 
-	int insertRider(Rider r);
+   int insertRider(Rider r);
 
-	int insertVehicle(Vehicle v);
+   int insertVehicle(Vehicle v);
 
-	User login(User u);
+   User login(User u);
 
-	int updateUser(User u);
+   int updateUser(User u);
 
-	int idCheck(String email);
+   int idCheck(String email);
 
-	String idfind(String phone);
+   String idfind(String phone);
 
-	String pwfind(String birth, String email);
+   String pwfind(String birth, String email);
 
-	int updatepw(String encPwd, String email);
+   int updatepw(String encPwd, String email);
 
-	List<Order> selectMyPostList(int userNo);
+   List<Order> selectMyPostList(int userNo);
+   int deleteUserAndAllData(int userNo, String role);
 
 }

@@ -15,39 +15,63 @@
     #resetButton {
         margin-top: 10px;
     }
+    .comments-actions {
+        margin-top: 20px; /* 수락하기 버튼 위 여백 추가 */
+    }
+    .comments-actions button {
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    .comments-actions button:hover {
+        background-color: #0056b3;
+    }
 </style>
 <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=66e04ef438990e6ab1d5d64f99a79f51&libraries=services"></script>
-
 </head>
 <body>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+<c:set var="orderImageUploadPath" value="/resources/images/Orders/"></c:set>
 <div class="frame">
-    <div class="main-image"></div>
-    <h1 class="product-title">제목 : ${order.orderTitle }</h1>
-    <div class="author-nickname">작성자 닉네임 : ${order.orderNo} </div>
-    <p class="product-description"> ${order.orderContent} </p>
-    <div id="map"></div> <!-- 지도를 표시할 div -->
-    <div class="category">${order.alertFragile}/${order.alertValuable}/${order.alertUrgent}</div>
-    <div class="price">${order.orderContent}</div>
-    <div class="delivery-info">배송정보 ex)주소 ${order.startPoint}/${order.endPoint}<br/>${order.distance}/${order.price}<br/>${order.startDate}/${order.endDate}</div>
+    <div class="main-image">
+         <img src="${contextPath}${orderImageUploadPath}${order.ordersImg.changeName}" alt="Main Image">
+    </div>
+    <h1 class="product-title">${order.orderTitle}</h1>
+    <div class="author-nickname">${order.writer}</div>
+    <p class="product-description">${order.orderContent}</p>
+    <div id="map"></div>
+    <div class="price">배송비: ${order.price}원</div>
+   
+   <div class="alert">
+    <c:if test="${order.alertFragile == 'Y'}">
+        <p><input type="checkbox" id="fragileCheckbox" checked disabled> 파손 주의</p>
+    </c:if>
+    <c:if test="${order.alertValuable == 'Y'}">
+        <p><input type="checkbox" id="valuableCheckbox" checked disabled> 귀중품 주의</p>
+    </c:if>
+    <c:if test="${order.alertUrgent == 'Y'}">
+        <p><input type="checkbox" id="urgentCheckbox" checked disabled> 긴급 배송 요청</p>
+    </c:if>
+   </div>
+   
+    <div class="delivery-info">출발 위치: ${order.startPoint}<br/>배송 거리: ${order.distance}km<br/><br>주문일자: ${order.startDate}</div>
     <button class="map-button" onclick="expandMapImage()">지도 보기</button>
     <button class="restore-button" onclick="restoreMapImage()">복구</button>
-    <button id="resetButton" onclick="clearMap()">초기화</button> <!-- 추가된 초기화 버튼 -->
-    <div id="address"></div>
     
-    
-    
+    <div class="end-point">수령 위치: ${order.endPoint}</div>
+
     <table id="reniewArea" class="comments-table">
        <thead>
            <tr>
-               <td colspan="3">댓글(<span id="rcount">${empty board.reniewList ? '0' : board.reniewList.size() }</span>)</td>
+               <td colspan="3">댓글(<span id="rcount">${empty board.reniewList ? '0' : board.reniewList.size()}</span>)</td>
            </tr>
            <tr>
                <th>별점</th>
                <th>글쓴이</th>
                <th>댓글 내용</th>
-               <th>작성시간</th>
-               <th>라이더번호</th>
+               <th>작성일</th>
            </tr>
        </thead>
        <tbody>
@@ -61,24 +85,33 @@
                            <span class="star" onclick="setRating(4)">★</span>
                            <span class="star" onclick="setRating(5)">★</span>
                        </div>
-                       <textarea class="form-control" name="reniewContent" id="reniewContent" rows="2" cols="55" 
-                         style="resize:none; width:100%; margin-right: 20px;"></textarea>
-                       <button class="btn btn-secondary" onclick="insertreniew();">등록하기</button>
+                       <input type="text" id="commentContent" style="flex-grow: 1; padding: 3px; margin-right: 4px" />
+                       <button type="button" onclick="submitComment()">댓글 달기</button>
                    </div>
                </td>
            </tr>
-           <c:forEach items="${board.reniewList}" var="reniew">
+           <tr>
+               <td colspan="5">
+               <c:if test="${sessionScope.loginUser.role == 'rider' || 'admin'}">
+                   <div class="comments-actions">
+                       <button onclick="accept()">수락하기</button>
+                   </div>
+                   </c:if>
+               </td>
+           </tr>
+           <c:forEach var="reniew" items="${board.reniewList}">
                <tr>
-                   <td>${reniew.rating}</td>
+                   <td>${reniew.score}</td>
                    <td>${reniew.writer}</td>
-                   <td>${reniew.reviewContent}</td>
+                   <td>${reniew.content}</td>
                    <td>${reniew.createDate}</td>
                    <td>${reniew.riderNo}</td>
                </tr>
            </c:forEach>
        </tbody>
-   </table>
+    </table>
 </div>
+
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 <script>
 let currentRating = 0; // 초기 별점 설정
@@ -247,6 +280,10 @@ function findRouteAndDrawLine() {
     .catch(error => console.log('경로 요청 중 오류 발생:', error)); // 오류가 발생하면 콘솔에 출력합니다
 }
 
+function accept(){
+	alert('수락되었습니다.');
+	location.href = "${contextPath}"
+}
 function clearMap() {
     // 모든 마커 제거
     for (var i = 0; i < markers.length; i++) {
@@ -266,7 +303,7 @@ function getAddressFromCoords(coords) {
     geocoder.coord2Address(coords.getLng(), coords.getLat(), function(result, status) {
         if (status === kakao.maps.services.Status.OK) { // 주소 변환이 성공한 경우
             var address = result[0].address.address_name; // 변환된 주소를 가져옵니다
-            document.getElementById('address').innerText = '좌표의 주소는 ' + address + ' 입니다.'; // 주소를 화면에 표시합니다
+            document.getElementById('address').innerText = address; // 주소를 화면에 표시합니다
         }
     });
 }
@@ -287,15 +324,16 @@ function expandMapImage() {
     elementsToHide.forEach(element => {
         element.classList.add('hidden');
     });
- // 맵 갱신을 위한 인터벌 설정
+    
+    // 맵 갱신을 위한 인터벌 설정
     const intervalId = setInterval(() => {
         map.relayout();
-    }, 1); // 
+    }, 1);
 
     // 일정 시간 후 인터벌 정지 (예: 1초 후 정지)
     setTimeout(() => {
         clearInterval(intervalId);
-    }, 300); // 1초 후에 인터벌 정지
+    }, 1000); // 1초 후에 인터벌 정지
 }
 
 function restoreMapImage() {
@@ -312,6 +350,15 @@ function restoreMapImage() {
         element.classList.remove('hidden');
     });
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    const fragileCheckbox = document.getElementById('fragileCheckbox');
+    const valuableCheckbox = document.getElementById('valuableCheckbox');
+    const urgentCheckbox = document.getElementById('urgentCheckbox');
+
+    // JavaScript에서 이벤트 처리 또는 초기 설정이 필요한 경우에 추가 작업 수행
+    // 예: 체크박스에 대한 추가적인 동작이나 스타일링 등
+});
 
 </script>
 </body>

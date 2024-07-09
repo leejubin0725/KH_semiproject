@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.kh.semi.order.model.vo.Order;
 
-
 public interface OrderService {
 
 //	int insertOrder(Orders o, OrderImg oi);
@@ -14,5 +13,9 @@ public interface OrderService {
 	List<Order> selectOrderList();
 
 	Order selectOrderOne(int orderNo);
+
+	int deleteOrder(int orderNo);
+
+	int deleteAllOrdersByUser(int userNo);
 
 }

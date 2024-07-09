@@ -13,5 +13,7 @@ public interface OrderDao {
 
 	Order selectOrderOne(int orderNo);
 
-
+    int deleteOrder(int orderNo);
+    
+    int deleteAllOrdersByUser(int userNo);  // 추가된 메소드
 }

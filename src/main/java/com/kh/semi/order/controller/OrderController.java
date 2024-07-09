@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -30,39 +31,38 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @Slf4j
 @RequestMapping("/order")
-@SessionAttributes({"loginUser"})
+@SessionAttributes({ "loginUser" })
 @RequiredArgsConstructor
 public class OrderController {
-	
+
 	private final OrderService orderService;
 	private final ServletContext application;
 	private final ResourceLoader resourceLoader;
+
+	
+	@GetMapping("/report")
+	public String report() {
+		return "/order/report";
+	} 
+	
 	
 	@GetMapping("/orderInsert")
 	public String insertOrderForm() {
 		return "/order/orderInsert";
 	}
-	
+
 	@PostMapping("/orderInsert")
-	public String insertOrder(
-			@RequestBody Order o,
-			Model model,
-			@ModelAttribute("loginUser") User loginUser,
-			RedirectAttributes ra,
-			@RequestParam(value="upfile", required=false) MultipartFile upfile
-			) {
+	public String insertOrder(@RequestBody Order o, Model model, @ModelAttribute("loginUser") User loginUser,
+			RedirectAttributes ra, @RequestParam(value = "upfile", required = false) MultipartFile upfile) {
 		o.setUserNo(loginUser.getUserNo());
-		
+
 		System.out.println(o.toString());
-		
+
 		orderService.insertOrder(o);
-		
-		
+
 //		System.out.println(o.getOrderTitle());
 //		OrdersImg oi = null;
-		
-		
-		
+
 //		if(upfile != null && !upfile.isEmpty()) {
 //			String webPath = "resources/images/Orders/";
 //			String serverFolderPath = application.getRealPath(webPath);
@@ -96,38 +96,42 @@ public class OrderController {
 //			model.addAttribute("errorMsg", "글 작성 실패");
 //			url = "common/errorPage";
 //		}
-		
-		
+
 		return "redirect:/";
 	}
-	
-	
+
 	@GetMapping("/noticeboard")
-	public String boardPage(
-			Model model
-			) {
+	public String boardPage(Model model) {
 		List<Order> list = orderService.selectOrderList();
-		
+
 		application.setAttribute("list", list);
-		
+
 		return "/order/noticeboard";
 	}
-	
+
 	@GetMapping("/detailProduct/{orderNo}")
-    public String detailProduct(
-          @PathVariable("orderNo") int orderNo,
-          Model model,
-          @ModelAttribute("loginUser") User loginUser,
-          HttpServletRequest req,
-          HttpServletResponse res
-          ) {
-       Order o  = orderService.selectOrderOne(orderNo);
-       
-       model.addAttribute("order", o);
-       
-       return "order/detailProduct";
-    }
-	
+	public String detailProduct(@PathVariable("orderNo") int orderNo, Model model,
+			@ModelAttribute("loginUser") User loginUser, HttpServletRequest req, HttpServletResponse res) {
+		Order o = orderService.selectOrderOne(orderNo);
+
+		model.addAttribute("order", o);
+
+		return "order/detailProduct";
+	}
+
+	/* 삭제 기능 */
+	@PostMapping("/del/{orderNo}")
+	@ResponseBody
+	public String deleteOrder(@PathVariable("orderNo") int orderNo) {
+		int result = orderService.deleteOrder(orderNo);
+		return result > 0 ? "success" : "fail";
+	}
+
+	@PostMapping("/deleteAll")
+	@ResponseBody
+	public String deleteAllOrders(@ModelAttribute("loginUser") User loginUser) {
+		int result = orderService.deleteAllOrdersByUser(loginUser.getUserNo());
+		return result > 0 ? "success" : "fail";
+	}
 
 }
-
