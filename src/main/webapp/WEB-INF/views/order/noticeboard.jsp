@@ -23,7 +23,9 @@
         }
 
         .container {
-
+         max-width: 1500px; /* 이미지와 동일한 최대 가로 크기 설정 */
+            margin: 0 auto; /* 가운데 정렬 */
+            padding: 0 15px; /* 좌우 여백 추가 */
             border-radius: 8px;
         }
 
@@ -87,17 +89,17 @@
                     </tr>
                 </c:if>
                 <c:forEach items="${list}" var="order">
-                    <tr class="clickable-row" data-id="${order.orderNo}">
-                        <td>${order.orderNo}</td>
-                        <td>${order.orderTitle}</td>
-                        <td>${order.userNo}</td>
-                        <td><span class="rider-status">${order.orderStatus}</span></td>
-                        <td>${order.startPoint}</td>
-                        <td>${order.endPoint}</td>
-                        <td><fmt:formatDate value="${order.createDate}" pattern="yy-MM-dd" /></td>
-                        <td>${order.price}</td>
-                    </tr>
-                </c:forEach>		
+                   <tr class="clickable-row" onclick="movePage(${order.orderNo})">
+                         <td>${order.orderNo}</td>
+                       <td>${order.orderTitle}</td>
+                       <td>${order.writer}</td>
+                       <td><span class="rider-status">${order.orderStatus}</span></td>
+                       <td>${order.startPoint}</td>
+                       <td>${order.endPoint}</td>
+                         <td>${order.createDate}</td>
+                         <td>${order.price}</td>
+                   </tr>
+                </c:forEach>      
             </tbody>
         </table>
         <button class="custom-button" id="customButton">배달 요청하기</button>
@@ -134,16 +136,9 @@
             window.location.href = url;
         });
         
-        document.addEventListener('DOMContentLoaded', function() {
-            var rows = document.querySelectorAll('.clickable-row');
-            rows.forEach(function(row) {
-                row.addEventListener('click', function() {
-                    const id = row.dataset.id;
-                    const url = `/semi/board/detailProduct?id=${id}`;
-                    window.location.href = url;
-                });
-            });
-        });
+        function movePage(ono) {
+          location.href = "${contextPath}/order/detailProduct/" + ono
+       }
     </script>
 </body>
 </html>

@@ -6,7 +6,8 @@
 	<select id="selectOrderList" resultType="order">
 		SELECT 
 			ORDER_NO,
-			USER_NO,
+			U.USER_NO,
+			U.NICKNAME AS WRITER,
 			ORDER_TITLE,
 			ORDER_CONTENT,
 			CATEGORY_MAIN,
@@ -15,13 +16,14 @@
 			ALERT_URGENT,
 			START_POINT,
 			END_POINT,
-			CREATE_DATE,
+			O.CREATE_DATE,
 			ORDER_STATUS,
 			DISTANCE,
 			PRICE,
 			START_DATE,
 			END_DATE
-		FROM ORDERS
+		FROM ORDERS O
+		LEFT JOIN USERS U ON (O.USER_NO = U.USER_NO)
 		ORDER BY ORDER_NO
 	</select>
 	
@@ -66,11 +68,30 @@
             SYSDATE
         )
     </insert>
+    
+    <insert id="insertOrdersImg" parameterType="OrdersImg" useGeneratedKeys="true">
+        <selectKey keyProperty="imgNo" resultType="int" order="BEFORE">
+            SELECT SEQ_OINO.NEXTVAL FROM DUAL
+        </selectKey>
+
+        INSERT INTO ORDERS_IMG (
+        	IMG_NO,
+        	ORDER_NO,
+        	ORIGIN_NAME,
+        	CHANGE_NAME
+        ) VALUES (
+          #{imgNo},
+          #{orderNo},
+          #{originName},
+          #{changeName}
+        )
+    </insert>
 	
 	<select id="selectOrderOne" resultType="order">
 		SELECT 
 			ORDER_NO,
-			USER_NO,
+			U.USER_NO,
+			U.NICKNAME AS WRITER,
 			ORDER_TITLE,
 			ORDER_CONTENT,
 			CATEGORY_MAIN,
@@ -79,15 +100,22 @@
 			ALERT_URGENT,
 			START_POINT,
 			END_POINT,
-			CREATE_DATE,
+			O.CREATE_DATE,
 			ORDER_STATUS,
 			DISTANCE,
 			PRICE,
 			START_DATE,
 			END_DATE
 		FROM ORDERS O
-		LEFT JOIN USER_NO USING (USER_NO)
+		LEFT JOIN USERS U ON (O.USER_NO = U.USER_NO)
 		WHERE O.ORDER_NO = #{orderNo}
+		ORDER BY ORDER_NO
+	</select>
+	
+	<select id="selectOrdersImg" resultType="ordersImg">
+		SELECT *
+		FROM ORDERS_IMG
+		WHERE ORDER_NO = #{orderNo}
 	</select>
 	
 	

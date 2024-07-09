@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.semi.Inquiry.model.vo.Inquiry;
 import com.kh.semi.Inquiry.model.vo.InquiryCategory;
+import com.kh.semi.Inquiry.model.vo.InquiryImg;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,6 +21,11 @@ public class InquiryDaoImpl implements InquiryDao{
 	public int insertInquiry(Inquiry i) {
 		return sqlSession.insert("inquiry.insertInquiry", i);
 	}
+	
+	@Override
+	public int initCategory(InquiryCategory ic) {
+		return sqlSession.insert("inquiry.initCategory", ic);
+	}
 
 	@Override
 	public List<Inquiry> inquiryList() {
@@ -32,8 +38,28 @@ public class InquiryDaoImpl implements InquiryDao{
 	}
 
 	@Override
-	public Inquiry getInquiryById(int id) {
-		return sqlSession.selectOne("inquiry.getInquiryById", id);
+	public Inquiry selectInquiryNo(int inquiryNo) {
+		return sqlSession.selectOne("inquiry.selectInquiryNo", inquiryNo);
+	}
+
+	@Override
+	public int insertInquiryImg(InquiryImg ii) {
+		return sqlSession.insert("inquiry.insertInquiryImg", ii);
+	}
+
+	@Override
+	public Inquiry selectInquiryOne(int inquiryNo) {
+		return sqlSession.selectOne("inquiry.selectInquiryOne", inquiryNo);
+	}
+
+	@Override
+	public InquiryImg selectInquiryImg(int inquiryNo) {
+		return sqlSession.selectOne("inquiry.selectInquiryImg", inquiryNo);
+	}
+
+	@Override
+	public int selectInquiryCategory(String category) {
+		return sqlSession.selectOne("inquiry.selectInquiryCategory", category);
 	}
 
 }

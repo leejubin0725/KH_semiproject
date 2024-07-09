@@ -1,5 +1,6 @@
 package com.kh.semi.order.controller;
 
+import java.io.File;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -20,8 +21,11 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.semi.Inquiry.model.vo.Inquiry;
+import com.kh.semi.common.Utils;
 import com.kh.semi.order.model.service.OrderService;
 import com.kh.semi.order.model.vo.Order;
+import com.kh.semi.order.model.vo.OrdersImg;
 import com.kh.semi.user.model.vo.User;
 
 import lombok.RequiredArgsConstructor;
@@ -45,60 +49,52 @@ public class OrderController {
 	
 	@PostMapping("/orderInsert")
 	public String insertOrder(
-			@RequestBody Order o,
+			Order o,
 			Model model,
 			@ModelAttribute("loginUser") User loginUser,
 			RedirectAttributes ra,
-			@RequestParam(value="upfile", required=false) MultipartFile upfile
+			@RequestParam(value="file", required=false) MultipartFile upfile
 			) {
 		o.setUserNo(loginUser.getUserNo());
 		
-		System.out.println(o.toString());
+		OrdersImg oi = null;
+		if(upfile != null && !upfile.isEmpty()) {
+			String webPath = "/resources/images/Orders/";
+			String serverFolderPath = application.getRealPath(webPath);
+			
+			// 디렉토리가 존재하지 않는다면 생성하는 코드 추가
+			File dir = new File(serverFolderPath);
+			if(!dir.exists()) {
+				dir.mkdirs();
+			}
+			
+			// 사용자가 등록한 첨부파일의 이름을 수정
+			String changeName = Utils.saveFile(upfile, serverFolderPath);
 		
-		orderService.insertOrder(o);
-		
-		
-//		System.out.println(o.getOrderTitle());
-//		OrdersImg oi = null;
-		
-		
-		
-//		if(upfile != null && !upfile.isEmpty()) {
-//			String webPath = "resources/images/Orders/";
-//			String serverFolderPath = application.getRealPath(webPath);
-//			
-//			File dir = new File(serverFolderPath);
-//			if(!dir.exists()) {
-//				dir.mkdirs();
-//			}
-//			
-//			oi = new OrdersImg();
-//			oi.setChangeName("");
-//			oi.setOriginName(upfile.getOriginalFilename());
-//		}
-//		
-//		log.debug("Order : {}", o);
-//		
-//		int result = 0;
-//		try {
-////			result = orderService.insertOrder(o, oi);
-//			result = orderService.insertOrder(o);
-//		} catch(Exception e) {
-//			e.printStackTrace();
-//		}
-//		
-//		String url = "";
-//		
-//		if(result > 0) {
-//			ra.addFlashAttribute("alerMsg", "글 작성 성공");
-//			url = "redirct:/order/list";
-//		}else {
-//			model.addAttribute("errorMsg", "글 작성 실패");
-//			url = "common/errorPage";
-//		}
+			oi = new OrdersImg();
+			oi.setOrderNo(o.getOrderNo());
+			oi.setChangeName(changeName);
+			oi.setOriginName(upfile.getOriginalFilename());
+		}
 		
 		
-		return "redirect:/";
+		int result = 0;
+		try {
+			result = orderService.insertOrder(o , oi);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		String url = "";
+        if(result > 0) {
+            ra.addFlashAttribute("alertMsg" , "글 작성 성공");
+            url = "redirect:/order/orderInsert";
+        } else {
+            model.addAttribute("errorMsg" , "게시글 작성 실패");
+            url = "common/errorPage";
+        }   
+        return url;
 	}
 	
 	
@@ -110,7 +106,7 @@ public class OrderController {
 		
 		application.setAttribute("list", list);
 		
-		return "/order/noticeboard";
+		return "order/noticeboard";
 	}
 	
 	@GetMapping("/detailProduct/{orderNo}")
@@ -122,11 +118,14 @@ public class OrderController {
 			HttpServletResponse res
 			) {
 		Order o  = orderService.selectOrderOne(orderNo);
+		o.setOrdersImg(orderService.selectOrdersImg(orderNo));
 		
 		model.addAttribute("order", o);
 		
-		return "/order/detailProduct";
+		return "order/detailProduct";
 	}
+	
+
 	
 }
 

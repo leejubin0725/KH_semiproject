@@ -3,17 +3,17 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<<<<<<< HEAD
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>마이페이지</title>
     <link rel="stylesheet" href="${contextPath }/resources/css/mypage.css">
-=======
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>마이페이지</title>
 <link rel="stylesheet" href="${contextPath }/resources/css/styles.css">
->>>>>>> jis
+
 </head>
 
 <body>
@@ -45,12 +45,18 @@
 
 				<button type="submit" class="mypage-button" onclick="editInfo()">개인정보 수정</button>
 			</form>
-			<button class="mypage-button" onclick="showMyPosts()">내가 쓴 글</button>
+			<button class="mypage-button" onclick="redirectToMyPost();">내가 쓴 글</button>
 			<button class="mypage-button secondary" onclick="confirmDelete()">회원탈퇴</button>
 		</div>
 	</div>
 
 	<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 	<script src="${contextPath }/resources/js/mypage-script.js"></script>
+	<script>
+        function redirectToMyPost() {
+            var contextPath = "${pageContext.request.contextPath}";
+            window.location.href = contextPath + "/user/mypost";
+        }
+    </script>
 </body>
 </html>

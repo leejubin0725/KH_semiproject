@@ -7,18 +7,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="${contextPath }/resources/css/headerStyle.css">
+ 
+  
 </head>
 <body>
     <div class="headerContainer">
+     <!-- 이미지를 클릭하면 contextPath로 이동하는 예제 -->
+
+    <img src="${contextPath}/resources/images/mainlogo.jpg" alt="작은 로고" class="headerLogo" >
+
+
         <div class="header-main">
             <div class="headerNav">
                 <span><a href="${contextPath}" style="text-decoration: none; color: inherit;">홈</a></span>
                 <span><a href="${contextPath}/order/noticeboard" style="text-decoration: none; color: inherit;">배달목록</a></span>
-                <span><a href="${contextPath}/board/customerservice" style="text-decoration: none; color: inherit;">고객문의</a></span>
+                <span><a href="${contextPath}/inquiry/customerservice" style="text-decoration: none; color: inherit;">고객문의</a></span>
             </div>
             <div class="headerNav2">
-
-
                 <c:choose>
                     <c:when test="${not empty loginUser}">
                         <span><a href="${contextPath}/user/mypage" style="text-decoration: none; color: inherit;">마이페이지</a></span>
@@ -29,9 +34,9 @@
                         <span><a href="${contextPath}/user/insert" style="text-decoration: none; color: inherit;">회원가입</a></span>
                     </c:otherwise>
                 </c:choose>
-
             </div>
         </div>
     </div>
+   
 </body>
 </html>

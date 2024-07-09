@@ -21,8 +21,11 @@
 </head>
 <body>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+<c:set var="orderImageUploadPath" value="/resources/images/Orders/"></c:set>
 <div class="frame">
-    <div class="main-image"></div>
+    <div class="main-image">
+    	 <img src="${contextPath}${orderImageUploadPath}${order.ordersImg.changeName}">
+    </div>
     <h1 class="product-title">제목 : ${order.orderTitle }</h1>
     <div class="author-nickname">작성자 닉네임 : ${order.writer} </div>
     <p class="product-description"> ${order.orderContent} </p>
@@ -35,39 +38,53 @@
     <button id="resetButton" onclick="clearMap()">초기화</button> <!-- 추가된 초기화 버튼 -->
     <div id="address"></div>
     
-    <table class="comments-table">
-        <thead>
-            <tr>
-                <th>별점</th>
-                <th>글쓴이</th>
-                <th>댓글 내용</th>
-                <th>작성시간</th>
-                <th>조회수</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>
-                    <div class="rating">
-                        <span class="star" onclick="setRating(1)">★</span>
-                        <span class="star" onclick="setRating(2)">★</span>
-                        <span class="star" onclick="setRating(3)">★</span>
-                        <span class="star" onclick="setRating(4)">★</span>
-                        <span class="star" onclick="setRating(5)">★</span>
-                    </div>
-                </td>
-                <td>배달해줘</td>
-                <td>이름숨김</td>
-                <td>2023-12-17</td>
-                <td>3</td>
-            </tr>
-            <!-- 더 많은 댓글 행을 여기에 추가할 수 있습니다 -->
-        </tbody>
-    </table>
+    
+    
+    <table id="reniewArea" class="comments-table">
+       <thead>
+           <tr>
+               <td colspan="3">댓글(<span id="rcount">${empty board.reniewList ? '0' : board.reniewList.size() }</span>)</td>
+           </tr>
+           <tr>
+               <th>별점</th>
+               <th>글쓴이</th>
+               <th>댓글 내용</th>
+               <th>작성시간</th>
+               <th>라이더번호</th>
+           </tr>
+       </thead>
+       <tbody>
+           <tr>
+               <td colspan="5">
+                   <div style="display: flex; align-items: center;">
+                       <div class="rating" style="margin-right: 20px;">
+                           <span class="star" onclick="setRating(1)">★</span>
+                           <span class="star" onclick="setRating(2)">★</span>
+                           <span class="star" onclick="setRating(3)">★</span>
+                           <span class="star" onclick="setRating(4)">★</span>
+                           <span class="star" onclick="setRating(5)">★</span>
+                       </div>
+                       <textarea class="form-control" name="reniewContent" id="reniewContent" rows="2" cols="55" 
+                         style="resize:none; width:100%; margin-right: 20px;"></textarea>
+                       <button class="btn btn-secondary" onclick="insertreniew();">등록하기</button>
+                   </div>
+               </td>
+           </tr>
+           <c:forEach items="${board.reniewList}" var="reniew">
+               <tr>
+                   <td>${reniew.rating}</td>
+                   <td>${reniew.writer}</td>
+                   <td>${reniew.reviewContent}</td>
+                   <td>${reniew.createDate}</td>
+                   <td>${reniew.riderNo}</td>
+               </tr>
+           </c:forEach>
+       </tbody>
+   </table>
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 <script>
-let currentRating = 3; // 초기 별점 설정
+let currentRating = 0; // 초기 별점 설정
 
 function setRating(rating) {
     currentRating = rating;
