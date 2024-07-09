@@ -227,7 +227,7 @@ body {
 						<tr class="clickable-row" data-id="${order.orderNo}">
 							<td>${order.orderNo}</td>
 							<td>${order.orderTitle}</td>
-							<td>${order.userNo}</td>
+							<td>${order.writer}</td>
 							<td>${order.createDate}</td>
 							<td><span class="rider-status">${order.orderStatus}</span></td>
 							<td>3</td>
@@ -258,9 +258,9 @@ body {
 		window.onload = function() {
 			document.querySelectorAll('tbody tr').forEach(row => {
             row.addEventListener('click', function(event) {
-            		const userNoCell = row.getElementsByTagName('td')[2];
-            		const userNo = userNoCell.textContent || userNoCell.innerText;
-                    const url = `/semi/order/detailProduct/\${userNo}`;
+            		const userNoCell = row.getElementsByTagName('td')[0];
+            		const orderNo = userNoCell.textContent || userNoCell.innerText;
+                    const url = `/semi/order/detailProduct/\${orderNo}`;
                     if (url) {
                         window.location.href = url;
                     }
