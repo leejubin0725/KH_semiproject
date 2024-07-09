@@ -31,3 +31,6 @@
     position: absolute; /* 절대 위치로 설정하여 오른쪽 끝에 고정 */
     right: 2%;
 }
+body{
+	margin-top: 87px;
+}

@@ -23,7 +23,9 @@
         }
 
         .container {
-
+			max-width: 1400px; /* 이미지와 동일한 최대 가로 크기 설정 */
+            margin: 0 auto; /* 가운데 정렬 */
+            padding: 0 15px; /* 좌우 여백 추가 */
             border-radius: 8px;
         }
 

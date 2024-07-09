@@ -48,6 +48,9 @@ body {
     font-size: 36px;
     line-height: 44px;
     color: #000000;
+    border: 4px solid #86C1C6; /* border 속성 수정 */
+    border-radius: 8px; /* border-radius 수정 */
+    padding: 10px; /* 텍스트와 테두리 사이의 여백 추가 */
 }
 
 .author-nickname {
@@ -55,9 +58,9 @@ body {
     width: 320px;
     height: 74px;
     right: 80px; /* 우측 여백을 동일하게 설정 */
-    top: 590px;
+    top: 602px;
     font-weight: 700;
-    font-size: 24px;
+    font-size: 30px;
     line-height: 29px;
     color: #000000;
 }
@@ -67,19 +70,22 @@ body {
     width: calc(100% - 160px); /* 좌우 여백을 고려하여 너비 조정 */
     height: 171px;
     left: 80px; /* 좌우 여백을 동일하게 설정 */
-    top: 750px;
+    top: 710px;
     font-weight: 700;
     font-size: 24px;
     line-height: 40px;
     letter-spacing: 0.05em;
     color: #000000;
+    border: 4px solid #86C1C6; /* border 속성 수정 */
+    border-radius: 8px; /* border-radius 수정 */
+    padding: 10px; /* 텍스트와 테두리 사이의 여백 추가 */
 }
 
-.category {
+.alert {
     position: absolute;
     width: 259px;
     height: 98px;
-    right: 280px; /* 우측 여백을 동일하게 설정 */
+    left: 500px; /* 우측 여백을 동일하게 설정 */
     top: 1231px;
     font-weight: 700;
     font-size: 24px;
@@ -91,7 +97,7 @@ body {
     position: absolute;
     width: 191px;
     height: 55px;
-    right: 350px; /* 우측 여백을 동일하게 설정 */
+    left: 500px; /* 우측 여백을 동일하게 설정 */
     top: 1329px;
     font-weight: 700;
     font-size: 24px;
@@ -101,10 +107,10 @@ body {
 
 .delivery-info {
     position: absolute;
-    width: 259px;
+    width: 470px;
     height: 98px;
-    right: 280px; /* 우측 여백을 동일하게 설정 */
-    top: 1384px;
+    left: 500px; /* 좌측 여백을 동일하게 설정 */
+    top: 1000px;
     font-weight: 700;
     font-size: 24px;
     line-height: 29px;
@@ -116,7 +122,7 @@ body {
     width: 400px; /* 초기 너비 설정 */
     height: 400px;
     left: 80px;
-    top: 1231px;
+    top: 1000px;
     background: grey;
     border-radius: 30px;
     transition: width 0.3s ease, height 0.3s ease; /* 애니메이션 추가 */
@@ -127,7 +133,7 @@ body {
     width: 74px;
     height: 73px;
     right: 0px; /* 우측 여백을 동일하게 설정 */
-    top: 1537px;
+    top: 1300px;
     background: #00AAFF;
     color: #FFFFFF;
     text-align: center;
@@ -144,7 +150,7 @@ body {
     width: 74px;
     height: 73px;
     right: 0px; /* 우측 여백을 동일하게 설정 */
-    top: 1600px;
+    top: 1380px;
     background: #FF5733;
     color: #FFFFFF;
     text-align: center;
@@ -233,7 +239,7 @@ body {
     width: 400px; /* 초기 너비 설정 */
     height: 400px;
     left: 80px;
-    top: 1231px;
+    top: 1000px;
     background: grey;
     border-radius: 30px;
     transition: width 0.3s ease, height 0.3s ease; /* 애니메이션 추가 */
@@ -245,10 +251,10 @@ body {
 
 #address {
     position: absolute;
-    width: 191px;
+    width: 400px;
     height: 55px;
-    right: 350px; /* 우측 여백을 동일하게 설정 */
-    top: 1529px;
+    left: 500px; /* 좌측 여백을 delivery-info와 동일하게 설정 */
+    top: 1280px;
     font-weight: 700;
     font-size: 16px;
     line-height: 29px;
