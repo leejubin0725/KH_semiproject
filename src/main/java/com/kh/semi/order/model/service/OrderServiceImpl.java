@@ -72,4 +72,9 @@ public class OrderServiceImpl implements OrderService {
 		return orderDao.deleteAllOrdersByUser(userNo);
 	}
 
+	@Override
+	public List<Order> selectUrgentOrderList() {
+		return orderDao.selectUrgentOrderList();
+	}
+
 }

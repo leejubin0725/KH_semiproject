@@ -13,13 +13,9 @@ import lombok.extern.slf4j.Slf4j;
 @Aspect
 @Slf4j
 public class BeforeAop {
-	
 	@Before(value = "CommonPointCut.implPointCut()")
 	public void beforeService(JoinPoint jp) {
-		
 		log.debug("start : " + jp.getTarget().getClass().getSimpleName() + "-" + jp.getSignature().getName());
-		log.debug("(" + Arrays.toString(jp.getArgs())+ ")");
-		
+		log.debug("(" + Arrays.toString(jp.getArgs()) + ")");
 	}
-
 }

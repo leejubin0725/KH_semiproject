@@ -24,4 +24,6 @@ public interface OrderDao {
     
     int deleteAllOrdersByUser(int userNo);  // 추가된 메소드
 
+	List<Order> selectUrgentOrderList();
+
 }

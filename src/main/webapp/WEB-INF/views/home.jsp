@@ -23,9 +23,39 @@
         </div>
         <div class="card-title">최근 게시글</div>
         <div class="content">
-            <div class="card">배달 게시글 1</div>
-            <div class="card">배달 게시글 2</div>
-            <div class="card">배달 게시글 3</div>
+            <div class="card">
+            	<c:choose>
+				    <c:when test="${urgentlist[0] ne null}">
+				    	<c:if test="${urgentlist[0].ordersImg.imgNo ne null}">
+				    		<img src="${contextPath }/resources/images/Orders/${urgentlist[0].ordersImg.changeName}">
+				    	</c:if>
+				    	${urgentlist[0].orderNo}
+				    </c:when>
+				    <c:otherwise>주문을 기다립니다.</c:otherwise>
+				 </c:choose>
+            </div>
+            <div class="card">
+            	<c:choose>
+				    <c:when test="${urgentlist[1] ne null}">
+				    	<c:if test="${urgentlist[1].ordersImg.imgNo ne null}">
+				    		<img src="${contextPath }/resources/images/Orders/${urgentlist[1].ordersImg.changeName}">
+				    	</c:if>
+				    	${urgentlist[1].orderNo}
+				    </c:when>
+				    <c:otherwise>주문을 기다립니다.</c:otherwise>
+				</c:choose>
+            </div>
+            <div class="card">
+            	<c:choose>
+				    <c:when test="${urgentlist[2] ne null}">
+				    	<c:if test="${urgentlist[2].ordersImg.imgNo ne null}">
+				    		<img src="${contextPath }/resources/images/Orders/${urgentlist[2].ordersImg.changeName}">
+				    	</c:if>
+				    	${urgentlist[2].orderNo}
+				    </c:when>
+				    <c:otherwise>주문을 기다립니다.</c:otherwise>
+				</c:choose>
+            </div>
         </div>
         <button onclick="noticeboard()" class="button-plus">더보기</button>
     </div>
@@ -35,6 +65,17 @@
     	function noticeboard(){
     		 location.href = '${contextPath}/order/noticeboard';
     	}
+    	
+    	var cards = document.querySelectorAll('.card');
+    	
+    	cards.forEach(div => {
+    		div.addEventListener("click" , function (e){	
+    			window.location.href = `${contextPath}/order/detailProduct/` + e.target.innerText;
+        	})
+    	});
+    	
+    	
+    	
     </script>
 </body>
 

@@ -32,6 +32,12 @@ public class FileDeleteScheduler {
 		
 		File path = new File(application.getRealPath("/resources/images/Orders/"));
 		File[] files = path.listFiles();
+		
+		if(files == null) {
+			log.debug("디렉토리가 없습니다. 삭제 스케줄러 끝.");
+			return;
+		}
+		
 		List<File> filesList = Arrays.asList(files);
 		log.debug("SERVER FILE LIST :  {}" , filesList);
 		
@@ -58,6 +64,12 @@ public class FileDeleteScheduler {
 		
 		File path = new File(application.getRealPath("/resources/images/Inquiry/"));
 		File[] files = path.listFiles();
+		
+		if(files == null) {
+			log.debug("디렉토리가 없습니다. 삭제 스케줄러 끝.");
+			return;
+		}
+		
 		List<File> filesList = Arrays.asList(files);
 		log.debug("SERVER FILE LIST :  {}" , filesList);
 		

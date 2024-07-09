@@ -21,4 +21,6 @@ public interface OrderService {
 
 	int deleteAllOrdersByUser(int userNo);
 
+	List<Order> selectUrgentOrderList();
+
 }

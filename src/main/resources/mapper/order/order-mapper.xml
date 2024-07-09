@@ -138,5 +138,64 @@
 	<delete id="deleteAllOrdersByUser" parameterType="int">
 		DELETE FROM ORDERS WHERE USER_NO = #{userNo}
 	</delete>
+	
+	<select id="selectUrgentOrderList" resultMap="orderExt">
+	SELECT *
+		FROM
+			(
+			SELECT
+				O.ORDER_NO,
+				U.USER_NO,
+				U.NICKNAME AS WRITER,
+				ORDER_TITLE,
+				ORDER_CONTENT,
+				CATEGORY_MAIN,
+				ALERT_FRAGILE,
+				ALERT_VALUABLE,
+				ALERT_URGENT,
+				START_POINT,
+				END_POINT,
+				O.CREATE_DATE,
+				ORDER_STATUS,
+				DISTANCE,
+				PRICE,
+				START_DATE,
+				END_DATE,
+				IMG_NO,
+				ORIGIN_NAME,
+				CHANGE_NAME
+				FROM ORDERS O
+			LEFT JOIN USERS U ON (O.USER_NO = U.USER_NO)
+			LEFT JOIN ORDERS_IMG OI ON (O.ORDER_NO = OI.ORDER_NO)
+			WHERE ALERT_URGENT = 'Y'
+			ORDER BY O.CREATE_DATE ASC)
+	WHERE ROWNUM <![CDATA[<=]]> 3
+	</select>
+	
+	<resultMap type="Order" id="orderExt">
+		<id column="ORDER_NO" property="orderNo"/>
+		<result column="USER_NO" property="userNo"/>
+		<result column="WRITER" property="writer"/>
+		<result column="ORDER_TITLE" property="orderTitle"/>
+		<result column="ORDER_CONTENT" property="orderContent"/>
+		<result column="CATEGORY_MAIN" property="categoryMain"/>
+		<result column="ALERT_FRAGILE" property="alertFragile"/>
+		<result column="ALERT_VALUABLE" property="alertValuable"/>
+		<result column="ALERT_URGENT" property="alertUrgent"/>
+		<result column="START_POINT" property="startPoint"/>
+		<result column="END_POINT" property="endPoint"/>
+		<result column="CREATE_DATE" property="createDate"/>
+		<result column="ORDER_STATUS" property="orderStatus"/>
+		<result column="DISTANCE" property="distance"/>
+		<result column="PRICE" property="price"/>
+		<result column="START_DATE" property="startDate"/>
+		<result column="END_DATE" property="endDate"/>
+		
+		<association property="ordersImg">
+			<id column="IMG_NO" property="orderNo"/>
+			<result column="ORIGIN_NAME" property="originName"/>
+			<result column="CHANGE_NAME" property="changeName"/>
+		</association>
+	</resultMap>
 
 </mapper>
