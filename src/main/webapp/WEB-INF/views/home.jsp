@@ -12,8 +12,9 @@
     <link rel="stylesheet" href="${contextPath }/resources/css/styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
-<body>
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
+<body>
+
     <div class="main-content">
         <div class="image-container">
             <img src="${contextPath }/resources/images/rider.png">
@@ -22,10 +23,15 @@
         </div>
         <div class="card-title">최근 게시글</div>
         <div class="content">
-            <div class="card">배달 게시글 1</div>
-            <div class="card">배달 게시글 2</div>
-            <div class="card">배달 게시글 3</div>
-        </div>
+			<c:forEach items="${urgentlist}" var="urgentlist">
+				<div class="card"
+					data-url="${contextPath}/order/detailProduct/${urgentlist.orderNo}">
+					<c:if test="${urgentlist.ordersImg.imgNo ne null}">
+						<img src="${contextPath }/resources/images/Orders/${urgentlist.ordersImg.changeName}">
+					</c:if>
+				</div>
+			</c:forEach>
+		</div>
         <button onclick="noticeboard()" class="button-plus">더보기</button>
     </div>
 
@@ -34,6 +40,14 @@
     	function noticeboard(){
     		 location.href = '${contextPath}/order/noticeboard';
     	}
+    	
+    	var cards = document.querySelectorAll('.card');
+    	
+    	cards.forEach(div => {
+    		div.addEventListener("click" , function (e){	
+    			window.location.href = div.getAttribute('data-url');
+        	})
+    	});
     </script>
 </body>
 

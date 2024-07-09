@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="InquiryAnswer">
+	<select id="selectAnswerList" resultType="InquiryAnswer">
+      SELECT
+      I.ANSWER_NO,
+      I.ANSWER_WRITER,
+      I.INQUIRY_NO,
+      I.ANSWER_CONTENT,
+      I.CREATE_DATE,
+      I.USER_NICKNAME,
+      I.STATUS
+      FROM INQ_ANS I
+      JOIN USERS U ON U.NICKNAME = I.ANSWER_WRITER
+      WHERE I.INQUIRY_NO = #{inquiryNo}
+      	AND I.STATUS = 'Y'
+   </select>
+
+	<insert id="insertAnswer" parameterType="InquiryAnswer">
+	   <selectKey keyProperty="userNickname" resultType="String" order="BEFORE">
+	     SELECT NICKNAME FROM USERS WHERE NICKNAME = #{answerWriter}
+	   </selectKey>
+		   INSERT INTO INQ_ANS
+		   VALUES(
+		     SEQ_ANO.NEXTVAL,
+		     #{answerWriter},
+		     #{inquiryNo},
+		     #{answerContent},
+		     SYSDATE,
+		     #{userNickname},
+		     'Y'
+		   )
+	</insert>
+
+
+   <update id="updateAnswer">
+      UPDATE INQ_ANS SET
+      ANSWER_CONTENT = #{answerContent},
+      CREATE_DATE = SYSDATE
+      WHERE ANSWER_NO = #{answerNo}
+   </update>
+	
+	<update id="deleteAnswer">
+	  UPDATE INQ_ANS SET
+      	STATUS = 'N'
+      WHERE ANSWER_NO = #{answerNo}
+	</update>
+
+
+</mapper>

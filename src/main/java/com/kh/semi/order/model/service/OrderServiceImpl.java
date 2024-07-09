@@ -18,8 +18,10 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Service
 public class OrderServiceImpl implements OrderService {
-	
+
 	private final OrderDao orderDao;
+
+	private final ServletContext application;
 
 	@Override
 	@Transactional (rollbackFor = {Exception.class}) 
@@ -49,8 +51,30 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
+
 	public OrdersImg selectOrdersImg(int orderNo) {
 		return orderDao.selectOrdersImg(orderNo);
+	}
+
+	@Override
+	public List<String> selectOrdersImgList() {
+		return orderDao.selectOrdersImgList();
+	}
+	
+	@Transactional
+	public int deleteOrder(int orderNo) {
+		return orderDao.deleteOrder(orderNo);
+	}
+
+	@Override
+	@Transactional
+	public int deleteAllOrdersByUser(int userNo) {
+		return orderDao.deleteAllOrdersByUser(userNo);
+	}
+
+	@Override
+	public List<Order> selectUrgentOrderList() {
+		return orderDao.selectUrgentOrderList();
 	}
 
 }

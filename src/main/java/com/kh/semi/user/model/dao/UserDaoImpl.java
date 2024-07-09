@@ -19,69 +19,106 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserDaoImpl implements UserDao {
 
-	private final SqlSessionTemplate sqlSession;
+   private final SqlSessionTemplate sqlSession;
 
-	@Override
-	public int insertUser(User u) {
-		return sqlSession.insert("user.insertUser", u);
-	}
+   @Override
+   public int insertUser(User u) {
+      return sqlSession.insert("user.insertUser", u);
+   }
 
-	@Override
-	public int insertRider(Rider r) {
-		return sqlSession.insert("user.insertRider", r);
-	}
+   @Override
+   public int insertRider(Rider r) {
+      return sqlSession.insert("user.insertRider", r);
+   }
 
-	@Override
-	public int insertVehicle(Vehicle v) {
-		return sqlSession.insert("user.insertVehicle", v);
-	}
+   @Override
+   public int insertVehicle(Vehicle v) {
+      return sqlSession.insert("user.insertVehicle", v);
+   }
 
-	@Override
-	public User login(User u) {
-		return sqlSession.selectOne("user.login", u);
-	}
+   @Override
+   public User login(User u) {
+      return sqlSession.selectOne("user.login", u);
+   }
 
-	@Override
-	public int updateUser(User u) {
-		return sqlSession.update("user.updateUser", u);
-	}
+   @Override
+   public int updateUser(User u) {
+      return sqlSession.update("user.updateUser", u);
+   }
 
-	@Override
-	public int idCheck(String email) {
-		return sqlSession.selectOne("user.idCheck", email);
-	}
+   @Override
+   public int idCheck(String email) {
+      return sqlSession.selectOne("user.idCheck", email);
+   }
 
-	@Override
-	public String idfind(String phone) {
-		return sqlSession.selectOne("user.idfind", phone);
-	}
+   @Override
+   public String idfind(String phone) {
+      return sqlSession.selectOne("user.idfind", phone);
+   }
 
-	@Override
-	public String pwfind(String birth, String email) {
+   @Override
+   public String pwfind(String birth, String email) {
 
-		Map<String, String> params = new HashMap<>();
-		params.put("birth", birth);
-		params.put("email", email);
-		
-		return sqlSession.selectOne("user.pwfind", params);
-	}
+      Map<String, String> params = new HashMap<>();
+      params.put("birth", birth);
+      params.put("email", email);
+      
+      return sqlSession.selectOne("user.pwfind", params);
+   }
 
-	@Override
-	@Transactional
+   @Override
+   @Transactional
 
-	public int updatepw(String encPwd, String email) {
-		// MyBatis 매퍼에 전달할 파라미터 준비
-		Map<String, Object> parameters = new HashMap<>();
-		parameters.put("encPwd", encPwd);
-		parameters.put("email", email);
+   public int updatepw(String encPwd, String email) {
+      // MyBatis 매퍼에 전달할 파라미터 준비
+      Map<String, Object> parameters = new HashMap<>();
+      parameters.put("encPwd", encPwd);
+      parameters.put("email", email);
 
-		// MyBatis 매퍼 호출하여 SQL 실행
-		return sqlSession.update("user.pwupdate", parameters);
-	}
+      // MyBatis 매퍼 호출하여 SQL 실행
+      return sqlSession.update("user.pwupdate", parameters);
+   }
 
-	@Override
+   @Override
     public List<Order> selectMyPostList(int userNo) {
         return sqlSession.selectList("user.selectMyPostList", userNo);
     }
+   /* 삭제 기능 */
+   @Override
+   public int deleteUser(int userNo) {
+      return sqlSession.delete("user.deleteUser", userNo);
+   }
+
+   @Override
+   public void deleteAllChatRoomJoinsByUser(int userNo) {
+      sqlSession.delete("user.deleteAllChatRoomJoinsByUser", userNo);
+   }
+
+   @Override
+   public void deleteAllChatsByUser(int userNo) {
+      sqlSession.delete("user.deleteAllChatsByUser", userNo);
+   }
+
+   @Override
+   public void deleteAllOrdersByUser(int userNo) {
+      sqlSession.delete("user.deleteAllOrdersByUser", userNo);
+   }
+
+   @Override
+   public void deleteAllChatRoomJoinsByChatRoom(int userNo) {
+      sqlSession.delete("user.deleteAllChatRoomJoinsByChatRoom", userNo);
+   }
+
+   @Override
+   public void deleteAllRidersByUser(int userNo) {
+      sqlSession.delete("user.deleteAllRidersByUser", userNo);
+   }
+
+   @Override
+   public void deleteAllVehiclesByRider(int userNo) {
+      sqlSession.delete("user.deleteAllVehiclesByRider", userNo);
+   }
+   
+   
 
 }

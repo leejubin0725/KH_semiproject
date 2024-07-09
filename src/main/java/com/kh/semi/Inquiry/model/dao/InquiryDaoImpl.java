@@ -62,4 +62,9 @@ public class InquiryDaoImpl implements InquiryDao{
 		return sqlSession.selectOne("inquiry.selectInquiryCategory", category);
 	}
 
+	@Override
+	public List<String> selectInquiryImgList() {
+		return sqlSession.selectList("inquiry.selectInquiryImgList");
+	}
+
 }

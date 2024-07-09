@@ -5,7 +5,6 @@ import java.util.List;
 import com.kh.semi.order.model.vo.Order;
 import com.kh.semi.order.model.vo.OrdersImg;
 
-
 public interface OrderService {
 
 	int insertOrder(Order o, OrdersImg oi) throws Exception;
@@ -15,5 +14,13 @@ public interface OrderService {
 	Order selectOrderOne(int orderNo);
 
 	OrdersImg selectOrdersImg(int orderNo);
+
+	List<String> selectOrdersImgList();
+
+	int deleteOrder(int orderNo);
+
+	int deleteAllOrdersByUser(int userNo);
+
+	List<Order> selectUrgentOrderList();
 
 }

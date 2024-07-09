@@ -67,6 +67,11 @@ public class InquiryServiceImpl implements InquiryService{
 		return inquiryDao.selectInquiryCategory(category);
 	}
 
+	@Override
+	public List<String> selectInquiryImgList() {
+		return inquiryDao.selectInquiryImgList();
+	}
+
 	
 	
 }

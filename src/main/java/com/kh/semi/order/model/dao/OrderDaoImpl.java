@@ -30,6 +30,16 @@ public class OrderDaoImpl implements OrderDao{
 	public Order selectOrderOne(int orderNo) {
 		return sqlSession.selectOne("Orders.selectOrderOne" , orderNo);
 	}
+	
+    @Override
+    public int deleteOrder(int orderNo) {
+        return sqlSession.delete("Orders.deleteOrder", orderNo);
+    }
+
+    @Override
+    public int deleteAllOrdersByUser(int userNo) {
+        return sqlSession.delete("Orders.deleteAllOrdersByUser", userNo);
+    }
 
 	@Override
 	public int insertOrdersImg(OrdersImg oi) {
@@ -39,6 +49,16 @@ public class OrderDaoImpl implements OrderDao{
 	@Override
 	public OrdersImg selectOrdersImg(int orderNo) {
 		return sqlSession.selectOne("Orders.selectOrdersImg" , orderNo);
+	}
+
+	@Override
+	public List<String> selectOrdersImgList() {
+		return sqlSession.selectList("Orders.selectOrdersImgList");
+	}
+
+	@Override
+	public List<Order> selectUrgentOrderList() {
+		return sqlSession.selectList("Orders.selectUrgentOrderList");
 	}
 
 }

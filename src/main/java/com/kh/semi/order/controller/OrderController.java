@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -125,7 +126,20 @@ public class OrderController {
 		return "order/detailProduct";
 	}
 	
+	/* 삭제 기능 */
+	@PostMapping("/del/{orderNo}")
+	@ResponseBody
+	public String deleteOrder(@PathVariable("orderNo") int orderNo) {
+		int result = orderService.deleteOrder(orderNo);
+		return result > 0 ? "success" : "fail";
+	}
 
+	@PostMapping("/deleteAll")
+	@ResponseBody
+	public String deleteAllOrders(@ModelAttribute("loginUser") User loginUser) {
+		int result = orderService.deleteAllOrdersByUser(loginUser.getUserNo());
+		return result > 0 ? "success" : "fail";
+	}
 	
 }
 

@@ -102,6 +102,12 @@
 			WHERE INQUIRY_NO = #{inquiryNo}
 	</select>
 	
+	<select id="selectInquiryImgList" resultType="string">
+		SELECT
+		'/resources/images/Inquiry/' || CHANGE_NAME
+		FROM INQ_IMG II
+		JOIN INQUIRIES I ON I.INQUIRY_NO=II.INQUIRY_NO
+	</select>
 	
 	
 </mapper>

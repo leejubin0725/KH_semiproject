@@ -4,119 +4,198 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Orders">
 	<select id="selectOrderList" resultType="order">
-		SELECT 
-			ORDER_NO,
-			U.USER_NO,
-			U.NICKNAME AS WRITER,
-			ORDER_TITLE,
-			ORDER_CONTENT,
-			CATEGORY_MAIN,
-			ALERT_FRAGILE,
-			ALERT_VALUABLE,
-			ALERT_URGENT,
-			START_POINT,
-			END_POINT,
-			O.CREATE_DATE,
-			ORDER_STATUS,
-			DISTANCE,
-			PRICE,
-			START_DATE,
-			END_DATE
+		SELECT
+		ORDER_NO,
+		U.USER_NO,
+		U.NICKNAME AS WRITER,
+		ORDER_TITLE,
+		ORDER_CONTENT,
+		CATEGORY_MAIN,
+		ALERT_FRAGILE,
+		ALERT_VALUABLE,
+		ALERT_URGENT,
+		START_POINT,
+		END_POINT,
+		O.CREATE_DATE,
+		ORDER_STATUS,
+		DISTANCE,
+		PRICE,
+		START_DATE,
+		END_DATE
 		FROM ORDERS O
 		LEFT JOIN USERS U ON (O.USER_NO = U.USER_NO)
-		ORDER BY ORDER_NO
+		ORDER BY
+		ORDER_NO
 	</select>
-	
-	    <insert id="insertOrder" parameterType="Order" useGeneratedKeys="true">
-        <selectKey keyProperty="orderNo" resultType="int" order="BEFORE">
-            SELECT SEQ_ONO.NEXTVAL FROM DUAL
-        </selectKey>
 
-        INSERT INTO ORDERS (
-           ORDER_NO,
-			USER_NO,
-			ORDER_TITLE,
-			ORDER_CONTENT,
-			CATEGORY_MAIN,
-			ALERT_FRAGILE,
-			ALERT_VALUABLE,
-			ALERT_URGENT,
-			START_POINT,
-			END_POINT,
-			CREATE_DATE,
-			ORDER_STATUS,
-			DISTANCE,
-			PRICE,
-			START_DATE,
-			END_DATE
-        ) VALUES (
-            #{orderNo},
-            #{userNo},
-            #{orderTitle},
-            #{orderContent},
-            #{categoryMain},
-            #{alertFragile},
-            #{alertValuable},
-            #{alertUrgent},
-            #{startPoint},
-            #{endPoint},
-            SYSDATE,
-            #{orderStatus},
-            #{distance},
-            #{price},
-           	SYSDATE,
-            SYSDATE
-        )
-    </insert>
-    
-    <insert id="insertOrdersImg" parameterType="OrdersImg" useGeneratedKeys="true">
-        <selectKey keyProperty="imgNo" resultType="int" order="BEFORE">
-            SELECT SEQ_OINO.NEXTVAL FROM DUAL
-        </selectKey>
+	<insert id="insertOrder" parameterType="Order"
+		useGeneratedKeys="true">
+		<selectKey keyProperty="orderNo" resultType="int"
+			order="BEFORE">
+			SELECT SEQ_ONO.NEXTVAL FROM DUAL
+		</selectKey>
 
-        INSERT INTO ORDERS_IMG (
-        	IMG_NO,
-        	ORDER_NO,
-        	ORIGIN_NAME,
-        	CHANGE_NAME
-        ) VALUES (
-          #{imgNo},
-          #{orderNo},
-          #{originName},
-          #{changeName}
-        )
-    </insert>
-	
+		INSERT INTO ORDERS (
+		ORDER_NO,
+		USER_NO,
+		ORDER_TITLE,
+		ORDER_CONTENT,
+		CATEGORY_MAIN,
+		ALERT_FRAGILE,
+		ALERT_VALUABLE,
+		ALERT_URGENT,
+		START_POINT,
+		END_POINT,
+		CREATE_DATE,
+		ORDER_STATUS,
+		DISTANCE,
+		PRICE,
+		START_DATE,
+		END_DATE
+		) VALUES (
+		#{orderNo},
+		#{userNo},
+		#{orderTitle},
+		#{orderContent},
+		#{categoryMain},
+		#{alertFragile},
+		#{alertValuable},
+		#{alertUrgent},
+		#{startPoint},
+		#{endPoint},
+		SYSDATE,
+		#{orderStatus},
+		#{distance},
+		#{price},
+		SYSDATE,
+		SYSDATE
+		)
+	</insert>
+
+	<insert id="insertOrdersImg" parameterType="OrdersImg"
+		useGeneratedKeys="true">
+		<selectKey keyProperty="imgNo" resultType="int"
+			order="BEFORE">
+			SELECT SEQ_OINO.NEXTVAL FROM DUAL
+		</selectKey>
+
+		INSERT INTO ORDERS_IMG (
+		IMG_NO,
+		ORDER_NO,
+		ORIGIN_NAME,
+		CHANGE_NAME
+		) VALUES (
+		#{imgNo},
+		#{orderNo},
+		#{originName},
+		#{changeName}
+		)
+	</insert>
+
 	<select id="selectOrderOne" resultType="order">
-		SELECT 
-			ORDER_NO,
-			U.USER_NO,
-			U.NICKNAME AS WRITER,
-			ORDER_TITLE,
-			ORDER_CONTENT,
-			CATEGORY_MAIN,
-			ALERT_FRAGILE,
-			ALERT_VALUABLE,
-			ALERT_URGENT,
-			START_POINT,
-			END_POINT,
-			O.CREATE_DATE,
-			ORDER_STATUS,
-			DISTANCE,
-			PRICE,
-			START_DATE,
-			END_DATE
+		SELECT
+		ORDER_NO,
+		U.USER_NO,
+		U.NICKNAME AS WRITER,
+		ORDER_TITLE,
+		ORDER_CONTENT,
+		CATEGORY_MAIN,
+		ALERT_FRAGILE,
+		ALERT_VALUABLE,
+		ALERT_URGENT,
+		START_POINT,
+		END_POINT,
+		O.CREATE_DATE,
+		ORDER_STATUS,
+		DISTANCE,
+		PRICE,
+		START_DATE,
+		END_DATE
 		FROM ORDERS O
 		LEFT JOIN USERS U ON (O.USER_NO = U.USER_NO)
-		WHERE O.ORDER_NO = #{orderNo}
+		WHERE
+		O.ORDER_NO = #{orderNo}
 		ORDER BY ORDER_NO
 	</select>
-	
+
 	<select id="selectOrdersImg" resultType="ordersImg">
 		SELECT *
 		FROM ORDERS_IMG
 		WHERE ORDER_NO = #{orderNo}
 	</select>
+
+	<select id="selectOrdersImgList" resultType="string">
+		SELECT
+		'/resources/images/Orders/' || CHANGE_NAME
+		FROM ORDERS_IMG OI
+		JOIN ORDERS O ON O.ORDER_NO=OI.ORDER_NO
+	</select>
+
+	<delete id="deleteOrder" parameterType="int">
+		DELETE FROM ORDERS WHERE ORDER_NO = #{orderNo}
+	</delete>
+
+	<delete id="deleteAllOrdersByUser" parameterType="int">
+		DELETE FROM ORDERS WHERE USER_NO = #{userNo}
+	</delete>
 	
+	<select id="selectUrgentOrderList" resultMap="orderExt">
+	SELECT *
+		FROM
+			(
+			SELECT
+				O.ORDER_NO,
+				U.USER_NO,
+				U.NICKNAME AS WRITER,
+				ORDER_TITLE,
+				ORDER_CONTENT,
+				CATEGORY_MAIN,
+				ALERT_FRAGILE,
+				ALERT_VALUABLE,
+				ALERT_URGENT,
+				START_POINT,
+				END_POINT,
+				O.CREATE_DATE,
+				ORDER_STATUS,
+				DISTANCE,
+				PRICE,
+				START_DATE,
+				END_DATE,
+				IMG_NO,
+				ORIGIN_NAME,
+				CHANGE_NAME
+				FROM ORDERS O
+			LEFT JOIN USERS U ON (O.USER_NO = U.USER_NO)
+			LEFT JOIN ORDERS_IMG OI ON (O.ORDER_NO = OI.ORDER_NO)
+			WHERE ALERT_URGENT = 'Y'
+			ORDER BY O.CREATE_DATE ASC)
+	WHERE ROWNUM <![CDATA[<=]]> 3
+	</select>
 	
+	<resultMap type="Order" id="orderExt">
+		<id column="ORDER_NO" property="orderNo"/>
+		<result column="USER_NO" property="userNo"/>
+		<result column="WRITER" property="writer"/>
+		<result column="ORDER_TITLE" property="orderTitle"/>
+		<result column="ORDER_CONTENT" property="orderContent"/>
+		<result column="CATEGORY_MAIN" property="categoryMain"/>
+		<result column="ALERT_FRAGILE" property="alertFragile"/>
+		<result column="ALERT_VALUABLE" property="alertValuable"/>
+		<result column="ALERT_URGENT" property="alertUrgent"/>
+		<result column="START_POINT" property="startPoint"/>
+		<result column="END_POINT" property="endPoint"/>
+		<result column="CREATE_DATE" property="createDate"/>
+		<result column="ORDER_STATUS" property="orderStatus"/>
+		<result column="DISTANCE" property="distance"/>
+		<result column="PRICE" property="price"/>
+		<result column="START_DATE" property="startDate"/>
+		<result column="END_DATE" property="endDate"/>
+		
+		<association property="ordersImg">
+			<id column="IMG_NO" property="orderNo"/>
+			<result column="ORIGIN_NAME" property="originName"/>
+			<result column="CHANGE_NAME" property="changeName"/>
+		</association>
+	</resultMap>
+
 </mapper>

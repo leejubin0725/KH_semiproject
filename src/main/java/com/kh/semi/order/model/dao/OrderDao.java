@@ -18,4 +18,12 @@ public interface OrderDao {
 
 	OrdersImg selectOrdersImg(int orderNo);
 
+	List<String> selectOrdersImgList();
+
+    int deleteOrder(int orderNo);
+    
+    int deleteAllOrdersByUser(int userNo);  // 추가된 메소드
+
+	List<Order> selectUrgentOrderList();
+
 }

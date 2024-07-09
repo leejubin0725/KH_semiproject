@@ -26,6 +26,8 @@ public interface InquiryDao {
 
 	int selectInquiryCategory(String category);
 
+	List<String> selectInquiryImgList();
+
 	
 
 }

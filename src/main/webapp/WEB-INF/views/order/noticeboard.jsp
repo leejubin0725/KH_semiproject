@@ -13,6 +13,9 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <style>
+    
+    
+  
         #middle-img {
             width: 100%; /* 이미지의 가로 크기를 컨테이너의 100%로 설정 */
             max-width: 1500px; /* 이미지의 최대 가로 크기를 1500px로 설정 */
@@ -50,6 +53,7 @@
             
         }
 
+
         .custom-button:hover {
             background-color: #0056b3;
         }
@@ -60,6 +64,25 @@
             color: #888;
             margin-top: 20px;
         }
+        .red-button {
+    display: block;
+    width: 150px;
+    padding: 10px 20px;
+    margin-right:100px;
+   margin: 5px 5px 20px auto; /* 수정된 부분: 오른쪽 마진을 0으로 변경, 왼쪽 마진을 auto로 설정 */
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #dc3545; /* Red color */
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.red-button:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
     </style>
 </head>
 <body>
@@ -102,12 +125,20 @@
                 </c:forEach>      
             </tbody>
         </table>
+        <c:if test="${sessionScope.loginUser.role == 'regular'}">
         <button class="custom-button" id="customButton">배달 요청하기</button>
+        </c:if>
+          <c:if test="${sessionScope.loginUser.role == 'regular'}">
+        <button onclick="submitReport()" class="custom-button red-button" id="reportButton">신고하기</button>
+           </c:if>
     </div>
 
     <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 
     <script>
+    function submitReport(){
+    	location.href = "${contextPath}/order/report/"
+    }
         document.querySelectorAll('tbody tr').forEach(row => {
             row.addEventListener('click', function(event) {
                 // 클릭된 요소가 라이더 상태 버튼이 아닌 경우에만 페이지 이동
