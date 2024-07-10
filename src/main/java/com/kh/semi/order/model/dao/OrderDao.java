@@ -26,4 +26,6 @@ public interface OrderDao {
 
 	List<Order> selectUrgentOrderList();
 
+	int updateOrderStatus(Order o);
+
 }

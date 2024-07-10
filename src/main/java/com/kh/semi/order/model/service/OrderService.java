@@ -23,4 +23,6 @@ public interface OrderService {
 
 	List<Order> selectUrgentOrderList();
 
+	int updateOrderStatus(Order o);
+
 }

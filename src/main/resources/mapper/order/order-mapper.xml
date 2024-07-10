@@ -197,5 +197,16 @@
 			<result column="CHANGE_NAME" property="changeName"/>
 		</association>
 	</resultMap>
+	
+	<update id="updateOrderStatus" parameterType="Order">
+		UPDATE ORDERS
+		<set>
+			RIDER_NO = #{riderNo}, 
+			ORDER_STATUS = #{orderStatus},
+			<if test="orderStatus eq '배달중'">START_DATE = #{startDate}</if>
+			<if test="orderStatus eq '배달완료'">END_DATE = #{endDate}</if>
+		</set>
+		WHERE ORDER_NO = #{orderNo}
+	</update>
 
 </mapper>

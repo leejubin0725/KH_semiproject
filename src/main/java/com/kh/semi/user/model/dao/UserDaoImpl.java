@@ -118,6 +118,11 @@ public class UserDaoImpl implements UserDao {
    public void deleteAllVehiclesByRider(int userNo) {
       sqlSession.delete("user.deleteAllVehiclesByRider", userNo);
    }
+
+@Override
+public Rider selectRiderOne(int userNo) {
+	return sqlSession.selectOne("user.selectRiderOne", userNo);
+}
    
    
 

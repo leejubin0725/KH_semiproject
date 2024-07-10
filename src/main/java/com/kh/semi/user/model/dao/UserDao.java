@@ -43,4 +43,6 @@ public interface UserDao {
    void deleteAllRidersByUser(int userNo);
 
    int deleteUser(int userNo);
+
+   Rider selectRiderOne(int userNo);
 }

@@ -1,6 +1,8 @@
 package com.kh.semi.order.controller;
 
 import java.io.File;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -27,6 +29,8 @@ import com.kh.semi.common.Utils;
 import com.kh.semi.order.model.service.OrderService;
 import com.kh.semi.order.model.vo.Order;
 import com.kh.semi.order.model.vo.OrdersImg;
+import com.kh.semi.user.model.service.UserService;
+import com.kh.semi.user.model.vo.Rider;
 import com.kh.semi.user.model.vo.User;
 
 import lombok.RequiredArgsConstructor;
@@ -40,6 +44,7 @@ import lombok.extern.slf4j.Slf4j;
 public class OrderController {
 	
 	private final OrderService orderService;
+	private final UserService userService;
 	private final ServletContext application;
 	private final ResourceLoader resourceLoader;
 	
@@ -139,6 +144,72 @@ public class OrderController {
 	public String deleteAllOrders(@ModelAttribute("loginUser") User loginUser) {
 		int result = orderService.deleteAllOrdersByUser(loginUser.getUserNo());
 		return result > 0 ? "success" : "fail";
+	}
+	
+	@GetMapping("/orderAccept")
+	public String orderAccept(
+			@ModelAttribute("loginUser") User loginUser,
+			Order o,
+			Model model,
+			RedirectAttributes ra
+			) {
+		
+		Rider rider = userService.selectRiderOne(loginUser.getUserNo());
+		
+		o.setRiderNo(rider.getRiderNo());
+		
+		LocalDate localDate = LocalDate.now();
+		o.setStartDate(Date.valueOf(localDate));
+		
+		o.setOrderStatus("배달중");
+		
+		int result = orderService.updateOrderStatus(o);
+		
+		String url = "";
+        if(result > 0) {
+            ra.addFlashAttribute("alertMsg" , "주문 수락 성공");
+            url = "redirect:/order/detailProduct";
+        } else {
+            model.addAttribute("errorMsg" , "주문 수락 실패");
+            url = "common/errorPage";
+        }   
+        
+        model.addAttribute("order", o);
+        
+        return url;
+	}
+	
+	@GetMapping("/orderEnd")
+	public String orderEnd(
+			@ModelAttribute("loginUser") User loginUser,
+			Order o,
+			Model model,
+			RedirectAttributes ra
+			) {
+		
+		Rider rider = userService.selectRiderOne(loginUser.getUserNo());
+		
+		o.setRiderNo(rider.getRiderNo());
+		
+		LocalDate localDate = LocalDate.now();
+		o.setEndDate(Date.valueOf(localDate));
+		
+		o.setOrderStatus("배달완료");
+		
+		int result = orderService.updateOrderStatus(o);
+		
+		String url = "";
+        if(result > 0) {
+            ra.addFlashAttribute("alertMsg" , "배달 완료 알림 성공");
+            url = "redirect:/order/detailProduct";
+        } else {
+            model.addAttribute("errorMsg" , "배달 완료 알림 실패");
+            url = "common/errorPage";
+        }   
+        
+        model.addAttribute("order", o);
+        
+        return url;
 	}
 	
 }

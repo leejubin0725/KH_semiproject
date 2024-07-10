@@ -77,4 +77,9 @@ public class OrderServiceImpl implements OrderService {
 		return orderDao.selectUrgentOrderList();
 	}
 
+	@Override
+	public int updateOrderStatus(Order o) {
+		return orderDao.updateOrderStatus(o);
+	}
+
 }

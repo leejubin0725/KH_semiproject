@@ -182,7 +182,11 @@
         DELETE FROM VEHICLES WHERE RIDER_NO IN (SELECT RIDER_NO FROM RIDERS WHERE USER_NO = #{userNo})
     </delete>
 
-
+	<select id="selectRiderOne" resultType="Rider">
+		SELECT *
+		FROM RIDERS
+		WHERE USER_NO = #{userNo}
+	</select>
 
 
 

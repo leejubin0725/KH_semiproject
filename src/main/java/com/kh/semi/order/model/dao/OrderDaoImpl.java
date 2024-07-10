@@ -61,4 +61,9 @@ public class OrderDaoImpl implements OrderDao{
 		return sqlSession.selectList("Orders.selectUrgentOrderList");
 	}
 
+	@Override
+	public int updateOrderStatus(Order o) {
+		return sqlSession.update("Orders.updateOrderStatus" , o);
+	}
+
 }

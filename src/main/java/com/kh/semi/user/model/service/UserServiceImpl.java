@@ -87,4 +87,9 @@ public class UserServiceImpl implements UserService {
         return dao.deleteUser(userNo);
 
    }
+
+	@Override
+	public Rider selectRiderOne(int userNo) {
+		return dao.selectRiderOne(userNo);
+	}
 }
