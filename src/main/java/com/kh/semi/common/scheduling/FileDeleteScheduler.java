@@ -24,7 +24,7 @@ public class FileDeleteScheduler {
 	private final OrderService oService;
 	private final InquiryService iService;
 	
-	@Scheduled(cron = "* 1 * * * *")
+	@Scheduled(cron = "1 1 * * * *")
 	public void deleteOrderFile() {
 		log.debug("주문 파일 삭제 스케쥴러 시작");
 		List<String> list = oService.selectOrdersImgList();
@@ -56,7 +56,7 @@ public class FileDeleteScheduler {
 		log.debug("주문 파일 삭제 스케쥴러 끝");
 	}
 	
-	@Scheduled(cron = "* 2 * * * *")
+	@Scheduled(cron = "1 2 * * * *")
 	public void deleteInquiryFile() {
 		log.debug("문의 파일 삭제 스케쥴러 시작");
 		List<String> list = iService.selectInquiryImgList();

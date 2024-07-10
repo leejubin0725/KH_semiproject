@@ -74,7 +74,7 @@ public class UserController {
       String url = "";
       if (!(loginUser != null && encoder.matches(u.getPassword(), loginUser.getPassword()))) {
     	  ra.addFlashAttribute("alertMsg", "로그인 실패!");
-         url = "redirect:/user/signup";
+    	  url = "redirect:/user/login";
       } else {
          ra.addFlashAttribute("alertMsg", "로그인 성공");
          model.addAttribute("loginUser", loginUser);

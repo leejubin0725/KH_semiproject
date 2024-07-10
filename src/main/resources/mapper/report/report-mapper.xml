@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="report">
+
+	<insert id="saveReport" parameterType="Order"
+		useGeneratedKeys="true">
+		<selectKey keyProperty="reportId" resultType="int"
+			order="BEFORE">
+			SELECT SEQ_RENO.NEXTVAL FROM DUAL
+	</selectKey>
+	
+	INSERT INTO REPORTS
+	(
+		REPORT_ID,
+		NICKNAME,
+		TITLE,
+		CONTENT,
+		REPORT_DATE
+	) VALUES
+	(
+		#{reportId},
+		#{nickName},
+		#{title},
+		#{content},
+		DEFAULT
+	)
+	</insert>
+	
+	<select id="selectReportList" resultType="Report">
+		SELECT *
+		FROM REPORTS
+		WHERE REPORT_ID = #{reportId}
+	</select>
+	
+</mapper>

@@ -137,7 +137,7 @@
 
     <script>
     function submitReport(){
-    	location.href = "${contextPath}/order/report/"
+    	location.href = "${contextPath}/report/report/"
     }
         document.querySelectorAll('tbody tr').forEach(row => {
             row.addEventListener('click', function(event) {
