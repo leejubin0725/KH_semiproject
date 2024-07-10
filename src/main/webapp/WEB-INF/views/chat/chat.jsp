@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -79,10 +80,15 @@
     <div class="chat-container">
         <div class="chat-header">Chat Room</div>
         <div id="chat">
-            <ul id="messages"></ul>
+            <ul id="messages">
+                <c:forEach var="message" items="${messages}">
+                    <li>${message.senderId}: ${message.content}</li>
+                </c:forEach>
+            </ul>
         </div>
         <div class="chat-inputs">
-            <input type="text" id="from" placeholder="Your name" />
+            <input type="hidden" id="from" value="${sessionScope.loginUser.userNo}" /> <!-- 세션에서 사용자 ID -->
+            <input type="hidden" id="chatRoomId" value="${chatRoomId}" /> <!-- 채팅방 ID 추가 -->
             <input type="text" id="text" placeholder="Your message" />
             <button onclick="sendMessage()">Send</button>
         </div>
@@ -92,7 +98,7 @@
         var stompClient = null;
 
         function connect() {
-            var socket = new SockJS('${pageContext.request.contextPath}/chat');
+            var socket = new SockJS('<%= request.getContextPath() %>/chat');
             stompClient = Stomp.over(socket);
             stompClient.connect({}, function (frame) {
                 console.log('Connected: ' + frame);
@@ -106,14 +112,22 @@
         function sendMessage() {
             var from = document.getElementById('from').value;
             var text = document.getElementById('text').value;
+            var chatRoomId = document.getElementById('chatRoomId').value; // 채팅방 ID 추가
+
             console.log('Sending message:', from, text);
-            stompClient.send("/app/sendMessage", {}, JSON.stringify({'from': from, 'text': text}));
+            stompClient.send("/app/sendMessage", {}, JSON.stringify({
+            	
+                'senderId': from,
+                'content': text,
+                'chatRoomId': chatRoomId // 채팅방 ID 추가
+            }));
         }
+
 
         function showMessage(message) {
             var response = document.getElementById('messages');
             var li = document.createElement('li');
-            li.appendChild(document.createTextNode(message.from + ": " + message.text));
+            li.appendChild(document.createTextNode(message.senderId + ": " + message.content));
             response.appendChild(li);
         }
 
@@ -121,3 +135,4 @@
     </script>
 </body>
 </html>
+

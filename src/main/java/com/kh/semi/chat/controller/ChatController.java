@@ -1,28 +1,41 @@
 package com.kh.semi.chat.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.semi.chat.model.vo.Message;
+import com.kh.semi.chat.service.MessageService;
+
+import java.util.List;
 
 @Controller
 public class ChatController {
-	
-	private static final Logger logger = LoggerFactory.getLogger(ChatController.class);
 
+    @Autowired
+    private MessageService messageService;
 
-    @GetMapping("/chat")
-    public String chat() {
-        return "chat/chat";
-    }
-    
     @MessageMapping("/sendMessage")
     @SendTo("/topic/messages")
-    public ChatMessage sendMessage(ChatMessage message) throws Exception {
-        logger.info("Received message: " + message.getFrom() + ": " + message.getText());
+    public Message sendMessage(Message message) {
+        // 메시지의 senderId를 클라이언트에서 받은 senderId로 설정
+        if (message.getSenderId() == 0) {
+            throw new IllegalStateException("User is not logged in.");
+        }
+
+        // 메시지를 데이터베이스에 저장
+        messageService.saveMessage(message);
+
         return message;
+    }
+
+    @GetMapping("/messages")
+    @ResponseBody
+    public List<Message> getMessages(@RequestParam int chatRoomId) {
+        return messageService.getMessagesByChatRoomId(chatRoomId);
     }
 }
