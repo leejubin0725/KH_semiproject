@@ -16,7 +16,7 @@
         margin-top: 10px;
     }
     .comments-actions {
-        margin-top: 20px; /* 수락하기 버튼 위 여백 추가 */
+        margin-top: 20px;
     }
     .comments-actions button {
         padding: 10px;
@@ -120,11 +120,10 @@
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 <script>
-let currentRating = 0; // 초기 별점 설정
+let currentRating = 0;
 
 function setRating(rating) {
     currentRating = rating;
-
     const stars = document.querySelectorAll('.star');
     stars.forEach((star, index) => {
         if (index < rating) {
@@ -133,36 +132,20 @@ function setRating(rating) {
             star.classList.remove('checked');
         }
     });
-
-    // 별점을 텍스트로 업데이트
     const starRatingText = getStarRatingText(rating);
     const starRatingCell = document.querySelector('.star-rating');
     starRatingCell.textContent = starRatingText;
 }
 
 function editStarRating() {
-    // 편집 모드로 전환하기 위한 로직 추가 가능
     console.log('Editing star rating...');
 }
 
 function getStarRatingText(rating) {
-    switch (rating) {
-        case 1:
-            return '★☆☆☆☆';
-        case 2:
-            return '★★☆☆☆';
-        case 3:
-            return '★★★☆☆';
-        case 4:
-            return '★★★★☆';
-        case 5:
-            return '★★★★★';
-        default:
-            return '별점 없음';
-    }
+    const ratings = ['별점 없음', '★☆☆☆☆', '★★☆☆☆', '★★★☆☆', '★★★★☆', '★★★★★'];
+    return ratings[rating] || ratings[0];
 }
 
-// 채팅방 생성 함수
 function createChatRoom(orderId) {
     var password = prompt("채팅방 비밀번호를 입력하세요:");
     if (password != null && password != "") {
@@ -182,7 +165,6 @@ function createChatRoom(orderId) {
     }
 }
 
-// 채팅방 참가 함수
 function joinChatRoom(orderId) {
     var password = prompt("채팅방 비밀번호를 입력하세요:");
     if (password != null && password != "") {
@@ -193,19 +175,143 @@ function joinChatRoom(orderId) {
 }
 
 function accept(){
-	alert('수락되었습니다.');
-	location.href = "${contextPath}"
+    alert('수락되었습니다.');
+    location.href = "${contextPath}"
+}
+
+var mapContainer = document.getElementById('map');
+var mapOption = {
+    center: new kakao.maps.LatLng(33.450701, 126.570667),
+    level: 4
+};
+
+var map = new kakao.maps.Map(mapContainer, mapOption);
+var geocoder = new kakao.maps.services.Geocoder();
+
+var startPoint = "${order.startPoint}";
+var endPoint = "${order.endPoint}";
+
+var markers = [];
+var polylines = [];
+
+function geocodeAddress(address, callback) {
+    geocoder.addressSearch(address, function(result, status) {
+        if (status === kakao.maps.services.Status.OK) {
+            callback(new kakao.maps.LatLng(result[0].y, result[0].x));
+        }
+    });
+}
+
+geocodeAddress(startPoint, function(coords) {
+    var startMarker = new kakao.maps.Marker({
+        map: map,
+        position: coords
+    });
+    markers.push(startMarker);
+    adjustMapBounds();
+});
+
+geocodeAddress(endPoint, function(coords) {
+    var endMarker = new kakao.maps.Marker({
+        map: map,
+        position: coords
+    });
+    markers.push(endMarker);
+    adjustMapBounds();
+    if (markers.length === 2) {
+        findRouteAndDrawLine();
+    }
+});
+
+function adjustMapBounds() {
+    if (markers.length === 2) {
+        var bounds = new kakao.maps.LatLngBounds();
+        markers.forEach(marker => bounds.extend(marker.getPosition()));
+        map.setBounds(bounds);
+    }
+}
+
+function findRouteAndDrawLine() {
+    var start = markers[0].getPosition();
+    var end = markers[1].getPosition();
+    
+    var url = `https://apis-navi.kakaomobility.com/v1/directions?origin=\${start.getLng()},\${start.getLat()}&destination=\${end.getLng()},\${end.getLat()}&waypoints=&priority=RECOMMEND&road_details=false`;
+    
+    fetch(url, {
+        method: 'GET',
+        headers: {
+            'Authorization': 'KakaoAK d0e8fab65653662fce2c093339eeeb25'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.routes && data.routes.length > 0) {
+            var route = data.routes[0];
+            var linePath = [];
+            route.sections.forEach(section => {
+                section.roads.forEach(road => {
+                    for (let i = 0; i < road.vertexes.length; i += 2) {
+                        linePath.push(new kakao.maps.LatLng(road.vertexes[i+1], road.vertexes[i]));
+                    }
+                });
+            });
+
+            var polyline = new kakao.maps.Polyline({
+                path: linePath,
+                strokeWeight: 5,
+                strokeColor: '#86C1C6',
+                strokeOpacity: 0.7,
+                strokeStyle: 'solid'
+            });
+
+            polyline.setMap(map);
+            polylines.push(polyline);
+
+            var distance = polyline.getLength();
+            var distanceKm = (distance / 1000).toFixed(2);
+            console.log('두 마커 사이의 거리는 ' + distanceKm + ' km 입니다.');
+        } else {
+            console.log('경로를 찾을 수 없습니다.');
+        }
+    })
+    .catch(error => console.log('경로 요청 중 오류 발생:', error));
+}
+
+function expandMapImage() {
+    const mapImage = document.querySelector('#map');
+    const mainImage = document.querySelector('.main-image');
+    const restoreButton = document.querySelector('.restore-button');
+    const elementsToHide = document.querySelectorAll('.product-title, .author-nickname, .product-description, .category, .price, .delivery-info');
+    
+    mapImage.style.width = mainImage.offsetWidth + 'px';
+    mapImage.style.height = '500px';
+    
+    restoreButton.style.display = 'block';
+
+    elementsToHide.forEach(element => element.classList.add('hidden'));
+    
+    const intervalId = setInterval(() => map.relayout(), 1);
+    setTimeout(() => clearInterval(intervalId), 1000);
+}
+
+function restoreMapImage() {
+    const mapImage = document.querySelector('#map');
+    const restoreButton = document.querySelector('.restore-button');
+    const elementsToHide = document.querySelectorAll('.product-title, .author-nickname, .product-description, .category, .price, .delivery-info');
+    
+    mapImage.style.width = '400px';
+    mapImage.style.height = '400px';
+    
+    restoreButton.style.display = 'none';
+    
+    elementsToHide.forEach(element => element.classList.remove('hidden'));
 }
 
 document.addEventListener('DOMContentLoaded', function() {
     const fragileCheckbox = document.getElementById('fragileCheckbox');
     const valuableCheckbox = document.getElementById('valuableCheckbox');
     const urgentCheckbox = document.getElementById('urgentCheckbox');
-
-    // JavaScript에서 이벤트 처리 또는 초기 설정이 필요한 경우에 추가 작업 수행
-    // 예: 체크박스에 대한 추가적인 동작이나 스타일링 등
 });
-
 </script>
 </body>
 </html>
