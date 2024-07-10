@@ -81,7 +81,7 @@
            </tr>
            <tr>
                <td colspan="4">
-	               <c:if test="${(sessionScope.loginUser.role == 'rider' || sessionScope.loginUser.role == 'admin') && order.orderStatus == '대기중'}">
+	               <c:if test="${(sessionScope.loginUser.role == 'rider' || sessionScope.loginUser.role == 'admin') && order.orderStatus == '대기중' && order.riderNo != null}">
 	                   <div class="comments-actions">
 	                       <button onclick="accept()">수락하기</button>
 	                   </div>

@@ -29,19 +29,6 @@ public interface UserDao {
 
    List<Order> selectMyPostList(int userNo);
 
-   /* 삭제 기능 */
-   void deleteAllChatRoomJoinsByUser(int userNo);
-
-   void deleteAllOrdersByUser(int userNo);
-
-   void deleteAllChatRoomJoinsByChatRoom(int userNo);
-
-   void deleteAllChatsByUser(int userNo);
-
-   void deleteAllVehiclesByRider(int userNo);
-
-   void deleteAllRidersByUser(int userNo);
-
    int deleteUser(int userNo);
 
    Rider selectRiderOne(int userNo);

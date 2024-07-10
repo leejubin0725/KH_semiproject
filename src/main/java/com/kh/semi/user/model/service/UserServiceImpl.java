@@ -69,27 +69,14 @@ public class UserServiceImpl implements UserService {
    public List<Order> selectMyPostList(int userNo) {
 	   return dao.selectMyPostList(userNo);
    }
-   @Override
-   @Transactional
-   public int deleteUserAndAllData(int userNo, String role) {
-      
-        dao.deleteAllChatRoomJoinsByUser(userNo);
-        dao.deleteAllOrdersByUser(userNo);
-        dao.deleteAllChatRoomJoinsByChatRoom(userNo); 
-        dao.deleteAllChatsByUser(userNo);
-
-        if ("rider".equals(role)) {
-           dao.deleteAllVehiclesByRider(userNo); 
-            dao.deleteAllRidersByUser(userNo); 
-        }
-
-
-        return dao.deleteUser(userNo);
-
-   }
 
 	@Override
 	public Rider selectRiderOne(int userNo) {
 		return dao.selectRiderOne(userNo);
+	}
+
+	@Override
+	public int deleteUser(int userNo) {
+		return dao.deleteUser(userNo);
 	}
 }

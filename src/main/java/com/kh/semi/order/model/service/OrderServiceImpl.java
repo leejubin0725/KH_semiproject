@@ -82,4 +82,9 @@ public class OrderServiceImpl implements OrderService {
 		return orderDao.updateOrderStatus(o);
 	}
 
+	@Override
+	public int selectOrderRiderOne(int riderNo) {
+		return orderDao.selectOrderRiderOne(riderNo);
+	}
+
 }

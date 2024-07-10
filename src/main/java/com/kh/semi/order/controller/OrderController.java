@@ -216,5 +216,16 @@ public class OrderController {
         return url;
 	}
 	
+	@GetMapping("/riderOrderSelect")
+	public String riderOrderSelect(
+			@ModelAttribute("loginUser") User loginUser,
+			Order o
+			) {
+		Rider rider = userService.selectRiderOne(loginUser.getUserNo());
+		int orderNo = orderService.selectOrderRiderOne(rider.getRiderNo());
+		
+		return "redirect:/order/detailProduct/" + orderNo;
+	}
+	
 }
 

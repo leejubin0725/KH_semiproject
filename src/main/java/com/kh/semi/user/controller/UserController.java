@@ -73,8 +73,8 @@ public class UserController {
       User loginUser = uService.login(u);
       String url = "";
       if (!(loginUser != null && encoder.matches(u.getPassword(), loginUser.getPassword()))) {
-         model.addAttribute("errorMsg", "로그인 실패!");
-         url = "common/errorPage";
+    	  ra.addFlashAttribute("alertMsg", "로그인 실패!");
+         url = "redirect:/user/signup";
       } else {
          ra.addFlashAttribute("alertMsg", "로그인 성공");
          model.addAttribute("loginUser", loginUser);
@@ -325,22 +325,26 @@ public class UserController {
    }
    /* 회원 탈퇴 */
 
-   @PostMapping("/delete")
-   @ResponseBody
-   public String deleteUser(HttpSession session) {
-       User loginUser = (User) session.getAttribute("loginUser");
-       if (loginUser != null) {
-           String role = loginUser.getRole();
-           int result = uService.deleteUserAndAllData(loginUser.getUserNo(), role);
-           if (result > 0) {
-               session.invalidate(); // 세션 무효화
-               return "success";
-           } else {
-               return "fail";
-           }
+   @GetMapping("/delete")
+   public String deleteUser(@ModelAttribute("loginUser") User loginUser , 
+		   RedirectAttributes ra,
+		   Model model,
+		   SessionStatus status) {
+       int result = uService.deleteUser(loginUser.getUserNo());
+       
+       String url = "";
+       if (result > 0) {
+          ra.addFlashAttribute("alertMsg", "회원가입 성공");
+          url = "redirect:/"; // 재요청
        } else {
-           return "fail";
+          model.addAttribute("errorMsg", "회원가입 실패");
+          url = "common/errorPage"; // 에러 페이지
        }
+       
+       status.setComplete(); // 세션 무효화
+       
+       return url;
+      
    }
 
 }

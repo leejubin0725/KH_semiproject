@@ -28,4 +28,6 @@ public interface OrderDao {
 
 	int updateOrderStatus(Order o);
 
+	int selectOrderRiderOne(int riderNo);
+
 }

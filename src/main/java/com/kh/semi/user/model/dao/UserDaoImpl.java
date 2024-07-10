@@ -89,40 +89,11 @@ public class UserDaoImpl implements UserDao {
       return sqlSession.delete("user.deleteUser", userNo);
    }
 
-   @Override
-   public void deleteAllChatRoomJoinsByUser(int userNo) {
-      sqlSession.delete("user.deleteAllChatRoomJoinsByUser", userNo);
-   }
 
-   @Override
-   public void deleteAllChatsByUser(int userNo) {
-      sqlSession.delete("user.deleteAllChatsByUser", userNo);
-   }
-
-   @Override
-   public void deleteAllOrdersByUser(int userNo) {
-      sqlSession.delete("user.deleteAllOrdersByUser", userNo);
-   }
-
-   @Override
-   public void deleteAllChatRoomJoinsByChatRoom(int userNo) {
-      sqlSession.delete("user.deleteAllChatRoomJoinsByChatRoom", userNo);
-   }
-
-   @Override
-   public void deleteAllRidersByUser(int userNo) {
-      sqlSession.delete("user.deleteAllRidersByUser", userNo);
-   }
-
-   @Override
-   public void deleteAllVehiclesByRider(int userNo) {
-      sqlSession.delete("user.deleteAllVehiclesByRider", userNo);
-   }
-
-@Override
-public Rider selectRiderOne(int userNo) {
-	return sqlSession.selectOne("user.selectRiderOne", userNo);
-}
+	@Override
+	public Rider selectRiderOne(int userNo) {
+		return sqlSession.selectOne("user.selectRiderOne", userNo);
+	}
    
    
 

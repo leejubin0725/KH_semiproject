@@ -29,8 +29,8 @@ public interface UserService {
 
 	List<Order> selectMyPostList(int userNo);
 
-	int deleteUserAndAllData(int userNo, String role);
-
 	Rider selectRiderOne(int userNo);
+
+	int deleteUser(int userNo);
 
 }
