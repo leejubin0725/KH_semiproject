@@ -81,11 +81,11 @@
            </tr>
            <tr>
                <td colspan="4">
-               <c:if test="${sessionScope.loginUser.role == 'rider' || sessionScope.loginUser.role == 'admin'}">
-                   <div class="comments-actions">
-                       <button onclick="accept()">수락하기</button>
-                   </div>
-                   </c:if>
+	               <c:if test="${(sessionScope.loginUser.role == 'rider' || sessionScope.loginUser.role == 'admin') && order.orderStatus == '대기중'}">
+	                   <div class="comments-actions">
+	                       <button onclick="accept()">수락하기</button>
+	                   </div>
+	               </c:if>
                </td>
            </tr>
            
@@ -171,18 +171,24 @@ function selectReviewList(){
         },
         success : function(result){
             var reviews = "";
-            for(var review of result){
-                reviews += "<tr>";
-                reviews += `<td>\${review.rating}</td>`;
-                reviews += `<td>\${review.writer}</td>`;
-                reviews += `<td>\${review.reviewContent}</td>`;
-                reviews += `<td>\${formatDate(review.createDate)}</td>`;
-                reviews += "</tr>";
+            if(result.length > 0){
+	            for(var review of result){
+	                reviews += "<tr>";
+	                reviews += `<td>\${review.rating}</td>`;
+	                reviews += `<td>\${review.writer}</td>`;
+	                reviews += `<td>\${review.reviewContent}</td>`;
+	                reviews += `<td>\${formatDate(review.createDate)}</td>`;
+	                reviews += "</tr>";
+	            }
+	            $("#reviewArea tbody").html(reviews);
+	            $("#rcount").html(result.length);
             }
-            $("#reviewArea tbody").html(reviews);
-            $("#rcount").html(result.length);
         }
     });
+}
+
+function accept() {
+	window.location.href = "${contextPath}/order/orderAccept?orderNo=${order.orderNo}";
 }
 
 function formatDate(timestamp) {

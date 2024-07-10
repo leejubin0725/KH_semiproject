@@ -149,6 +149,7 @@ public class OrderController {
 	@GetMapping("/orderAccept")
 	public String orderAccept(
 			@ModelAttribute("loginUser") User loginUser,
+			@RequestParam("orderNo") int orderNo,
 			Order o,
 			Model model,
 			RedirectAttributes ra
@@ -156,6 +157,7 @@ public class OrderController {
 		
 		Rider rider = userService.selectRiderOne(loginUser.getUserNo());
 		
+		o.setOrderNo(orderNo);
 		o.setRiderNo(rider.getRiderNo());
 		
 		LocalDate localDate = LocalDate.now();
@@ -168,7 +170,7 @@ public class OrderController {
 		String url = "";
         if(result > 0) {
             ra.addFlashAttribute("alertMsg" , "주문 수락 성공");
-            url = "redirect:/order/detailProduct";
+            url = "redirect:/order/detailProduct/" + orderNo;
         } else {
             model.addAttribute("errorMsg" , "주문 수락 실패");
             url = "common/errorPage";
@@ -182,6 +184,7 @@ public class OrderController {
 	@GetMapping("/orderEnd")
 	public String orderEnd(
 			@ModelAttribute("loginUser") User loginUser,
+			@RequestParam("orderNo") int orderNo,
 			Order o,
 			Model model,
 			RedirectAttributes ra
@@ -189,6 +192,7 @@ public class OrderController {
 		
 		Rider rider = userService.selectRiderOne(loginUser.getUserNo());
 		
+		o.setOrderNo(orderNo);
 		o.setRiderNo(rider.getRiderNo());
 		
 		LocalDate localDate = LocalDate.now();
@@ -201,7 +205,7 @@ public class OrderController {
 		String url = "";
         if(result > 0) {
             ra.addFlashAttribute("alertMsg" , "배달 완료 알림 성공");
-            url = "redirect:/order/detailProduct";
+            url = "redirect:/order/detailProduct/" + orderNo;
         } else {
             model.addAttribute("errorMsg" , "배달 완료 알림 실패");
             url = "common/errorPage";
