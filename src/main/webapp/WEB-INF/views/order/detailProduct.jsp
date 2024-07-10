@@ -162,71 +162,63 @@ var mapContainer = document.getElementById('map'); // 지도를 표시할 div
 // 기본 위치 (임의의 위치 설정)
 var mapOption = {
     center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-    level: 3 // 지도의 확대 레벨
+    level: 4 // 축소된 상태로 설정
 };
 
 var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 var geocoder = new kakao.maps.services.Geocoder(); // 주소-좌표 변환 객체를 생성합니다
 
-// 현재 위치를 가져와서 지도의 중심으로 설정
-if (navigator.geolocation) { // 브라우저가 Geolocation을 지원하는지 확인합니다
-    navigator.geolocation.getCurrentPosition(function(position) { // 현재 위치를 가져옵니다
-        var lat = position.coords.latitude; // 위도를 가져옵니다
-        var lon = position.coords.longitude; // 경도를 가져옵니다
-        
-        var locPosition = new kakao.maps.LatLng(lat, lon); // 위도와 경도를 기반으로 새로운 LatLng 객체를 생성합니다
-
-        map.setCenter(locPosition); // 현재 위치로 지도의 중심을 이동시킵니다
-        getAddressFromCoords(locPosition); // 현재 위치의 주소를 가져옵니다
-    }, function(error) { // 위치를 가져오는 데 실패한 경우 오류를 콘솔에 출력합니다
-        console.error(error);
-    });
-} else {
-    console.error("Geolocation is not supported by this browser."); // 브라우저가 Geolocation을 지원하지 않는 경우 메시지를 출력합니다
-}
+// 출발 위치와 도착 위치를 위도와 경도로 변환하여 마커를 찍기
+var startPoint = "${order.startPoint}";
+var endPoint = "${order.endPoint}";
 
 var markers = []; // 마커를 저장할 배열
 var polylines = []; // 폴리라인을 저장할 배열
 
-// 지도 클릭 이벤트를 등록합니다
-kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
-    if (markers.length >= 2) { // 마커가 2개 이상일 때 클릭하면 모든 마커와 폴리라인을 제거합니다
-        clearMap();
-    } else {
-        // 클릭한 위치의 좌표를 가져옵니다 
-        var latlng = mouseEvent.latLng;
-        
-        // 마커를 생성합니다
-        var marker = new kakao.maps.Marker({
-            position: latlng // 마커의 위치를 클릭한 좌표로 설정합니다
+geocoder.addressSearch(startPoint, function(result, status) {
+    if (status === kakao.maps.services.Status.OK) {
+        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+        var startMarker = new kakao.maps.Marker({
+            map: map,
+            position: coords
         });
-
-        // 지도에 마커를 표시합니다
-        marker.setMap(map);
-        
-        // 마커를 배열에 추가합니다
-        markers.push(marker);
-
-        // 클릭한 위치의 주소를 가져옵니다
-        getAddressFromCoords(latlng);
-
-        // 두 개의 마커가 있는 경우 경로를 요청하고 폴리라인을 그립니다
-        if (markers.length === 2) {
+        markers.push(startMarker); // 마커를 배열에 추가합니다
+        adjustMapBounds(); // 지도 경계 조정
+        if (markers.length === 2) { // 두 개의 마커가 추가되면 경로를 찾고 폴리라인을 그립니다
             findRouteAndDrawLine();
         }
     }
 });
 
+geocoder.addressSearch(endPoint, function(result, status) {
+    if (status === kakao.maps.services.Status.OK) {
+        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+        var endMarker = new kakao.maps.Marker({
+            map: map,
+            position: coords
+        });
+        markers.push(endMarker); // 마커를 배열에 추가합니다
+        adjustMapBounds(); // 지도 경계 조정
+        if (markers.length === 2) { // 두 개의 마커가 추가되면 경로를 찾고 폴리라인을 그립니다
+            findRouteAndDrawLine();
+        }
+    }
+});
+
+function adjustMapBounds() {
+    if (markers.length === 2) {
+        var bounds = new kakao.maps.LatLngBounds();
+        bounds.extend(markers[0].getPosition());
+        bounds.extend(markers[1].getPosition());
+        map.setBounds(bounds);
+    }
+}
+
 function findRouteAndDrawLine() {
     var start = markers[0].getPosition(); // 첫 번째 마커의 위치를 가져옵니다
     var end = markers[1].getPosition(); // 두 번째 마커의 위치를 가져옵니다
     
-    console.log("Start:", start);
-    console.log("End:", end);
-    
     var url = `https://apis-navi.kakaomobility.com/v1/directions?origin=\${start.getLng()},\${start.getLat()}&destination=\${end.getLng()},\${end.getLat()}&waypoints=&priority=RECOMMEND&road_details=false`;
-    
-    console.log("URL:", url);
     
     fetch(url, {
         method: 'GET',
@@ -234,12 +226,8 @@ function findRouteAndDrawLine() {
             'Authorization': 'KakaoAK d0e8fab65653662fce2c093339eeeb25'
         }
     })
-    .then(response => {
-        console.log("Response Status:", response.status); // 응답 상태 코드 출력
-        return response.json();
-    }) // 응답을 JSON 형식으로 변환합니다
+    .then(response => response.json())
     .then(data => {
-        console.log("Data:", data); // 받아온 데이터 출력
         if (data.routes && data.routes.length > 0) { // 경로 데이터가 있는지 확인합니다
             var route = data.routes[0]; // 첫 번째 경로를 가져옵니다
 
@@ -281,31 +269,8 @@ function findRouteAndDrawLine() {
 }
 
 function accept(){
-	alert('수락되었습니다.');
-	location.href = "${contextPath}"
-}
-function clearMap() {
-    // 모든 마커 제거
-    for (var i = 0; i < markers.length; i++) {
-        markers[i].setMap(null); // 지도에서 마커를 제거합니다
-    }
-    markers = []; // 마커 배열을 초기화합니다
-
-    // 모든 폴리라인 제거
-    for (var i = 0; i < polylines.length; i++) {
-        polylines[i].setMap(null); // 지도에서 폴리라인을 제거합니다
-    }
-    polylines = []; // 폴리라인 배열을 초기화합니다
-}
-
-function getAddressFromCoords(coords) {
-    // 좌표를 주소로 변환합니다
-    geocoder.coord2Address(coords.getLng(), coords.getLat(), function(result, status) {
-        if (status === kakao.maps.services.Status.OK) { // 주소 변환이 성공한 경우
-            var address = result[0].address.address_name; // 변환된 주소를 가져옵니다
-            document.getElementById('address').innerText = address; // 주소를 화면에 표시합니다
-        }
-    });
+   alert('수락되었습니다.');
+   location.href = "${contextPath}"
 }
 
 function expandMapImage() {
