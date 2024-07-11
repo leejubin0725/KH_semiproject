@@ -69,23 +69,13 @@
         function confirmDelete() {
             if (confirm("정말로 탈퇴하시겠습니까?")) {
                 var contextPath = "${pageContext.request.contextPath}";
-                $.ajax({
-                    url: contextPath + "/user/delete",
-                    type: 'POST',
-                    success: function(result) {
-                        if (result === 'success') {
-                            alert('회원탈퇴가 완료되었습니다.');
-                            window.location.href = contextPath;
-                        } else {
-                            alert('회원탈퇴 실패');
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error:', error);
-                        alert('회원탈퇴 중 오류 발생');
-                    }
-                });
+                window.location.href = contextPath + "/user/delete";
             }
+        }
+        
+        function acceptorder(){
+        	var contextPath = "${pageContext.request.contextPath}";
+        	window.location.href = contextPath + "/order/riderOrderSelect";
         }
     </script>
 </body>

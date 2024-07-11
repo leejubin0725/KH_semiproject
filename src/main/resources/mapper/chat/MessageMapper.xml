@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.semi.chat.model.dao.MessageDao">
+
+    <insert id="insertMessage" parameterType="com.kh.semi.chat.model.vo.Message">
+        INSERT INTO Message (MESSAGE_ID, chat_room_id, sender_id, content)
+        VALUES (SEQ_MESSAGE_ID.NEXTVAL, #{chatRoomId}, #{senderId}, #{content})
+    </insert>
+
+    <select id="selectMessagesByChatRoomId" resultType="com.kh.semi.chat.model.vo.Message">
+        SELECT * FROM Message WHERE chat_room_id = #{chatRoomId}
+    </select>
+</mapper>

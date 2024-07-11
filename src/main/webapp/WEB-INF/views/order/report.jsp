@@ -78,17 +78,17 @@
         <h1>신고하기</h1>
     </header>
     <main>
-        <form id="reportForm" class="report-form">
+        <form action="${contextPath }/report/save" method="POST" id="reportForm" class="report-form">
             <div class="form-group">
                 <label for="reportTitle">신고 제목</label>
-                <input type="text" id="reportTitle" name="reportTitle" required>
+                <input type="text" id="reportTitle" name="title" required>
             </div>
             <div class="form-group">
                 <label for="reportContent">신고 내용</label>
-                <textarea id="reportContent" name="reportContent" rows="5" required></textarea>
+                <textarea id="reportContent" name="content" rows="5" required></textarea>
             </div>
             <div class="button-group">
-                <button type="button" onclick="submitReport()" class="btn-submit">신고 제출</button>
+                <button type="submit" class="btn-submit">신고 제출</button>
             </div>
         </form>
     </main>

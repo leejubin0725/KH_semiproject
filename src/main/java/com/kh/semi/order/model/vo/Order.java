@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 public class Order {
 	private int orderNo;
     private int userNo;
+    private int riderNo;
     private String writer;
     private String orderTitle;
     private String orderContent;

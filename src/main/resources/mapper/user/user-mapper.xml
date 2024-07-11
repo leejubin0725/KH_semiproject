@@ -146,10 +146,12 @@
    </select>
 
    <!-- 특정 USER_NO로 사용자 삭제 -->
-   <delete id="deleteUser" parameterType="int">
-      DELETE FROM USERS WHERE
-      USER_NO = #{userNo}
-   </delete>
+   <update id="deleteUser" parameterType="int">
+      UPDATE USERS
+      SET
+      STATUS = 'N'
+      WHERE USER_NO = #{userNo}
+   </update>
 
    <!-- 추가할 매퍼들 -->
    <delete id="deleteAllChatRoomJoinsByUser" parameterType="int">
@@ -182,7 +184,11 @@
         DELETE FROM VEHICLES WHERE RIDER_NO IN (SELECT RIDER_NO FROM RIDERS WHERE USER_NO = #{userNo})
     </delete>
 
-
+	<select id="selectRiderOne" resultType="Rider">
+		SELECT *
+		FROM RIDERS
+		WHERE USER_NO = #{userNo}
+	</select>
 
 
 

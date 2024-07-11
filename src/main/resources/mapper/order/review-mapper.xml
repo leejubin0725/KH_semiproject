@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="review">
+	<select id="selectReviewList" resultType = "Review">
+	SELECT * FROM REVIEWS WHERE ORDER_NO = #{orderNo}
+	
+	</select>
+	
+	<insert id="insertReview" parameterType="Review"
+		useGeneratedKeys="true">
+		
+		INSERT INTO REVIEWS (
+		RIDER_NO,
+		ORDER_NO,
+		REVIEW_CONTENT,
+		CREATE_DATE,
+		RATING,
+		WRITER
+		) VALUES (
+		#{riderNo},		
+		#{orderNo},		
+		#{reviewContent},		
+		SYSDATE,		
+		#{rating},		
+		#{writer}		
+		)
+		
+		</insert>
+		
+
+</mapper>
