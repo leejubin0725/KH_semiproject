@@ -94,7 +94,7 @@
                <td colspan="5">
                <c:if test="${sessionScope.loginUser.role == 'rider' || 'admin'}">
                    <div class="comments-actions">
-                       <button onclick="accept()">수락하기</button>
+                       <button onclick="accept(${order.orderNo})">수락하기</button>
                    </div>
                    </c:if>
                </td>
@@ -175,8 +175,19 @@ function joinChatRoom(orderId) {
     }
 }
 
-function accept(){
+function accept(orderId){
     alert('수락되었습니다.');
+    $.ajax({
+        url: '${pageContext.request.contextPath}/chatRoom/password',
+        type: 'GET',
+        data: { orderId: orderId },
+        success: function(response) {
+            alert('룸 비밀번호: ' + response);
+        },
+        error: function(xhr, status, error) {
+            alert("비밀번호를 가져오는 중 오류가 발생했습니다: " + error);
+        }
+    });
     location.href = "${contextPath}"
 }
 

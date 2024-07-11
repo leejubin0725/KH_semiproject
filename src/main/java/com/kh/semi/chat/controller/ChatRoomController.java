@@ -59,4 +59,15 @@ public class ChatRoomController {
             return "error/invalid-room";
         }
     }
+    
+    @GetMapping("/password")
+    @ResponseBody
+    public String getPassword(@RequestParam("orderId") int orderId) {
+        ChatRoom chatRoom = chatRoomService.getChatRoomByOrderId(orderId);
+        if (chatRoom != null) {
+            return chatRoom.getPassword();
+        } else {
+            return "방을 찾을 수 없습니다.";
+        }
+    }
 }
