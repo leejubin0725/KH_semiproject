@@ -17,7 +17,7 @@ public class ChatRoomServiceImpl implements ChatRoomService {
         if (chatRoomDao.countChatRoomByOrderId(chatRoom.getOrderId()) == 0) {
             chatRoomDao.insertChatRoom(chatRoom);
         } else {
-            throw new IllegalStateException("The chat room already exists.");
+            throw new IllegalStateException("채팅방이 이미 존재합니다.");
         }
     }
 

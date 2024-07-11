@@ -153,6 +153,7 @@ function createChatRoom(orderId) {
             url: '${pageContext.request.contextPath}/chatRoom/create',
             type: 'POST',
             data: { orderId: orderId, password: password },
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // 추가된 부분
             success: function(response) {
                 alert(response);
             },
