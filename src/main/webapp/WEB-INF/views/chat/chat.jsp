@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
     <title>Chat Room</title>
     <style>
         body {
@@ -89,7 +90,7 @@
         <div class="chat-inputs">
             <input type="hidden" id="from" value="${sessionScope.loginUser.userNo}" /> <!-- 세션에서 사용자 ID -->
             <input type="hidden" id="chatRoomId" value="${chatRoomId}" /> <!-- 채팅방 ID 추가 -->
-            <input type="text" id="text" placeholder="Your message" />
+            <input type="text" id="text" placeholder="Your message" onkeypress="handleKeyPress(event)" />
             <button onclick="sendMessage()">Send</button>
         </div>
     </div>
@@ -121,6 +122,8 @@
                 'content': text,
                 'chatRoomId': chatRoomId // 채팅방 ID 추가
             }));
+
+            document.getElementById('text').value = ''; // 메시지 전송 후 입력 필드 초기화
         }
 
         function showMessage(message) {
@@ -128,6 +131,12 @@
             var li = document.createElement('li');
             li.appendChild(document.createTextNode(message.senderId + ": " + message.content));
             response.appendChild(li);
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
         }
 
         connect();

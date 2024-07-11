@@ -1,6 +1,7 @@
 package com.kh.semi.chat.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class ChatRoomController {
     @Autowired
     private MessageService messageService;
 
-    @PostMapping("/create")
+    @PostMapping(value = "/create", produces = MediaType.TEXT_PLAIN_VALUE + ";charset=UTF-8")
     @ResponseBody
     public String createChatRoom(@RequestParam("orderId") int orderId, @RequestParam("password") String password) {
         try {
