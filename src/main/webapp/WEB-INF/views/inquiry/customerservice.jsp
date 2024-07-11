@@ -118,7 +118,7 @@
 									<%-- data-id="${inquiry.inquiryNo}" --%> onclick="movePage(${inquiry.inquiryNo})">
 									<td>${inquiry.inquiryNo}</td>
 									<td>${inquiry.title}</td>
-									<td>${inquiry.userNo}</td>
+									<td>${inquiry.writer}</td>
 									<td><fmt:formatDate value="${inquiry.createDate}"
 											pattern="yy-MM-dd" /></td>
 									<td><span class="status completed">답변대기</span></td>
