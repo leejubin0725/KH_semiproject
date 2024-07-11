@@ -214,19 +214,17 @@ body {
                   <th>작성자</th>
                   <th>작성일</th>
                   <th>진행상태</th>
-                  <th>조회수</th>
                   <th>삭제</th>
                </tr>
             </thead>
             <tbody>
                <c:forEach items="${list}" var="order">
                   <tr class="clickable-row" data-id="${order.orderNo}">
-                     <td>${order.orderNo}</td>
+                     <td>&nbsp${order.orderNo}</td>
                      <td>${order.orderTitle}</td>
                      <td>${order.writer}</td>
                      <td>${order.createDate}</td>
                      <td><span class="rider-status">${order.orderStatus}</span></td>
-                     <td>3</td>
                      <td><button class="delete-btn" onclick="deleteRow(${order.orderNo}, this)">Delete</button></td>
                   </tr>
                </c:forEach>
