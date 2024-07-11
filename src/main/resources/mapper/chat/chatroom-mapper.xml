@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.semi.chat.mapper.ChatRoomMapper">
+
+    <select id="selectChatRoomByOrderId" resultType="com.kh.semi.chat.model.vo.ChatRoom">
+        SELECT
+            CHAT_ROOM_ID,
+            ORDER_ID,
+            PASSWORD
+        FROM CHAT_ROOM
+        WHERE ORDER_ID = #{orderId}
+    </select>
+
+    <insert id="insertChatRoom" parameterType="com.kh.semi.chat.model.vo.ChatRoom"
+        useGeneratedKeys="true" keyProperty="chatRoomId">
+        <selectKey keyProperty="chatRoomId" resultType="int" order="BEFORE">
+            SELECT SEQ_CHAT_ROOM_ID.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO CHAT_ROOM (
+            CHAT_ROOM_ID,
+            ORDER_ID,
+            PASSWORD
+        ) VALUES (
+            #{chatRoomId},
+            #{orderId},
+            #{password}
+        )
+    </insert>
+
+    <select id="countChatRoomByOrderId" resultType="int">
+        SELECT COUNT(*) FROM CHAT_ROOM WHERE ORDER_ID = #{orderId}
+    </select>
+</mapper>

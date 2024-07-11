@@ -77,7 +77,9 @@ public class UserController {
     	  url = "redirect:/user/login";
       } else {
          ra.addFlashAttribute("alertMsg", "로그인 성공");
-         model.addAttribute("loginUser", loginUser);
+         //model.addAttribute("loginUser", loginUser);
+         session.setAttribute("loginUser", loginUser);
+         
 
          String nextUrl = (String) session.getAttribute("nextUrl");
 
