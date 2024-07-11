@@ -63,10 +63,8 @@
     <div class="end-point">수령 위치: ${order.endPoint}</div>
 
     <table id="reniewArea" class="comments-table">
+      <c:if test="${(order.orderStatus == '배달완료') && sessionScope.loginUser.userNo == order.userNo} }">
        <thead>
-           <tr>
-               <td colspan="3">댓글(<span id="rcount">${empty board.reniewList ? '0' : board.reniewList.size()}</span>)</td>
-           </tr>
            <tr>
                <th>별점</th>
                <th>글쓴이</th>
@@ -90,9 +88,10 @@
                    </div>
                </td>
            </tr>
+        </c:if>
            <tr>
                <td colspan="5">
-               <c:if test="${sessionScope.loginUser.role == 'rider' || 'admin'}">
+               <c:if test="${(order.orderStatus == '대기중') && (sessionScope.loginUser.role == 'rider' || 'admin')}">
                    <div class="comments-actions">
                        <button onclick="accept()">수락하기</button>
                    </div>
@@ -109,6 +108,7 @@
                </tr>
            </c:forEach>
        </tbody>
+       
     </table>
     
     <!-- 채팅방 생성 및 참가 버튼 추가 -->

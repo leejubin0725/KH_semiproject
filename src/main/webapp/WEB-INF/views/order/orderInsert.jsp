@@ -24,21 +24,21 @@
 				</select>
 				<div class="checkbox-group">
 					<div class="checkbox-label">
-						<input type="checkbox" id="fragile"> <label for="fragile">파손
+						<input type="checkbox" id="fragile" value="0.1"> <label for="fragile">파손
 							주의</label>
 					</div>
 					<p>이 항목을 체크 하시면 라이더에게 추가 적인 정보가 표시 되며, 추가 제약 조건이 붙습니다.</p>
 				</div>
 				<div class="checkbox-group">
 					<div class="checkbox-label">
-						<input type="checkbox" id="valuable"> <label
+						<input type="checkbox" id="valuable" value="0"> <label
 							for="valuable">귀중품 주의</label>
 					</div>
 					<p>이 항목을 체크 하시면 라이더에게 추가 적인 정보가 표시 되며, 추가 제약 조건이 붙습니다.</p>
 				</div>
 				<div class="checkbox-group">
 					<div class="checkbox-label">
-						<input type="checkbox" id="urgent"> <label for="urgent">긴급
+						<input type="checkbox" id="urgent" value="0.5"> <label for="urgent">긴급
 							배송 요청</label>
 					</div>
 					<p class="red">이 항목을 체크 하시면 라이더에게 추가 적인 정보가 표시 되며, 추가 제약 조건이
@@ -120,7 +120,9 @@
                 }
             }
         });
-
+	
+        
+        
         function findRouteAndDrawLine() {
             var start = markers[0].getPosition();
             var end = markers[1].getPosition();
@@ -162,7 +164,7 @@
                     var distance = polyline.getLength();
                     var distanceKm = (distance / 1000).toFixed(2);
                     
-                    var distanceMoney =  Math.floor(distanceKm * 4000);
+                    var distanceMoney = 5000 + Math.floor(distanceKm * 4000);
                     document.getElementById("price").value= distanceMoney + "원";
                     document.getElementById("dis").value= distanceKm + "km";
                     console.log('두 마커 사이의 거리는 ' + distanceKm + ' km 입니다.');
@@ -172,7 +174,31 @@
             })
             .catch(error => console.log('경로 요청 중 오류 발생:', error));
         }
+	
+        function updateDistanceMoney(baseDistanceMoney) {
+            var extraMoney = 0;
+            var checkboxes = document.querySelectorAll('input[type="checkbox"]');
 
+            checkboxes.forEach(function(checkbox) {
+                if (checkbox.checked) {
+                    extraMoney += parseFloat(checkbox.value);
+                }
+            });
+
+            var distanceMoney = Math.floor(baseDistanceMoney * (1 + extraMoney));
+            document.getElementById("price").value = distanceMoney + "원";
+        }
+
+        // 체크박스 변경 시 요금 업데이트
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(function(checkbox) {
+            checkbox.addEventListener('change', function() {
+                var distanceKm = parseFloat(document.getElementById("dis").value.replace('km', '')) || 0;
+                var baseDistanceMoney = Math.floor(distanceKm * 4000);
+                updateDistanceMoney(baseDistanceMoney);
+            });
+        });
+        
         function clearMap() {
             for (var i = 0; i < markers.length; i++) {
                 markers[i].setMap(null);
