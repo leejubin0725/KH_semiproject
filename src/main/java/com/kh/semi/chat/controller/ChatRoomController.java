@@ -1,17 +1,24 @@
 package com.kh.semi.chat.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.semi.chat.model.vo.ChatRoom;
 import com.kh.semi.chat.model.vo.Message;
 import com.kh.semi.chat.service.ChatRoomService;
 import com.kh.semi.chat.service.MessageService;
-
-import java.util.List;
+import com.kh.semi.user.model.vo.User;
 
 @Controller
 @RequestMapping("/chatRoom")
@@ -38,10 +45,13 @@ public class ChatRoomController {
     }
 
     @GetMapping("/join")
-    public String joinChatRoom(@RequestParam("orderId") int orderId, @RequestParam("password") String password, Model model) {
+    public String joinChatRoom(@RequestParam("orderId") int orderId, @RequestParam("password") String password, Model model,HttpSession session) {
         ChatRoom chatRoom = chatRoomService.getChatRoomByOrderId(orderId);
         if (chatRoom != null && chatRoom.getPassword().equals(password)) {
             model.addAttribute("chatRoomId", chatRoom.getChatRoomId());
+            
+            User u = (User) session.getAttribute("loginUser");
+            model.addAttribute("nickName", u.getNickname());
             List<Message> messages = messageService.getMessagesByChatRoomId(chatRoom.getChatRoomId());
             model.addAttribute("messages", messages);
             return "chat/chat";
