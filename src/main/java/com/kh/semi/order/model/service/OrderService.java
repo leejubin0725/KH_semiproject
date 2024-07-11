@@ -27,4 +27,6 @@ public interface OrderService {
 
 	int selectOrderRiderOne(int riderNo);
 
+	int OrderRiderCount(int riderNo);
+
 }

@@ -222,5 +222,14 @@
 		</set>
 		WHERE ORDER_NO = #{orderNo}
 	</update>
+	
+	<select id="OrderRiderCount" resultType="int">
+		SELECT COUNT(*)
+		FROM ORDERS
+		WHERE
+		(RIDER_NO = #{riderNo})
+		AND
+		(ORDER_STATUS <![CDATA[<>]]> '배달완료')
+	</select>
 
 </mapper>

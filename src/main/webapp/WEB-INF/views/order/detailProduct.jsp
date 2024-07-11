@@ -30,6 +30,7 @@
     }
 </style>
 <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=66e04ef438990e6ab1d5d64f99a79f51&libraries=services"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -92,11 +93,7 @@
            </tr>
            <tr>
                <td colspan="5">
-               <c:if test="${sessionScope.loginUser.role == 'rider' || 'admin'}">
-                   <div class="comments-actions">
-                       <button onclick="accept()">수락하기</button>
-                   </div>
-                   </c:if>
+                   <div class="comments-actions"></div>   		
                </td>
            </tr>
            <c:forEach var="reniew" items="${board.reniewList}">
@@ -120,7 +117,10 @@
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 <script>
-let currentRating = 0;
+
+buttonSelction();
+let currentRating = 0; // 초기 별점 설정
+
 
 function setRating(rating) {
     currentRating = rating;
@@ -174,9 +174,53 @@ function joinChatRoom(orderId) {
     }
 }
 
+
 function accept(){
     alert('수락되었습니다.');
-    location.href = "${contextPath}"
+    location.href = "${contextPath}/order/orderAccept?orderNo=${order.orderNo}"
+}
+
+function orderEnd() {
+	window.location.href = "${contextPath}/order/orderEnd?orderNo=${order.orderNo}";
+}
+
+function buttonSelction() {
+	
+		var userRole = "${sessionScope.loginUser.role}";
+		var orderStatus = "${order.orderStatus}";
+		var orderRiderNo = ${order.riderNo};
+		
+		var buttons="";
+		$(".comments-actions").html(buttons);
+		
+		if(userRole == "rider"){
+			$.ajax({
+		        url : "${pageContext.request.contextPath}/order/riderOrderSelectAjax",
+		        data : {
+		        	orderRiderNo : orderRiderNo
+		        },
+		        success : function(result){
+		        	if(orderRiderNo == 0){
+		        		buttons = (orderRiderNo == result) ? "" : "<button type='button' onclick='accept()'>주문 수락</button>";
+		        		$(".comments-actions").html(buttons);
+		        	}
+		        	
+		        	else {
+		        		console.log(result);
+		        		buttons = (orderRiderNo == result) ? "<button type='button' onclick='orderEnd()'>배송 완료</button>" : "";
+		        		$(".comments-actions").html(buttons);
+		        	}
+		        }		        	      
+		    });
+		} 	
+}
+
+function formatDate(timestamp) {
+    const date = new Date(timestamp);
+    const year = date.getFullYear().toString().slice(-2); // Get last 2 digits of year
+    const month = ('0' + (date.getMonth() + 1)).slice(-2); // Months are zero-based
+    const day = ('0' + date.getDate()).slice(-2);
+    return `\${year}-\${month}-\${day}`;
 }
 
 var mapContainer = document.getElementById('map');

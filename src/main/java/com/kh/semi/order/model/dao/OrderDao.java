@@ -30,4 +30,6 @@ public interface OrderDao {
 
 	int selectOrderRiderOne(int riderNo);
 
+	int OrderRiderCount(int riderNo);
+
 }

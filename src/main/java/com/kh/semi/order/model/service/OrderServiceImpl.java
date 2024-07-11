@@ -87,4 +87,9 @@ public class OrderServiceImpl implements OrderService {
 		return orderDao.selectOrderRiderOne(riderNo);
 	}
 
+	@Override
+	public int OrderRiderCount(int riderNo) {
+		return orderDao.OrderRiderCount(riderNo);
+	}
+
 }
