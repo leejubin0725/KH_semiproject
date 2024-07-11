@@ -120,7 +120,7 @@
                        <td>${order.startPoint}</td>
                        <td>${order.endPoint}</td>
                          <td>${order.createDate}</td>
-                         <td>${order.price}</td>
+                         <td>${order.price}원</td>
                    </tr>
                 </c:forEach>      
             </tbody>

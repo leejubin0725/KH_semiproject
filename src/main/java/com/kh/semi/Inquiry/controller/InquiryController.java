@@ -73,7 +73,7 @@ public class InquiryController {
             ) {
         i.setUserNo(loginUser.getUserNo());
         i.setCategoryNo(iService.selectInquiryCategory(category));
-        
+        i.setInquiryStatus("답변대기");
         InquiryImg ii = null;
 		if(upfile != null && !upfile.isEmpty()) {
 			String webPath = "/resources/images/Inquiry/";

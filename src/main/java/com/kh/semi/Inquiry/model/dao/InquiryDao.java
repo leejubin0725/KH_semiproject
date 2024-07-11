@@ -28,6 +28,8 @@ public interface InquiryDao {
 
 	List<String> selectInquiryImgList();
 
+	int updateStatus(int i);
+
 	
 
 }

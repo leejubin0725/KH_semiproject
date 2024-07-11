@@ -67,4 +67,9 @@ public class InquiryDaoImpl implements InquiryDao{
 		return sqlSession.selectList("inquiry.selectInquiryImgList");
 	}
 
+	@Override
+	public int updateStatus(int i) {
+		return sqlSession.update("inquiry.updateStatus", i);
+	}
+
 }

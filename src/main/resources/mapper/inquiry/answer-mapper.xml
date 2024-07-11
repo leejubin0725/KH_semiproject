@@ -10,12 +10,10 @@
       I.INQUIRY_NO,
       I.ANSWER_CONTENT,
       I.CREATE_DATE,
-      I.USER_NICKNAME,
-      I.STATUS
+      I.USER_NICKNAME
       FROM INQ_ANS I
       JOIN USERS U ON U.NICKNAME = I.ANSWER_WRITER
       WHERE I.INQUIRY_NO = #{inquiryNo}
-      	AND I.STATUS = 'Y'
    </select>
 
 	<insert id="insertAnswer" parameterType="InquiryAnswer">
@@ -29,8 +27,7 @@
 		     #{inquiryNo},
 		     #{answerContent},
 		     SYSDATE,
-		     #{userNickname},
-		     'Y'
+		     #{userNickname}
 		   )
 	</insert>
 
