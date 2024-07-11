@@ -66,7 +66,8 @@
 			CATEGORY_NO,
 			TITLE,
 			CONTENT,
-			CREATE_DATE
+			CREATE_DATE,
+			INQUIRY_STATUS
 		)
 		VALUES(
 		#{inquiryNo},
@@ -74,7 +75,8 @@
 		#{categoryNo},
 		#{title},
 		#{content},
-		DEFAULT
+		DEFAULT,
+		#{inquiryStatus}
 		)
 	</insert>
 	
@@ -109,5 +111,10 @@
 		JOIN INQUIRIES I ON I.INQUIRY_NO=II.INQUIRY_NO
 	</select>
 	
+	<update id="updateStatus">
+		UPDATE INQUIRIES
+		SET INQUIRY_STATUS = '답변완료'
+		WHERE INQUIRY_NO = #{inquiryNo}
+	</update>
 	
 </mapper>
