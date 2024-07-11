@@ -5,49 +5,60 @@
 <mapper namespace="inquiry">
 
 	<select id="inquiryList" resultType="Inquiry">
-		SELECT *
-		FROM INQUIRIES
+		SELECT
+		INQUIRY_NO,
+		I.USER_NO,
+		CATEGORY_NO,
+		TITLE,
+		CONTENT,
+		I.CREATE_DATE,
+		I.UPDATE_DATE,
+		NICKNAME AS WRITER
+		FROM INQUIRIES I
+		JOIN USERS U ON (I.USER_NO = U.USER_NO)
 	</select>
-	
+
 	<insert id="initCategory" parameterType="InquiryCategory">
 		INSERT INTO INQ_CATEGORY
 		(
-			CATEGORY_NO,
-			CATEGORY_NAME
+		CATEGORY_NO,
+		CATEGORY_NAME
 		)
 		VALUES
 		(
-			#{categoryNo},
-			#{categoryName}
+		#{categoryNo},
+		#{categoryName}
 		)
 	</insert>
-	
+
 	<select id="inquiryCategoryList" resultType="InquiryCategory">
 		SELECT *
-		FROM INQ_CATEGORY
+		FROM
+		INQ_CATEGORY
 	</select>
-	
+
 	<select id="selectInquiryCategory" resultType="int">
 		SELECT CATEGORY_NO
 		FROM INQ_CATEGORY
 		WHERE CATEGORY_NAME = #{category}
 	</select>
-	
+
 	<select id="selectInquiryOne" resultType="Inquiry">
 		SELECT
-			INQUIRY_NO,
-			U.USER_NO,
-			U.NICKNAME AS WRITER,
-			CATEGORY_NO,
-			TITLE,
-			CONTENT,
-			I.CREATE_DATE,
-			I.UPDATE_DATE
+		INQUIRY_NO,
+		U.USER_NO,
+		U.NICKNAME AS WRITER,
+		CATEGORY_NO,
+		TITLE,
+		CONTENT,
+		I.CREATE_DATE,
+		I.UPDATE_DATE
 		FROM INQUIRIES I
 		JOIN USERS U ON (U.USER_NO = I.USER_NO)
-		WHERE INQUIRY_NO = #{inquiryNo}
+		WHERE
+		INQUIRY_NO = #{inquiryNo}
 	</select>
-	
+
 	<select id="selectInquiryImg" resultType="InquiryImg">
 		SELECT *
 		FROM INQ_IMG
@@ -61,12 +72,12 @@
 		</selectKey>
 		INSERT INTO INQUIRIES
 		(
-			INQUIRY_NO,
-			USER_NO,
-			CATEGORY_NO,
-			TITLE,
-			CONTENT,
-			CREATE_DATE
+		INQUIRY_NO,
+		USER_NO,
+		CATEGORY_NO,
+		TITLE,
+		CONTENT,
+		CREATE_DATE
 		)
 		VALUES(
 		#{inquiryNo},
@@ -77,37 +88,40 @@
 		DEFAULT
 		)
 	</insert>
-	
-	<insert id="insertInquiryImg" parameterType="InquiryImg" useGeneratedKeys="true">
-        <selectKey keyProperty="imgNo" resultType="int" order="BEFORE">
-            SELECT SEQ_IINO.NEXTVAL FROM DUAL
-        </selectKey>
 
-        INSERT INTO INQ_IMG (
-        	IMG_NO,
-        	INQUIRY_NO,
-        	ORIGIN_NAME,
-        	CHANGE_NAME
-        ) VALUES (
-          #{imgNo},
-          #{inquiryNo},
-          #{originName},
-          #{changeName}
-        )
-    </insert>
-	
+	<insert id="insertInquiryImg" parameterType="InquiryImg"
+		useGeneratedKeys="true">
+		<selectKey keyProperty="imgNo" resultType="int"
+			order="BEFORE">
+			SELECT SEQ_IINO.NEXTVAL FROM DUAL
+		</selectKey>
+
+		INSERT INTO INQ_IMG (
+		IMG_NO,
+		INQUIRY_NO,
+		ORIGIN_NAME,
+		CHANGE_NAME
+		) VALUES (
+		#{imgNo},
+		#{inquiryNo},
+		#{originName},
+		#{changeName}
+		)
+	</insert>
+
 	<select id="selectInquiryNo" resultType="Inquiry">
-			SELECT *
-			FROM INQUIRIES
-			WHERE INQUIRY_NO = #{inquiryNo}
+		SELECT *
+		FROM INQUIRIES
+		WHERE INQUIRY_NO = #{inquiryNo}
 	</select>
-	
+
 	<select id="selectInquiryImgList" resultType="string">
 		SELECT
 		'/resources/images/Inquiry/' || CHANGE_NAME
 		FROM INQ_IMG II
-		JOIN INQUIRIES I ON I.INQUIRY_NO=II.INQUIRY_NO
+		JOIN
+		INQUIRIES I ON I.INQUIRY_NO=II.INQUIRY_NO
 	</select>
-	
-	
+
+
 </mapper>

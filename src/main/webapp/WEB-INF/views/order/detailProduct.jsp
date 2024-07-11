@@ -93,7 +93,11 @@
            </tr>
            <tr>
                <td colspan="5">
-                   <div class="comments-actions"></div>   		
+	               <c:if test="${sessionScope.loginUser.role == 'rider' || 'admin'}">
+	                   <div class="comments-actions">
+	                       <button onclick="accept(${order.orderNo})">수락하기</button>
+	                   </div>
+	               </c:if>
                </td>
            </tr>
            <c:forEach var="reniew" items="${board.reniewList}">
@@ -153,6 +157,7 @@ function createChatRoom(orderId) {
             url: '${pageContext.request.contextPath}/chatRoom/create',
             type: 'POST',
             data: { orderId: orderId, password: password },
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // 추가된 부분
             success: function(response) {
                 alert(response);
             },
@@ -174,10 +179,20 @@ function joinChatRoom(orderId) {
     }
 }
 
-
-function accept(){
+function accept(orderId){
     alert('수락되었습니다.');
-    location.href = "${contextPath}/order/orderAccept?orderNo=${order.orderNo}"
+    $.ajax({
+        url: '${pageContext.request.contextPath}/chatRoom/password',
+        type: 'GET',
+        data: { orderId: orderId },
+        success: function(response) {
+            alert('룸 비밀번호: ' + response);
+        },
+        error: function(xhr, status, error) {
+            alert("비밀번호를 가져오는 중 오류가 발생했습니다: " + error);
+        }
+    });
+    window.location.href = "${contextPath}/order/orderAccept?orderNo=${order.orderNo}"
 }
 
 function orderEnd() {
@@ -201,7 +216,7 @@ function buttonSelction() {
 		        },
 		        success : function(result){
 		        	if(orderRiderNo == 0){
-		        		buttons = (orderRiderNo == result) ? "" : "<button type='button' onclick='accept()'>주문 수락</button>";
+		        		buttons = (orderRiderNo == result) ? "" : "<button type='button' onclick='accept(${order.orderNo})'>주문 수락</button>";
 		        		$(".comments-actions").html(buttons);
 		        	}
 		        	
@@ -224,6 +239,7 @@ function formatDate(timestamp) {
 }
 
 var mapContainer = document.getElementById('map');
+
 var mapOption = {
     center: new kakao.maps.LatLng(33.450701, 126.570667),
     level: 4

@@ -10,6 +10,10 @@
     </insert>
 
     <select id="selectMessagesByChatRoomId" resultType="com.kh.semi.chat.model.vo.Message">
-        SELECT * FROM Message WHERE chat_room_id = #{chatRoomId}
+         SELECT m.*, u.nickname AS writer
+        FROM Message m
+        JOIN Users u ON m.sender_id = u.user_no
+        WHERE m.chat_room_id = #{chatRoomId}
+        ORDER BY MESSAGE_ID
     </select>
 </mapper>
