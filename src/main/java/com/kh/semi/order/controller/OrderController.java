@@ -160,9 +160,6 @@ public class OrderController {
 		o.setOrderNo(orderNo);
 		o.setRiderNo(rider.getRiderNo());
 		
-		LocalDate localDate = LocalDate.now();
-		o.setStartDate(Date.valueOf(localDate));
-		
 		o.setOrderStatus("배달중");
 		
 		int result = orderService.updateOrderStatus(o);
@@ -194,9 +191,6 @@ public class OrderController {
 		
 		o.setOrderNo(orderNo);
 		o.setRiderNo(rider.getRiderNo());
-		
-		LocalDate localDate = LocalDate.now();
-		o.setEndDate(Date.valueOf(localDate));
 		
 		o.setOrderStatus("배달완료");
 		
