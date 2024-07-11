@@ -98,11 +98,12 @@
         var stompClient = null;
 
         function connect() {
+            var chatRoomId = document.getElementById('chatRoomId').value; // 채팅방 ID
             var socket = new SockJS('<%= request.getContextPath() %>/chat');
             stompClient = Stomp.over(socket);
             stompClient.connect({}, function (frame) {
                 console.log('Connected: ' + frame);
-                stompClient.subscribe('/topic/messages', function (messageOutput) {
+                stompClient.subscribe('/topic/messages/' + chatRoomId, function (messageOutput) {
                     console.log('Received message:', messageOutput.body);
                     showMessage(JSON.parse(messageOutput.body));
                 });
@@ -116,13 +117,11 @@
 
             console.log('Sending message:', from, text);
             stompClient.send("/app/sendMessage", {}, JSON.stringify({
-            	
                 'senderId': from,
                 'content': text,
                 'chatRoomId': chatRoomId // 채팅방 ID 추가
             }));
         }
-
 
         function showMessage(message) {
             var response = document.getElementById('messages');
@@ -135,4 +134,3 @@
     </script>
 </body>
 </html>
-
