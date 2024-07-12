@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.semi.chat.model.vo.ChatRoom;
 import com.kh.semi.chat.model.vo.Message;
@@ -31,7 +32,7 @@ public class ChatRoomController {
     private MessageService messageService;
 
     @PostMapping("/enter")
-    public String enterChatRoom(@RequestParam("orderId") int orderId, @RequestParam("password") String password, Model model, HttpSession session) {
+    public String enterChatRoom(@RequestParam("orderId") int orderId, @RequestParam("password") String password, Model model, HttpSession session, RedirectAttributes ra) {
         ChatRoom chatRoom = chatRoomService.getChatRoomByOrderId(orderId);
         
         if (chatRoom == null) {
@@ -41,9 +42,9 @@ public class ChatRoomController {
             chatRoom.setPassword(password);
             chatRoomService.createChatRoom(chatRoom);
         } else if (!chatRoom.getPassword().equals(password)) {
-            // 비밀번호가 맞지 않으면 에러 페이지로 이동
-            model.addAttribute("errorMessage", "Invalid room ID or password.");
-            return "redirect:/order/datailProduct/"+chatRoom.getOrderId();
+            // 비밀번호가 맞지 않으면 에러 메시지 추가
+        	 ra.addFlashAttribute("errorMessage", "비밀번호가 틀렸습니다.");
+             return "redirect:/order/detailProduct/" + orderId;
         }
         
         model.addAttribute("chatRoomId", chatRoom.getChatRoomId());
@@ -60,7 +61,7 @@ public class ChatRoomController {
         
         return "chat/chat";
     }
-
+    
     
     @GetMapping("/password")
     @ResponseBody
@@ -72,4 +73,8 @@ public class ChatRoomController {
             return "방을 찾을 수 없습니다.";
         }
     }
+
+
+
+
 }
