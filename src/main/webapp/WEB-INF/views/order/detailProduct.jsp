@@ -350,10 +350,6 @@ function buttonSelction() {
 		<table id="reviewArea" class="comments-table">
 			<thead>
 				<tr>
-					<td colspan="4">댓글(<span id="rcount">${empty board.reviewList ? '0' : board.reviewList.size()}</span>)
-					</td>
-				</tr>
-				<tr>
 					<th>별점</th>
 					<th>글쓴이</th>
 					<th>댓글 내용</th>
@@ -363,18 +359,28 @@ function buttonSelction() {
 			<tbody>
 				<tr>
 					<td colspan="4">
-						<div style="display: flex; align-items: center;">
-							<div class="rating" style="margin-right: 20px;">
-								<span class="star" onclick="setRating(1)">★</span> <span
-									class="star" onclick="setRating(2)">★</span> <span class="star"
-									onclick="setRating(3)">★</span> <span class="star"
-									onclick="setRating(4)">★</span> <span class="star"
-									onclick="setRating(5)">★</span>
-							</div>
-							<input type="text" id="reviewContent"
-								style="flex-grow: 1; padding: 3px; margin-right: 4px" />
-							<button type="button" onclick="insertReview()">댓글 달기</button>
-						</div>
+						<c:choose>
+								<c:when test="${order.orderStatus == '배달완료'}">
+									<div style="display: flex; align-items: center;">
+										<div class="rating" style="margin-right: 20px;">
+											<span class="star" onclick="setRating(1)">★</span> <span
+												class="star" onclick="setRating(2)">★</span> <span
+												class="star" onclick="setRating(3)">★</span> <span
+												class="star" onclick="setRating(4)">★</span> <span
+												class="star" onclick="setRating(5)">★</span>
+										</div>
+										<input type="text" id="reviewContent"
+											style="flex-grow: 1; padding: 3px; margin-right: 4px" />
+										<button type="button" onclick="insertReview()">댓글 달기</button>
+									</div>
+								</c:when>
+								<c:when test="${order.orderStatus == '배달중'}">
+									<p>배달중입니다.</p>
+								</c:when>
+								<c:otherwise>
+									<p>주문이 완료 되었습니다.</p>
+								</c:otherwise>
+	  					</c:choose>
 					</td>
 				</tr>
 				<tr>
