@@ -24,14 +24,14 @@
 
     <div class="headerContainer">
         <!-- 이미지를 클릭하면 contextPath로 이동하는 예제 -->
-        <img src="${contextPath}/resources/images/mainlogo.jpg" alt="작은 로고" class="headerLogo">
+        
 
         <div class="header-main">
             <div class="headerNav">
+            	<img src="${contextPath}/resources/images/mainlogo.jpg" alt="작은 로고" class="headerLogo">
                 <span><a href="${contextPath}" style="text-decoration: none; color: inherit;">홈</a></span>
                 <span><a href="${contextPath}/order/noticeboard" style="text-decoration: none; color: inherit;">배달목록</a></span>
                 <span><a href="${contextPath}/inquiry/customerservice" style="text-decoration: none; color: inherit;">고객문의</a></span>
-
             </div>
             <div class="headerNav2">
                 <c:choose>

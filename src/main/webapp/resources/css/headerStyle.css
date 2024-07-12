@@ -4,7 +4,6 @@
     position: fixed; /* 고정 위치 */
     top: 0;
     left: 0; /* 왼쪽에 붙이기 */
-    z-index: 1000; /* 다른 요소들 위에 표시되도록 설정 */
     margin-bottom: 30px;
 }
 
@@ -39,10 +38,15 @@ body{
      font-weight: bold;
 }
 .headerLogo {
+	z-index: 1200; /* 다른 요소들 위에 표시되도록 설정 */
     position: absolute; /* 절대 위치 지정 */
     top:-3px; /* 위쪽 여백 설정 */
     left: 350px; /* 왼쪽 여백 설정 */
     width: 90px; /* 로고 너비 설정 */
     height: auto; /* 자동 높이 설정 */
    
+   
+}
+.headerLogo:hover {
+	 cursor: pointer;
 }
