@@ -35,5 +35,7 @@ public interface UserDao {
 
    Rider selectRider(int riderNo);
 
-   int updateRiderRating(Rider rider);
+   int updateRiderRating(Rider rider); 
+   
+   int nnCheck(String nickname);
 }

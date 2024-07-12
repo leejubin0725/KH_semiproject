@@ -90,4 +90,9 @@ public class UserServiceImpl implements UserService {
 		return dao.updateRiderRating(rider);
 	}
 	
+	   @Override
+	   public int nncheck(String nickname) {
+	      return dao.nnCheck(nickname);
+	   } 
+
 }

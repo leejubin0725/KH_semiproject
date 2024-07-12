@@ -34,6 +34,8 @@ public interface UserService {
 	Rider selectRider(int riderNo);
 
 	int deleteUser(int userNo);
+	
+	int nncheck(String nickname);
 
 	int updateRiderRating(Rider rider);
 

@@ -34,6 +34,7 @@ public class ChatRoomController {
     @PostMapping("/enter")
     public String enterChatRoom(@RequestParam("orderId") int orderId, @RequestParam("password") String password, Model model, HttpSession session, RedirectAttributes ra) {
         ChatRoom chatRoom = chatRoomService.getChatRoomByOrderId(orderId);
+        User loginUser = (User) session.getAttribute("loginUser");
         
         if (chatRoom == null) {
             // 채팅방이 없으면 생성
@@ -49,7 +50,7 @@ public class ChatRoomController {
         
         model.addAttribute("chatRoomId", chatRoom.getChatRoomId());
         
-        User loginUser = (User) session.getAttribute("loginUser");
+        
         if (loginUser != null) {
             model.addAttribute("nickName", loginUser.getNickname());
         } else {

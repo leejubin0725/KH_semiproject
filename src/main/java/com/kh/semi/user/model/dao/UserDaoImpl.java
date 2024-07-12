@@ -105,6 +105,11 @@ public class UserDaoImpl implements UserDao {
 		return sqlSession.update("user.updateRiderRating", rider);
 	}
    
+	@Override
+	   public int nnCheck(String nickname) {
+
+	      return sqlSession.selectOne("user.nnCheck", nickname);
+	   } 
    
 
 }
