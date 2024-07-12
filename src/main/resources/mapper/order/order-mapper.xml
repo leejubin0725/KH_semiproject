@@ -255,5 +255,14 @@
 		WHERE U.STATUS = 'Y' AND RIDER_NO = #{riderNo}
 		ORDER BY ORDER_NO
 	</select>
-
+	
+	<select id="selectOrderListConut" resultType="int">
+      SELECT COUNT(*)
+      FROM ORDERS O
+      LEFT JOIN USERS U ON (O.USER_NO = U.USER_NO)
+      WHERE U.STATUS = 'Y'
+      ORDER BY
+      ORDER_NO
+   </select>
+	
 </mapper>

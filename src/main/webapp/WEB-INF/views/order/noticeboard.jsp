@@ -91,6 +91,42 @@
             </c:if>
         </div>
     </div>
+    
+    <c:set var="url" value="${noticeboard }?currentPage=" />
+	   <div id="pagingArea">
+	       <ul class="pagination">
+	           <!-- 이전 페이지 링크 -->
+	           <c:if test="${pi.currentPage eq 1}">
+	               <li class="page-item disabled">
+	                   <span class='page-link'>이전</span>
+	               </li>
+	           </c:if>
+	           <c:if test="${pi.currentPage ne 1}">
+	               <li class="page-item">
+	                   <a class='page-link' href="${url}${pi.currentPage - 1}${sParam}">이전</a>
+	               </li>
+	           </c:if>
+	   
+	           <!-- 페이지 번호 링크 -->
+	           <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}">
+	               <li class="page-item ${i eq pi.currentPage ? 'active' : ''}">
+	                   <a class="page-link" href="${url}${i}${sParam}">${i}</a>
+	               </li>
+	           </c:forEach>
+	   
+	           <!-- 다음 페이지 링크 -->
+	           <c:if test="${pi.currentPage eq pi.maxPage}">
+	               <li class="page-item disabled">
+	                   <span class='page-link'>다음</span>
+	               </li>
+	           </c:if>
+	           <c:if test="${pi.currentPage ne pi.maxPage}">
+	               <li class="page-item">
+	                   <a class='page-link' href="${url}${pi.currentPage + 1}${sParam}">다음</a>
+	               </li>
+	           </c:if>
+	       </ul>
+	   </div>
 
     <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 

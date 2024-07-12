@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +27,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.semi.common.Utils;
+import com.kh.semi.common.model.vo.PageInfo;
+import com.kh.semi.common.template.Pagination;
 import com.kh.semi.order.model.service.OrderService;
 import com.kh.semi.order.model.vo.Order;
 import com.kh.semi.order.model.vo.OrdersImg;
@@ -105,15 +108,24 @@ public class OrderController {
 	
 	
 	@GetMapping("/noticeboard")
-	public String boardPage(
-			Model model
-			) {
-		List<Order> list = orderService.selectOrderList();
-		
-		application.setAttribute("list", list);
-		
-		return "order/noticeboard";
-	}
+   public String boardPage(
+           @RequestParam(value = "currentPage", defaultValue = "1") int currentPage,
+           Model model,
+           @RequestParam Map<String, Object> paramMap) {
+       int listCount = orderService.selectListCount(paramMap);
+       int pageLimit = 10;
+       int boardLimit = 10;
+       
+       PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+
+       List<Order> list = orderService.selectOrderList(pi);
+
+       model.addAttribute("list", list);
+       model.addAttribute("pi", pi);
+       model.addAttribute("url", "/noticeboard?currentPage="); // URL 설정
+
+       return "order/noticeboard";
+   }
 	
 	@GetMapping("/detailProduct/{orderNo}")
 	public String detailProduct(
