@@ -30,35 +30,37 @@ public class ChatRoomController {
     @Autowired
     private MessageService messageService;
 
-    @PostMapping(value = "/create", produces = MediaType.TEXT_PLAIN_VALUE + ";charset=UTF-8")
-    @ResponseBody
-    public String createChatRoom(@RequestParam("orderId") int orderId, @RequestParam("password") String password) {
-        try {
-            ChatRoom chatRoom = new ChatRoom();
+    @PostMapping("/enter")
+    public String enterChatRoom(@RequestParam("orderId") int orderId, @RequestParam("password") String password, Model model, HttpSession session) {
+        ChatRoom chatRoom = chatRoomService.getChatRoomByOrderId(orderId);
+        
+        if (chatRoom == null) {
+            // 채팅방이 없으면 생성
+            chatRoom = new ChatRoom();
             chatRoom.setOrderId(orderId);
             chatRoom.setPassword(password);
             chatRoomService.createChatRoom(chatRoom);
-            return "채팅방이 성공적으로 생성되었습니다.";
-        } catch (IllegalStateException e) {
-            return e.getMessage();
+        } else if (!chatRoom.getPassword().equals(password)) {
+            // 비밀번호가 맞지 않으면 에러 페이지로 이동
+            model.addAttribute("errorMessage", "Invalid room ID or password.");
+            return "redirect:/order/datailProduct/"+chatRoom.getOrderId();
         }
+        
+        model.addAttribute("chatRoomId", chatRoom.getChatRoomId());
+        
+        User loginUser = (User) session.getAttribute("loginUser");
+        if (loginUser != null) {
+            model.addAttribute("nickName", loginUser.getNickname());
+        } else {
+            return "error/unauthorized";
+        }
+        
+        List<Message> messages = messageService.getMessagesByChatRoomId(chatRoom.getChatRoomId());
+        model.addAttribute("messages", messages);
+        
+        return "chat/chat";
     }
 
-    @GetMapping("/join")
-    public String joinChatRoom(@RequestParam("orderId") int orderId, @RequestParam("password") String password, Model model,HttpSession session) {
-        ChatRoom chatRoom = chatRoomService.getChatRoomByOrderId(orderId);
-        if (chatRoom != null && chatRoom.getPassword().equals(password)) {
-            model.addAttribute("chatRoomId", chatRoom.getChatRoomId());
-            
-            User u = (User) session.getAttribute("loginUser");
-            model.addAttribute("nickName", u.getNickname());
-            List<Message> messages = messageService.getMessagesByChatRoomId(chatRoom.getChatRoomId());
-            model.addAttribute("messages", messages);
-            return "chat/chat";
-        } else {
-            return "error/invalid-room";
-        }
-    }
     
     @GetMapping("/password")
     @ResponseBody

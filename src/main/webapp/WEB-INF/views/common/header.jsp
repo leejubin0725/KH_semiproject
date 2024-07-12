@@ -31,8 +31,6 @@
                 <span><a href="${contextPath}" style="text-decoration: none; color: inherit;">홈</a></span>
                 <span><a href="${contextPath}/order/noticeboard" style="text-decoration: none; color: inherit;">배달목록</a></span>
                 <span><a href="${contextPath}/inquiry/customerservice" style="text-decoration: none; color: inherit;">고객문의</a></span>
-                <!-- 채팅방으로 이동하는 버튼 추가 -->
-                <span><a href="${contextPath}/chat" style="text-decoration: none; color: inherit;">채팅방</a></span>
 
             </div>
             <div class="headerNav2">

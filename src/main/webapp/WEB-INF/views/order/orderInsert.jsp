@@ -72,7 +72,7 @@
 				</div>
 				<div class="buttons">
 					<button type="button" onclick="sendData()">생성</button>
-					<button type="button">취소</button>
+					<button type="button" onclick="cancel()">취소</button>
 				</div>
 			</div>
 		</div>
@@ -347,6 +347,10 @@
                }
            });
        }
+        
+        function cancel(){
+        	window.location.href= `${contextPath}/order/noticeboard`;
+        }
 
         	
        
