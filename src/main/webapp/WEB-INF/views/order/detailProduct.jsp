@@ -33,6 +33,13 @@
 </head>
 <body>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+<%-- 에러 메시지 처리 --%>
+<c:if test="${not empty errorMessage}">
+    <script>
+        alert("${errorMessage}");
+    </script>
+</c:if>
+
 <c:set var="orderImageUploadPath" value="/resources/images/Orders/"></c:set>
 <div class="frame">
     <div class="main-image">
