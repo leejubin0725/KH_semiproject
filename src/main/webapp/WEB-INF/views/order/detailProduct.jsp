@@ -1,17 +1,63 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>상품 상세 페이지</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/detailProduct.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/detailProduct.css">
 <style>
+.image-box {
+	width: 70%; /* 원하는 너비로 조정 */
+	max-height: 400px; /* 원하는 높이로 조정 */
+	overflow: hidden; /* 넘치는 부분 숨김 */
+	margin: 20px auto; /* 수직 가운데 정렬 */
+	border: 1px solid #ccc; /* 테두리 설정 */
+	border-radius: 20px; /* 둥근 테두리 */
+}
 
+.image-container {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center; /* 가로 방향 가운데 정렬 */
+	align-items: center; /* 세로 방향 가운데 정렬 */
+}
 
+.image-container img {
+	max-width: 100%; /* 이미지가 부모 너비를 넘지 않도록 */
+	max-height: 100%; /* 이미지가 부모 높이를 넘지 않도록 */
+	display: block; /* 이미지가 inline 속성을 가지지 않도록 */
+}
+
+.chat-actions {
+	margin-top: 20px;
+	margin-bottom: 110px;
+	margin-left: 300px;
+	display: flex; /* 버튼들을 가로로 배치하기 위해 flex 속성 추가 */
+	justify-content: flex-start; /* 버튼들을 왼쪽 정렬 */
+	gap: 10px; /* 버튼 사이에 간격 추가 */
+}
+
+.chat-actions button {
+	padding: 10px 20px; /* 위아래 10px, 좌우 20px 여백 설정 */
+	background-color: #28a745; /* 배경색 */
+	color: white; /* 글자색 */
+	border: none;
+	cursor: pointer;
+	border-radius: 5px; /* 버튼을 둥글게 만들기 */
+	transition: background-color 0.3s; /* 배경색 변경 시 부드럽게 전환 */
+}
+
+.chat-actions button:hover {
+	background-color: #218838; /* 마우스 호버 시 배경색 변경 */
+}
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=66e04ef438990e6ab1d5d64f99a79f51&libraries=services"></script>
+<script type="text/javascript"
+	src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=66e04ef438990e6ab1d5d64f99a79f51&libraries=services"></script>
 <script>
 let mapDisplayed = false; // 지도 보기 상태를 관리하는 변수
 let mapInstance = null; // Kakao 지도 인스턴스 변수
@@ -135,114 +181,186 @@ function initializeMap() {
 	}
 }
 
+/* 채팅기능 */
+function enterChatRoom(orderId) {
+	    var password = prompt("채팅방 비밀번호를 입력하세요:");
+	    if (password) {
+	        var form = document.createElement("form");
+	        form.method = "POST";
+	        form.action = "${pageContext.request.contextPath}/chatRoom/enter";
+
+	        var orderIdInput = document.createElement("input");
+	        orderIdInput.type = "hidden";
+	        orderIdInput.name = "orderId";
+	        orderIdInput.value = orderId;
+	        form.appendChild(orderIdInput);
+
+	        var passwordInput = document.createElement("input");
+	        passwordInput.type = "hidden";
+	        passwordInput.name = "password";
+	        passwordInput.value = password;
+	        form.appendChild(passwordInput);
+
+	        document.body.appendChild(form);
+	        form.submit();
+	    } else {
+	        alert("비밀번호를 입력해주세요.");
+	    }
+	}
+
+function accept(orderId){
+    alert('수락되었습니다.');
+    $.ajax({
+        url: '${pageContext.request.contextPath}/chatRoom/password',
+        type: 'GET',
+        data: { orderId: orderId },
+        success: function(response) {
+            alert('룸 비밀번호: ' + response);
+        },
+        error: function(xhr, status, error) {
+            alert("비밀번호를 가져오는 중 오류가 발생했습니다: " + error);
+        }
+    });
+}
+
 
 </script>
 </head>
 <body>
-<%@ include file="/WEB-INF/views/common/header.jsp" %>
-<c:set var="orderImageUploadPath" value="/resources/images/Orders/"></c:set>
-<div class="frame">
-    <div class="main-image">
-        <c:choose>
-            <c:when test="${not empty order.ordersImg.changeName}">
-                <img src="${contextPath}${orderImageUploadPath}${order.ordersImg.changeName}" alt="Main Image">
-            </c:when>
-            <c:otherwise>
-                <div class="no-image">
-                    <img src="${pageContext.request.contextPath}/resources/images/no-image.png" alt="No Image">
-                </div>
-            </c:otherwise>
-        </c:choose>
-    </div>
-    <div class="product-box">
-        <h1 class="product-title">${order.orderTitle}</h1>
-    </div>
-    <div class="author-nickname">${order.writer}</div>
-    <p class="product-description">${order.orderContent}</p>
-    <div id="map"></div> <!-- 지도를 표시할 div -->
-    <div class="price">배송비: ${order.price}원</div>
 
-    <div class="alert">
-        <c:if test="${order.alertFragile == 'Y'}">
-            <p><input type="checkbox" id="fragileCheckbox" checked disabled> <span style="color: black;">파손 주의</span></p>
-        </c:if>
-        <c:if test="${order.alertValuable == 'Y'}">
-            <p><input type="checkbox" id="valuableCheckbox" checked disabled> <span style="color: black;">귀중품 주의</span></p>
-        </c:if>
-        <c:if test="${order.alertUrgent == 'Y'}">
-            <p><input type="checkbox" id="urgentCheckbox" checked disabled> 긴급 배송 요청</p>
-        </c:if>
-    </div>
+	<%@ include file="/WEB-INF/views/common/header.jsp"%>
+	<c:if test="${not empty errorMessage}">
+		<script>
+       alert("${errorMessage}");
+    </script>
+	</c:if>
+	<c:set var="orderImageUploadPath" value="/resources/images/Orders/"></c:set>
+	<div class="frame">
+		<div class="image-box">
+			<div class="image-container">
+				<c:choose>
+					<c:when test="${not empty order.ordersImg.changeName}">
+						<img
+							src="${contextPath}${orderImageUploadPath}${order.ordersImg.changeName}"
+							alt="Main Image">
+					</c:when>
+					<c:otherwise>
+						<div class="no-image">
+							<img
+								src="${pageContext.request.contextPath}/resources/images/no-image.png"
+								alt="No Image">
+						</div>
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</div>
+		<div class="product-box">
+			<h1 class="product-title">${order.orderTitle}</h1>
+		</div>
+		<div class="author-nickname">${order.writer}</div>
+		<p class="product-description">${order.orderContent}</p>
+		<div id="map"></div>
+		<!-- 지도를 표시할 div -->
+		<div class="price">배송비: ${order.price}원</div>
 
-    <div class="delivery-info">출발 위치: ${order.startPoint}<br/>배송 거리: ${order.distance}km<br/><br>수령 위치: ${order.endPoint}</div>
+		<div class="alert">
+			<c:if test="${order.alertFragile == 'Y'}">
+				<p>
+					<input type="checkbox" id="fragileCheckbox" checked disabled>
+					<span style="color: black;">파손 주의</span>
+				</p>
+			</c:if>
+			<c:if test="${order.alertValuable == 'Y'}">
+				<p>
+					<input type="checkbox" id="valuableCheckbox" checked disabled>
+					<span style="color: black;">귀중품 주의</span>
+				</p>
+			</c:if>
+			<c:if test="${order.alertUrgent == 'Y'}">
+				<p>
+					<input type="checkbox" id="urgentCheckbox" checked disabled>
+					긴급 배송 요청
+				</p>
+			</c:if>
+		</div>
 
-    <div class="status-info ${order.orderStatus == '대기중' ? 'status-waiting' : (order.orderStatus == '배달중' ? 'status-in-progress' : 'status-completed')}">
-        ${order.orderStatus == '대기중' ? '대기중' : (order.orderStatus == '배달중' ? '배달중' : '배달완료')}
-    </div>
+		<div class="delivery-info">
+			출발 위치: ${order.startPoint}<br />배송 거리: ${order.distance}km<br /> <br>수령
+			위치: ${order.endPoint}
+		</div>
 
-    <div class="map-buttons">
-        <button class="map-button" onclick="showMap()">지도 보기</button>
-        <button class="map-button" onclick="hideMap()">지도 숨기기</button>
-    </div>
+		<div
+			class="status-info ${order.orderStatus == '대기중' ? 'status-waiting' : (order.orderStatus == '배달중' ? 'status-in-progress' : 'status-completed')}">
+			${order.orderStatus == '대기중' ? '대기중' : (order.orderStatus == '배달중' ? '배달중' : '배달완료')}
+		</div>
 
-    <div class="end-point">주문일자: ${order.startDate}</div>
+		<div class="map-buttons">
+			<button class="map-button" onclick="showMap()">지도 보기</button>
+			<button class="map-button" onclick="hideMap()">지도 숨기기</button>
+		</div>
 
-    <table id="reviewArea" class="comments-table">
-        <thead>
-            <tr>
-                <td colspan="4">댓글(<span id="rcount">${empty board.reviewList ? '0' : board.reviewList.size()}</span>)</td>
-            </tr>
-            <tr>
-                <th>별점</th>
-                <th>글쓴이</th>
-                <th>댓글 내용</th>
-                <th>작성일</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td colspan="4">
-                    <div style="display: flex; align-items: center;">
-                        <div class="rating" style="margin-right: 20px;">
-                            <span class="star" onclick="setRating(1)">★</span>
-                            <span class="star" onclick="setRating(2)">★</span>
-                            <span class="star" onclick="setRating(3)">★</span>
-                            <span class="star" onclick="setRating(4)">★</span>
-                            <span class="star" onclick="setRating(5)">★</span>
-                        </div>
-                        <input type="text" id="reviewContent" style="flex-grow: 1; padding: 3px; margin-right: 4px" />
-                        <button type="button" onclick="insertReview()">댓글 달기</button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="4">
-                    <!-- <c:if test="${(sessionScope.loginUser.role == 'rider' || sessionScope.loginUser.role == 'admin') && order.orderStatus == '대기중' && order.riderNo != null}"> -->
-                    <div class="comments-actions">
-                        <button onclick="accept()">수락하기</button>
-                    </div>
-                    <!-- </c:if> -->
-                </td>
-            </tr>
-            
-            <c:forEach var="review" items="${board.reviewList}">
-                <tr id="review-${review.reviewNo}">
-                    <td>${review.rating}</td>
-                    <td>${review.writer}</td>
-                    <td>${review.reviewContent}</td>
-                    <td>${review.createDate}</td>
-                    <td>
-                        <c:if test="${sessionScope.loginUser.userId == review.writerId || sessionScope.loginUser.role == 'admin'}">
-                            <button onclick="updateReview(${review.reviewNo})">수정</button>
-                            <button onclick="deleteReview(${review.reviewNo})">삭제</button>
-                        </c:if>
-                    </td>
-                </tr>
-            </c:forEach>
-        </tbody>
-    </table>
-</div>
+		<div class="end-point">주문일자: ${order.startDate}</div>
 
-<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+		<table id="reviewArea" class="comments-table">
+			<thead>
+				<tr>
+					<td colspan="4">댓글(<span id="rcount">${empty board.reviewList ? '0' : board.reviewList.size()}</span>)
+					</td>
+				</tr>
+				<tr>
+					<th>별점</th>
+					<th>글쓴이</th>
+					<th>댓글 내용</th>
+					<th>작성일</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td colspan="4">
+						<div style="display: flex; align-items: center;">
+							<div class="rating" style="margin-right: 20px;">
+								<span class="star" onclick="setRating(1)">★</span> <span
+									class="star" onclick="setRating(2)">★</span> <span class="star"
+									onclick="setRating(3)">★</span> <span class="star"
+									onclick="setRating(4)">★</span> <span class="star"
+									onclick="setRating(5)">★</span>
+							</div>
+							<input type="text" id="reviewContent"
+								style="flex-grow: 1; padding: 3px; margin-right: 4px" />
+							<button type="button" onclick="insertReview()">댓글 달기</button>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="4">
+						<!-- <c:if test="${(sessionScope.loginUser.role == 'rider' || sessionScope.loginUser.role == 'admin') && order.orderStatus == '대기중' && order.riderNo != null}"> -->
+						<div class="comments-actions">
+							<button onclick="accept(${order.orderNo})">수락하기</button>
+						</div> <!-- </c:if> -->
+					</td>
+				</tr>
+
+				<c:forEach var="review" items="${board.reviewList}">
+					<tr id="review-${review.reviewNo}">
+						<td>${review.rating}</td>
+						<td>${review.writer}</td>
+						<td>${review.reviewContent}</td>
+						<td>${review.createDate}</td>
+						<td><c:if
+								test="${sessionScope.loginUser.userId == review.writerId || sessionScope.loginUser.role == 'admin'}">
+								<button onclick="updateReview(${review.reviewNo})">수정</button>
+								<button onclick="deleteReview(${review.reviewNo})">삭제</button>
+							</c:if></td>
+
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+		<div class="chat-actions">
+			<button onclick="enterChatRoom(${order.orderNo})">채팅방</button>
+		</div>
+	</div>
+
+	<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 </body>
 </html>

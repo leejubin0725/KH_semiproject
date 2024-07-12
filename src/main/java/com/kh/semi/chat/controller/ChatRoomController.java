@@ -61,9 +61,7 @@ public class ChatRoomController {
         
         return "chat/chat";
     }
-
-
-
+    
     
     @GetMapping("/password")
     @ResponseBody
@@ -75,4 +73,8 @@ public class ChatRoomController {
             return "방을 찾을 수 없습니다.";
         }
     }
+
+
+
+
 }
