@@ -189,7 +189,18 @@
 		FROM RIDERS
 		WHERE USER_NO = #{userNo}
 	</select>
+	
+	<select id="selectRider" resultType="Rider">
+		SELECT *
+		FROM RIDERS
+		WHERE RIDER_NO = #{riderNo}
+	</select>
 
-
+	<update id="updateRiderRating">
+		 UPDATE RIDERS
+	     SET
+	     GRADE = #{grade}
+	     WHERE RIDER_NO = #{riderNo}
+	</update>
 
 </mapper>

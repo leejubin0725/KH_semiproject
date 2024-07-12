@@ -29,4 +29,6 @@ public interface OrderService {
 
 	List<Order> selectRiderOrderList(int riderNo);
 
+	int OrderRiderCountComplete(int riderNo);
+
 }

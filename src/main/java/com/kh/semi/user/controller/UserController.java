@@ -71,7 +71,7 @@ public class UserController {
    public String login(@ModelAttribute User u, Model model, HttpSession session) {
        User loginUser = uService.login(u);
        String url = "";
-       if (loginUser.getEmail().equals("admin") || (!(loginUser != null && encoder.matches(u.getPassword(), loginUser.getPassword())))) {
+       if (!(loginUser != null && encoder.matches(u.getPassword(), loginUser.getPassword()))) {
            model.addAttribute("loginError", "로그인에 실패하셨습니다");
            url = "/user/login";
        } else {

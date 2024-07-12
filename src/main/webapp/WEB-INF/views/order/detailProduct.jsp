@@ -66,9 +66,6 @@
     <table id="reniewArea" class="comments-table">
        <thead>
            <tr>
-               <td colspan="3">댓글(<span id="rcount">${empty board.reniewList ? '0' : board.reniewList.size()}</span>)</td>
-           </tr>
-           <tr>
                <th>별점</th>
                <th>글쓴이</th>
                <th>댓글 내용</th>
@@ -76,6 +73,7 @@
            </tr>
        </thead>
        <tbody>
+       <c:if test="${(sessionScope.loginUser.role == 'regular') && order.orderStatus == '배달완료' && reviewList.size() < 1}">
            <tr>
                <td colspan="5">
                    <div style="display: flex; align-items: center;">
@@ -87,10 +85,11 @@
                            <span class="star" onclick="setRating(5)">★</span>
                        </div>
                        <input type="text" id="commentContent" style="flex-grow: 1; padding: 3px; margin-right: 4px" />
-                       <button type="button" onclick="submitComment()">댓글 달기</button>
+                       <button type="button" onclick="submitComment()">후기 달기</button>
                    </div>
                </td>
            </tr>
+		</c:if>
            <tr>
                <td colspan="5">
 	               <c:if test="${sessionScope.loginUser.role == 'rider' || 'admin'}">
@@ -100,15 +99,7 @@
 	               </c:if>
                </td>
            </tr>
-           <c:forEach var="reniew" items="${board.reniewList}">
-               <tr>
-                   <td>${reniew.score}</td>
-                   <td>${reniew.writer}</td>
-                   <td>${reniew.content}</td>
-                   <td>${reniew.createDate}</td>
-                   <td>${reniew.riderNo}</td>
-               </tr>
-           </c:forEach>
+           
        </tbody>
     </table>
     
@@ -122,6 +113,7 @@
 <script>
 
 buttonSelction();
+showReviewList();
 let currentRating = 0; // 초기 별점 설정
 
 
@@ -149,6 +141,60 @@ function getStarRatingText(rating) {
     return ratings[rating] || ratings[0];
 }
 
+function submitComment() {
+	 $.ajax({
+         url: '${pageContext.request.contextPath}/review/insertReview',
+         type: 'POST',
+         data: {
+        	 	riderNo : ${order.riderNo},
+        	 	orderNo : ${order.orderNo},
+        	 	reviewContent : 'document.getElementById("commentContent").value',
+        	 	rating : currentRating,
+        	 	writer : '${order.writer}',
+        	 },
+         success: function(result) {
+             if(result > 0) {
+            	 console.log("후기 추가 완료");
+             }
+         },
+         error: function(xhr, status, error) {
+             alert("후기 제출 중 오류가 발생했습니다: " + error);
+         }
+     });
+}
+
+function showReviewList() {
+	 $.ajax({
+         url: '${pageContext.request.contextPath}/review/selectReviewList',
+         type: 'POST',
+         data: {
+        	 	orderNo : ${order.orderNo}
+        	 },
+         success: function(result) {
+        	 let answers = "";
+             if(result > 0) {
+            	 if (result.length === 0) {
+                     answers = "<tr><td colspan='5'>현재 문의 확인중입니다.</td></tr>";
+                 } else {
+                     for (let ReviewList of result) {
+                         answers += "<tr>";
+                         별점 , 글쓴이 , 내용 , 작성일
+                         answers += `<td>\${ReviewList.rating}</td>`;
+                         answers += `<td>\${ReviewList.writer}</td>`;
+                         answers += `<td>\${ReviewList.reviewContent}</td>`;
+                         answers += `<td>\${formatDate(ReviewList.createDate)}</td>`;
+                         answers += "</tr>";
+                     }
+                 }
+            	 
+             }
+         },
+         error: function(xhr, status, error) {
+             alert("후기 생성 중 오류가 발생했습니다: " + error);
+         }
+     });
+}
+
 function createChatRoom(orderId) {
     var password = prompt("채팅방 비밀번호를 입력하세요:");
     if (password != null && password != "") {
@@ -167,7 +213,7 @@ function createChatRoom(orderId) {
     } else {
         alert("비밀번호를 입력해주세요.");
     }
-}dd
+}
 
 function enterChatRoom(orderId) {
     var password = prompt("채팅방 비밀번호를 입력하세요:");

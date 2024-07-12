@@ -20,7 +20,12 @@
 					placeholder="제목 입력"> <label for="content">내용</label>
 				<textarea id="content" placeholder="내용 입력"></textarea>
 				<label for="category">대분류</label> <select id="category">
-					<option>Value</option>
+					<option></option>
+					<option>물건분류1</option>
+					<option>물건분류2</option>
+					<option>물건분류3</option>
+					<option>물건분류4</option>
+					<option>물건분류5</option>
 				</select>
 				<div class="checkbox-group">
 					<div class="checkbox-label">

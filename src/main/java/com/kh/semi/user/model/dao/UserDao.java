@@ -32,4 +32,8 @@ public interface UserDao {
    int deleteUser(int userNo);
 
    Rider selectRiderOne(int userNo);
+
+   Rider selectRider(int riderNo);
+
+   int updateRiderRating(Rider rider);
 }

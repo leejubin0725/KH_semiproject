@@ -32,4 +32,6 @@ public interface OrderDao {
 
 	List<Order> selectRiderOrderList(int riderNo);
 
+	int OrderRiderCountComplete(int riderNo);
+
 }

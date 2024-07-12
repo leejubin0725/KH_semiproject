@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class Rider {
 	private int riderNo;
 	private int userNo;
+	private Double grade;
 }

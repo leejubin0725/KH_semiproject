@@ -21,8 +21,7 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 
 	@Override
-	public int insertReview(Review review) {
-		
+	public int insertReview(Review review) {	
 		return reviewDao.insertReview(review);
 	}
 

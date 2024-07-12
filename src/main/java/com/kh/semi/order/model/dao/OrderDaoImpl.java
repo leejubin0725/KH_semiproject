@@ -76,4 +76,9 @@ public class OrderDaoImpl implements OrderDao{
 		return sqlSession.selectList("Orders.selectRiderOrderList" , riderNo);
 	}
 
+	@Override
+	public int OrderRiderCountComplete(int riderNo) {
+		return sqlSession.selectOne("Orders.OrderRiderCountComplete" , riderNo);
+	}
+
 }

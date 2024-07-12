@@ -91,5 +91,10 @@ public class OrderServiceImpl implements OrderService {
 	public List<Order> selectRiderOrderList(int riderNo) {
 		return orderDao.selectRiderOrderList(riderNo);
 	}
+
+	@Override
+	public int OrderRiderCountComplete(int riderNo) {
+		return orderDao.OrderRiderCountComplete(riderNo);
+	}
 	
 }

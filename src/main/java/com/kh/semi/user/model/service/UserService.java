@@ -30,7 +30,11 @@ public interface UserService {
 	List<Order> selectMyPostList(int userNo);
 
 	Rider selectRiderOne(int userNo);
+	
+	Rider selectRider(int riderNo);
 
 	int deleteUser(int userNo);
+
+	int updateRiderRating(Rider rider);
 
 }

@@ -221,6 +221,15 @@
 		(ORDER_STATUS <![CDATA[<>]]> '배달완료')
 	</select>
 	
+	<select id="OrderRiderCountComplete" resultType="int">
+		SELECT COUNT(*)
+		FROM ORDERS
+		WHERE
+		(RIDER_NO = #{riderNo})
+		AND
+		(ORDER_STATUS <![CDATA[LIKE]]> '배달완료')
+	</select>
+	
 	<select id="selectRiderOrderList" resultType="Order">
 		SELECT
 		ORDER_NO,
