@@ -36,6 +36,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.semi.order.model.vo.Order;
+import com.kh.semi.report.model.service.ReportService;
+import com.kh.semi.report.model.vo.Report;
 import com.kh.semi.user.model.service.UserService;
 import com.kh.semi.user.model.vo.Rider;
 import com.kh.semi.user.model.vo.User;
@@ -61,12 +63,24 @@ public class UserController {
 
    private final UserService uService;
    private final BCryptPasswordEncoder encoder;
-
+   private final ReportService reportservice;
    @GetMapping("/login")
    public String loginPage() {
       return "/user/login";
    }
 
+   @GetMapping("/reportList")
+   public String showReportList(Model model) {
+  	 List<Report> list = reportservice.selectReportList();
+  		
+  		application.setAttribute("reports", list);
+  		
+  		return "user/reportList";
+  	}
+   
+
+   
+   
    @PostMapping("/login")
    public String login(@ModelAttribute User u, Model model, HttpSession session) {
        User loginUser = uService.login(u);

@@ -69,21 +69,12 @@ public class ReportController {
      }   
      return url;
 	}
+}
  
  
  
  
 
- @GetMapping("/reportList")
- public String showReportList(Model model) {
-	 List<Report> list = reportservice.selectReportList();
-		
-		application.setAttribute("reports", list);
-		
-		return "report/reportList";
-	}
- }
 
- 
  
  

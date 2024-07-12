@@ -79,6 +79,34 @@
 .inquiry {
 	margin-top: 20px; /* inquiry 섹션의 위 여백 */
 }
+
+.status-circle {
+    display: inline-block;
+    width: 68px;
+    height: 30px;
+    border-radius: 15px;
+    margin-left: 33px;
+    text-align: center;
+    line-height: 30px;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    align-content: center;
+    align-items: center;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 50%;
+   
+}
+
+
+.status-waiting {
+    background-color: #f0ad4e;
+}
+
+.status-completed {
+    background-color: #5cb85c;
+}
 </style>
 </head>
 <body>
@@ -121,7 +149,9 @@
 									<td>${inquiry.writer}</td>
 									<td><fmt:formatDate value="${inquiry.createDate}"
 											pattern="yy-MM-dd" /></td>
-									<td><span class="status completed">답변대기</span></td>
+									<td><span class="status-circle ${inquiry.inquiryStatus == '답변대기' ? 'status-waiting' : 'status-completed'}">
+			                                ${inquiry.inquiryStatus == '답변대기' ? '답변대기'  : '답변완료'}
+			                            </span></td>
 								</tr>
 							</c:forEach>
 						</c:otherwise>

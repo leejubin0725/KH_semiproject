@@ -79,10 +79,7 @@
     </header>
     <main>
         <form action="${contextPath }/report/save" method="POST" id="reportForm" class="report-form">
-            <div class="form-group">
-                <label for="reportTitle">신고 제목</label>
-                <input type="text" id="reportTitle" name="title" required>
-            </div>
+           
             <div class="form-group">
                 <label for="reportContent">신고 내용</label>
                 <textarea id="reportContent" name="content" rows="5" required></textarea>

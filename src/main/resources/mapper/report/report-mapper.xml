@@ -31,7 +31,6 @@
 	<select id="selectReportList" resultType="Report">
 		SELECT *
 		FROM REPORTS
-		WHERE REPORT_ID = #{reportId}
 	</select>
 	
 </mapper>

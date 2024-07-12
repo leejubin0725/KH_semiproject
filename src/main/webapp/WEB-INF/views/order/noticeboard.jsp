@@ -41,7 +41,7 @@
                 </div>
             </div>
             <div class="search-container">
-                <input type="text" id="searchInput" placeholder="세부 주소 검색">
+                <input type="text" id="searchInput" placeholder="시작위치 검색">
                 <button id="searchButton">검색</button>
             </div>
         </div>
