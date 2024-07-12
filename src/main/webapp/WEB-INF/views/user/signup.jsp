@@ -165,33 +165,33 @@ body {
             </div>
             <div class="form-group">
                <label for="name">아이디</label> <input type="text" id="email"
-                  name="email" placeholder="실제 사용하는 이메일을 입력하세요." maxlength="100">
+                  name="email" placeholder="실제 사용하는 이메일을 입력하세요." maxlength="100" required>
                   <button type="button" class="hi" onclick="idCheck();">email중복확인</button>
       
             </div>
             <div class="form-group">
                <label for="name">비밀번호</label> <input type="password" id="password"
-                  name="password" placeholder="비밀번호를 입력하세요." maxlength="100">
+                  name="password" placeholder="비밀번호를 입력하세요." maxlength="100" required>
             </div>
             <div class="form-group">
                <label for="name">닉네임</label> <input type="text" id="nickname"
-                  name="nickname" placeholder="사용할 닉네임을 입력하세요." maxlength="100">
+                  name="nickname" placeholder="사용할 닉네임을 입력하세요." maxlength="100" required>
             <button type="button" class="hi" onclick="nnCheck();">닉네임 중복확인</button>
                   
             </div>
             <div class="form-group">
                <label for="name">생년월일</label> <input type="text" id="birth"
                   name="birth" placeholder="생년월일을 입력하세요. ex) 2000.02.17 - > 000217"
-                  maxlength="11">
+                  maxlength="11" required>
             </div>
             <div class="form-group">
                <label for="text">전화번호</label> <input type="text"
                   oninput="formatPhoneNumber(this)" id="phone" name="phone"
-                  placeholder="휴대폰 번호를 입력하세요. ex)01030532345" maxlength="13">
+                  placeholder="휴대폰 번호를 입력하세요. ex)01030532345" maxlength="13" required>
             </div>
             <div class="form-group">
                <label for="password">주소</label> <input type="text" id="address"
-                  name="address" placeholder="주소를 입력하세요." maxlength="255">
+                  name="address" placeholder="주소를 입력하세요." maxlength="255" required>
             </div>
             <div class="category-selector">
                <div>
@@ -250,8 +250,8 @@ body {
                    console.log("result");
                     if (result == 1) { // 이미 사용 중인 이메일
                         alert("이미 사용 중인 닉네임입니다.");
-                        $email.val("");
-                        $email.focus();
+                        $nickname.val("");
+                        $nickname.focus();
                     } else { // 사용 가능한 이메일
                         alert("사용 가능한 닉네임입니다.");
                     }
