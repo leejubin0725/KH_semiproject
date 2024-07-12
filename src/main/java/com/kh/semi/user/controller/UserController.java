@@ -184,6 +184,24 @@ public class UserController {
 
       return result;
    }
+   
+   @GetMapping("/nnCheck")
+   @ResponseBody
+   public int nncheck(@RequestParam String nickname) {
+      int result = uService.nncheck(nickname);
+
+//      INFO : [SQL]SELECT COUNT(*)
+//      FROM USERS
+//      WHERE EMAIL = '2222'
+//      INFO : |---------|
+//      INFO : |COUNT(*) |
+//      INFO : |---------|
+//      INFO : |1        |
+//      INFO : |---------|
+//      WARN : org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.HttpMediaTypeNotAcceptableException: Could not find acceptable representation]
+
+      return result;
+   }
 
 //   @PostMapping("/idfind")
 //   @ResponseBody

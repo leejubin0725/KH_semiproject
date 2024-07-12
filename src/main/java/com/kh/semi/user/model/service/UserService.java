@@ -32,5 +32,7 @@ public interface UserService {
 	Rider selectRiderOne(int userNo);
 
 	int deleteUser(int userNo);
+	
+	int nncheck(String nickname);
 
 }

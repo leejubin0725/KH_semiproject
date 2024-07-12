@@ -32,4 +32,6 @@ public interface UserDao {
    int deleteUser(int userNo);
 
    Rider selectRiderOne(int userNo);
+   
+   int nnCheck(String nickname);
 }

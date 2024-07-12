@@ -79,4 +79,9 @@ public class UserServiceImpl implements UserService {
 	public int deleteUser(int userNo) {
 		return dao.deleteUser(userNo);
 	}
+	
+	   @Override
+	   public int nncheck(String nickname) {
+	      return dao.nnCheck(nickname);
+	   } 
 }
