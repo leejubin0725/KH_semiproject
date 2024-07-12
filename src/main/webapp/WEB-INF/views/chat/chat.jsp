@@ -14,7 +14,7 @@
     <div class="chat-container">
         <div class="chat-header">
             Chat Room
-            <button class="exit-button" onclick="exitChat()">나가기</button>
+            <button class="exit-button" onclick="exitChat()">X</button>
         </div>
         <div id="chat">
             <ul id="messages">
