@@ -213,12 +213,29 @@ public class OrderController {
 	@GetMapping("/riderOrderSelect")
 	public String riderOrderSelect(
 			@ModelAttribute("loginUser") User loginUser,
+			Model model,
+			RedirectAttributes ra,
 			Order o
 			) {
+
 		Rider rider = userService.selectRiderOne(loginUser.getUserNo());
-		int orderNo = orderService.selectOrderRiderOne(rider.getRiderNo());
 		
-		return "redirect:/order/detailProduct/" + orderNo;
+		List<Order> riderOrders = orderService.selectRiderOrderList(rider.getRiderNo());
+		
+		int orderNo = 0;
+		for(Order temp : riderOrders) {
+			if(temp.getOrderStatus().equals("배달중")) {
+				orderNo = temp.getOrderNo();
+			}
+		}
+		
+		if(orderNo == 0) {
+			ra.addFlashAttribute("alertMsg" , "현재 배달중인 목록이 없습니다.");
+			return "redirect:/user/mypage/";
+		} else {
+			return "redirect:/order/detailProduct/" + orderNo;
+		}
+	
 	}
 	
 	@GetMapping("riderOrderSelectAjax")
