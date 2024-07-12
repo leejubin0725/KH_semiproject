@@ -10,8 +10,9 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/noticeboard.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    
+    <style>
+        /* 여기에 CSS 코드 추가 */
+    </style>
 </head>
 <body>
     <%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -20,6 +21,30 @@
     
     <div class="container">
         <h2>배달 요청</h2>
+        <div class="container">
+            <div class="dropdown-container">
+                <div class="dropdown">
+                    <button class="dropbtn">대분류 지역 선택</button>
+                    <div class="dropdown-content">
+                        <a href="#" data-location="전체">전체</a>
+                        <a href="#" data-location="서울">서울</a>
+                        <a href="#" data-location="경기">경기</a>
+                        <a href="#" data-location="인천">인천</a>
+                        <a href="#" data-location="부산">부산</a>
+                        <a href="#" data-location="충청">충청</a>
+                        <a href="#" data-location="경상">경상</a>
+                        <a href="#" data-location="전라">경상</a>
+                        <a href="#" data-location="대구">대구</a>
+
+                        <!-- 필요한 대분류 지역 항목들을 추가 -->
+                    </div>
+                </div>
+            </div>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="세부 주소 검색">
+                <button id="searchButton">검색</button>
+            </div>
+        </div>
         <table>
             <thead>
                 <tr>
@@ -45,10 +70,10 @@
                         <td>${order.orderTitle}</td>
                         <td>${order.writer}</td>
                         <td>
-                        <span class="status-circle ${order.orderStatus == '대기중' ? 'status-waiting' : (order.orderStatus == '배달중' ? 'status-in-progress' : 'status-completed')}">
-                         ${order.orderStatus == '대기중' ? '대기중' : (order.orderStatus == '배달중' ? '배달중' : '배달완료')}
-                     </span>
-                    </td>
+                            <span class="status-circle ${order.orderStatus == '대기중' ? 'status-waiting' : (order.orderStatus == '배달중' ? 'status-in-progress' : 'status-completed')}">
+                                ${order.orderStatus == '대기중' ? '대기중' : (order.orderStatus == '배달중' ? '배달중' : '배달완료')}
+                            </span>
+                        </td>
                         <td>${order.startPoint}</td>
                         <td>${order.endPoint}</td>
                         <td>${order.createDate}</td>
@@ -70,6 +95,59 @@
     <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdownLinks = document.querySelectorAll('.dropdown-content a');
+            const searchInput = document.getElementById('searchInput');
+            const searchButton = document.getElementById('searchButton');
+
+            dropdownLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const selectedLocation = this.getAttribute('data-location'); // 선택된 지역 이름
+
+                    // 모든 행을 가져와서 처리
+                    const tableRows = document.querySelectorAll('tbody tr');
+
+                    // "전체" 선택 시 모든 행 보이기
+                    if (selectedLocation === '전체') {
+                        tableRows.forEach(row => {
+                            row.style.display = '';
+                        });
+                    } else {
+                        // 선택된 지역에 해당하는 행만 표시
+                        tableRows.forEach(row => {
+                            const startPointCell = row.querySelector('td:nth-child(5)');
+                            if (startPointCell.textContent.includes(selectedLocation)) {
+                                row.style.display = ''; // 행 보이기
+                            } else {
+                                row.style.display = 'none'; // 행 숨기기
+                            }
+                        });
+                    }
+                });
+            });
+
+            searchButton.addEventListener('click', function() {
+                const searchText = searchInput.value.trim().toLowerCase(); // 입력된 검색어
+
+                // 모든 행을 가져와서 처리
+                const tableRows = document.querySelectorAll('tbody tr');
+
+                tableRows.forEach(row => {
+                    const startPointCell = row.querySelector('td:nth-child(5)');
+                    const orderTitleCell = row.querySelector('td:nth-child(2)');
+                    const startPointText = startPointCell.textContent.trim().toLowerCase();
+                    const orderTitleText = orderTitleCell.textContent.trim().toLowerCase();
+
+                    if (startPointText.includes(searchText) || orderTitleText.includes(searchText)) {
+                        row.style.display = ''; // 행 보이기
+                    } else {
+                        row.style.display = 'none'; // 행 숨기기
+                    }
+                });
+            });
+        });
+
         function submitReport() {
             location.href = "${contextPath}/report/report/";
         }
@@ -84,15 +162,6 @@
                         window.location.href = url;
                     }
                 }
-            });
-        });
-
-        // 라이더 상태 버튼에 대한 별도의 이벤트 리스너
-        document.querySelectorAll('.rider-status').forEach(button => {
-            button.addEventListener('click', function(event) {
-                event.stopPropagation(); // 이벤트 버블링 방지
-                console.log('Rider status button clicked');
-                // 여기에 라이더 상태 버튼 클릭 시 수행할 동작을 추가하세요
             });
         });
 

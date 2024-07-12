@@ -30,12 +30,10 @@
 				<a class="find-ID" onclick="findid()"> 아이디 찾기</a> <a class="find-ID"
 					onclick="findpw()"> 비밀번호 찾기</a>
 			</div>
+			<img class="image" src="${contextPath }/resources/images/cut_2.png">
 		</form>
 	</div>
 	<div class="divider"></div>
-	<div>
-		<img class="image" src="${contextPath }/resources/images/cut_2.png">
-	</div>
 </body>
 <script>
 	//아이디 찾기

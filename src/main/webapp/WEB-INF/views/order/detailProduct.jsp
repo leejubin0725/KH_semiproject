@@ -82,105 +82,114 @@ function hideMap() {
 }
 
 function initializeMap() {
-	var mapContainer = document.getElementById('map');
-	var mapOption = {
-	    center: new kakao.maps.LatLng(33.450701, 126.570667),
-	    level: 4
-	};
+    var mapContainer = document.getElementById('map');
+    var mapOption = {
+        center: new kakao.maps.LatLng(33.450701, 126.570667),
+        level: 4
+    };
 
-	var map = new kakao.maps.Map(mapContainer, mapOption);
-	var geocoder = new kakao.maps.services.Geocoder();
+    var map = new kakao.maps.Map(mapContainer, mapOption);
+    var geocoder = new kakao.maps.services.Geocoder();
 
-	var startPoint = "${order.startPoint}";
-	var endPoint = "${order.endPoint}";
+    var startPoint = "${order.startPoint}";
+    var endPoint = "${order.endPoint}";
 
-	var markers = [];
-	var polylines = [];
+    var markers = [];
+    var polylines = [];
 
-	function geocodeAddress(address, callback) {
-	    geocoder.addressSearch(address, function(result, status) {
-	        if (status === kakao.maps.services.Status.OK) {
-	            callback(new kakao.maps.LatLng(result[0].y, result[0].x));
-	        }
-	    });
-	}
+    function geocodeAddress(address) {
+        return new Promise(function(resolve, reject) {
+            geocoder.addressSearch(address, function(result, status) {
+                if (status === kakao.maps.services.Status.OK) {
+                    resolve(new kakao.maps.LatLng(result[0].y, result[0].x));
+                } else {
+                    reject(status);
+                }
+            });
+        });
+    }
 
-	geocodeAddress(startPoint, function(coords) {
-	    var startMarker = new kakao.maps.Marker({
-	        map: map,
-	        position: coords
-	    });
-	    markers.push(startMarker);
-	    adjustMapBounds();
-	});
+    Promise.all([geocodeAddress(startPoint), geocodeAddress(endPoint)])
+        .then(function(coords) {
+            var startMarker = new kakao.maps.Marker({
+                map: map,
+                position: coords[0]
+            });
+            markers.push(startMarker);
 
-	geocodeAddress(endPoint, function(coords) {
-	    var endMarker = new kakao.maps.Marker({
-	        map: map,
-	        position: coords
-	    });
-	    markers.push(endMarker);
-	    adjustMapBounds();
-	    if (markers.length === 2) {
-	        findRouteAndDrawLine();
-	    }
-	});
+            var endMarker = new kakao.maps.Marker({
+                map: map,
+                position: coords[1]
+            });
+            markers.push(endMarker);
 
-	function adjustMapBounds() {
-	    if (markers.length === 2) {
-	        var bounds = new kakao.maps.LatLngBounds();
-	        markers.forEach(marker => bounds.extend(marker.getPosition()));
-	        map.setBounds(bounds);
-	    }
-	}
+            adjustMapBounds();
 
-	function findRouteAndDrawLine() {
-	    var start = markers[0].getPosition();
-	    var end = markers[1].getPosition();
-	    
-	    var url = `https://apis-navi.kakaomobility.com/v1/directions?origin=\${start.getLng()},\${start.getLat()}&destination=\${end.getLng()},\${end.getLat()}&waypoints=&priority=RECOMMEND&road_details=false`;
-	    
-	    fetch(url, {
-	        method: 'GET',
-	        headers: {
-	            'Authorization': 'KakaoAK d0e8fab65653662fce2c093339eeeb25'
-	        }
-	    })
-	    .then(response => response.json())
-	    .then(data => {
-	        if (data.routes && data.routes.length > 0) {
-	            var route = data.routes[0];
-	            var linePath = [];
-	            route.sections.forEach(section => {
-	                section.roads.forEach(road => {
-	                    for (let i = 0; i < road.vertexes.length; i += 2) {
-	                        linePath.push(new kakao.maps.LatLng(road.vertexes[i+1], road.vertexes[i]));
-	                    }
-	                });
-	            });
+            if (markers.length === 2) {
+                findRouteAndDrawLine();
+            }
+        })
+        .catch(function(error) {
+            console.error('Geocode error:', error);
+        });
 
-	            var polyline = new kakao.maps.Polyline({
-	                path: linePath,
-	                strokeWeight: 5,
-	                strokeColor: '#86C1C6',
-	                strokeOpacity: 0.7,
-	                strokeStyle: 'solid'
-	            });
-	
-	            
-	            polyline.setMap(map);
-	            polylines.push(polyline);
-	            
-	            var distance = polyline.getLength();
-	            var distanceKm = (distance / 1000).toFixed(2);
-	            console.log('두 마커 사이의 거리는 ' + distanceKm + ' km 입니다.');
-	        } else {
-	            console.log('경로를 찾을 수 없습니다.');
-	        }
-	    })
-	    .catch(error => console.log('경로 요청 중 오류 발생:', error));
-	}
+    function adjustMapBounds() {
+        if (markers.length === 2) {
+            var bounds = new kakao.maps.LatLngBounds();
+            markers.forEach(marker => bounds.extend(marker.getPosition()));
+            map.setBounds(bounds);
+        }
+    }
+
+    function findRouteAndDrawLine() {
+        var start = markers[0].getPosition();
+        var end = markers[1].getPosition();
+        
+        var url = `https://apis-navi.kakaomobility.com/v1/directions?origin=\${start.getLng()},\${start.getLat()}&destination=\${end.getLng()},\${end.getLat()}&waypoints=&priority=RECOMMEND&road_details=false`;
+        
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'KakaoAK d0e8fab65653662fce2c093339eeeb25'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.routes && data.routes.length > 0) {
+                var route = data.routes[0];
+                var linePath = [];
+                route.sections.forEach(section => {
+                    section.roads.forEach(road => {
+                        for (let i = 0; i < road.vertexes.length; i += 2) {
+                            linePath.push(new kakao.maps.LatLng(road.vertexes[i+1], road.vertexes[i]));
+                        }
+                    });
+                });
+
+                var polyline = new kakao.maps.Polyline({
+                    path: linePath,
+                    strokeWeight: 5,
+                    strokeColor: '#86C1C6',
+                    strokeOpacity: 0.7,
+                    strokeStyle: 'solid'
+                });
+
+                
+                polyline.setMap(map);
+                polylines.push(polyline);
+                
+                var distance = polyline.getLength();
+                var distanceKm = (distance / 1000).toFixed(2);
+                console.log('두 마커 사이의 거리는 ' + distanceKm + ' km 입니다.');
+            } else {
+                console.log('경로를 찾을 수 없습니다.');
+            }
+        })
+        .catch(error => console.log('경로 요청 중 오류 발생:', error));
+    }
 }
+
+
 
 /* 채팅기능 */
 function enterChatRoom(orderId) {
@@ -385,14 +394,16 @@ function buttonSelction() {
 								<button onclick="updateReview(${review.reviewNo})">수정</button>
 								<button onclick="deleteReview(${review.reviewNo})">삭제</button>
 							</c:if></td>
-
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
+		<c:if test="${sessionScope.loginUser.userNo == order.userNo || sessionScope.loginUser.role == 'rider'}">
 		<div class="chat-actions">
+
 			<button onclick="enterChatRoom(${order.orderNo})">채팅방</button>
 		</div>
+		</c:if>
 	</div>
 
 	<%@ include file="/WEB-INF/views/common/footer.jsp"%>
