@@ -111,10 +111,9 @@
        </tbody>
     </table>
     
-    <!-- 채팅방 생성 및 참가 버튼 추가 -->
+    <!-- 채팅방 생성 및 참가 버튼 통합 -->
     <div class="chat-actions">
-        <button onclick="createChatRoom(${order.orderNo})">채팅방 생성</button>
-        <button onclick="joinChatRoom(${order.orderNo})">채팅방 참가</button>
+        <button onclick="enterChatRoom(${order.orderNo})">채팅방</button>
     </div>
 </div>
 
@@ -164,12 +163,29 @@ function createChatRoom(orderId) {
     } else {
         alert("비밀번호를 입력해주세요.");
     }
-}
+}dd
 
-function joinChatRoom(orderId) {
+function enterChatRoom(orderId) {
     var password = prompt("채팅방 비밀번호를 입력하세요:");
-    if (password != null && password != "") {
-        window.location.href = '${pageContext.request.contextPath}/chatRoom/join?orderId=' + orderId + '&password=' + password;
+    if (password) {
+        var form = document.createElement("form");
+        form.method = "POST";
+        form.action = "${pageContext.request.contextPath}/chatRoom/enter";
+
+        var orderIdInput = document.createElement("input");
+        orderIdInput.type = "hidden";
+        orderIdInput.name = "orderId";
+        orderIdInput.value = orderId;
+        form.appendChild(orderIdInput);
+
+        var passwordInput = document.createElement("input");
+        passwordInput.type = "hidden";
+        passwordInput.name = "password";
+        passwordInput.value = password;
+        form.appendChild(passwordInput);
+
+        document.body.appendChild(form);
+        form.submit();
     } else {
         alert("비밀번호를 입력해주세요.");
     }
