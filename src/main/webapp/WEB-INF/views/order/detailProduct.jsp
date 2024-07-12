@@ -170,7 +170,7 @@ function createChatRoom(orderId) {
     } else {
         alert("비밀번호를 입력해주세요.");
     }
-}dd
+}
 
 function enterChatRoom(orderId) {
     var password = prompt("채팅방 비밀번호를 입력하세요:");
