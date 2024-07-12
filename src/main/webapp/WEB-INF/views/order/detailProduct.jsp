@@ -360,14 +360,16 @@ function accept(orderId){
 								<button onclick="updateReview(${review.reviewNo})">수정</button>
 								<button onclick="deleteReview(${review.reviewNo})">삭제</button>
 							</c:if></td>
-
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
+		<c:if test="${sessionScope.loginUser.userNo == order.userNo || sessionScope.loginUser.role == 'rider'}">
 		<div class="chat-actions">
+
 			<button onclick="enterChatRoom(${order.orderNo})">채팅방</button>
 		</div>
+		</c:if>
 	</div>
 
 	<%@ include file="/WEB-INF/views/common/footer.jsp"%>
