@@ -25,6 +25,8 @@ public interface OrderService {
 
 	int updateOrderStatus(Order o);
 
-	int selectOrderRiderOne(int riderNo);
+	int OrderRiderCount(int riderNo);
+
+	List<Order> selectRiderOrderList(int riderNo);
 
 }

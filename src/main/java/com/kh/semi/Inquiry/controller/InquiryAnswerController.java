@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.kh.semi.Inquiry.model.service.InquiryAnswerService;
+import com.kh.semi.Inquiry.model.service.InquiryService;
 import com.kh.semi.Inquiry.model.vo.InquiryAnswer;
 import com.kh.semi.user.model.vo.User;
 
@@ -30,6 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 public class InquiryAnswerController {
 	
 	private final InquiryAnswerService service;
+	private final InquiryService inquiryService;
 	
 	@GetMapping("/selectAnswerList")
 	public List<InquiryAnswer> selectAnswerList(@RequestParam(required = false) Integer inquiryNo) {
@@ -40,6 +42,8 @@ public class InquiryAnswerController {
 	public int insertAnswer(@RequestBody InquiryAnswer a, @SessionAttribute("loginUser") User loginUser) {
 	    a.setAnswerWriter(loginUser.getNickname());
 	    a.setUserNickname(loginUser.getNickname());
+	    int result = inquiryService.updateStatus(a.getInquiryNo());
+
 	    return service.insertAnswer(a);
 	}
 	

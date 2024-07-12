@@ -18,6 +18,7 @@ public class Inquiry {
 	private String content;
 	private Date createDate;
 	private Date updateDate;
+	private String inquiryStatus;
 	
 	private InquiryImg inquiryImg;
 }

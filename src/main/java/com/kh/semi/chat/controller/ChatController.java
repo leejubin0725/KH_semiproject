@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.semi.chat.model.vo.ChatRoom;
 import com.kh.semi.chat.model.vo.Message;
 import com.kh.semi.chat.service.MessageService;
 
@@ -42,4 +43,6 @@ public class ChatController {
     public List<Message> getMessages(@RequestParam int chatRoomId) {
         return messageService.getMessagesByChatRoomId(chatRoomId);
     }
+    
+
 }

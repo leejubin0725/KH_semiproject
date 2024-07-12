@@ -30,6 +30,7 @@
     }
 </style>
 <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=66e04ef438990e6ab1d5d64f99a79f51&libraries=services"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -92,11 +93,11 @@
            </tr>
            <tr>
                <td colspan="5">
-               <c:if test="${sessionScope.loginUser.role == 'rider' || 'admin'}">
-                   <div class="comments-actions">
-                       <button onclick="accept()">수락하기</button>
-                   </div>
-                   </c:if>
+	               <c:if test="${sessionScope.loginUser.role == 'rider' || 'admin'}">
+	                   <div class="comments-actions">
+	                       <button onclick="accept(${order.orderNo})">수락하기</button>
+	                   </div>
+	               </c:if>
                </td>
            </tr>
            <c:forEach var="reniew" items="${board.reniewList}">
@@ -111,16 +112,18 @@
        </tbody>
     </table>
     
-    <!-- 채팅방 생성 및 참가 버튼 추가 -->
+    <!-- 채팅방 생성 및 참가 버튼 통합 -->
     <div class="chat-actions">
-        <button onclick="createChatRoom(${order.orderNo})">채팅방 생성</button>
-        <button onclick="joinChatRoom(${order.orderNo})">채팅방 참가</button>
+        <button onclick="enterChatRoom(${order.orderNo})">채팅방</button>
     </div>
 </div>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 <script>
-let currentRating = 0;
+
+buttonSelction();
+let currentRating = 0; // 초기 별점 설정
+
 
 function setRating(rating) {
     currentRating = rating;
@@ -153,6 +156,7 @@ function createChatRoom(orderId) {
             url: '${pageContext.request.contextPath}/chatRoom/create',
             type: 'POST',
             data: { orderId: orderId, password: password },
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8', // 추가된 부분
             success: function(response) {
                 alert(response);
             },
@@ -163,23 +167,95 @@ function createChatRoom(orderId) {
     } else {
         alert("비밀번호를 입력해주세요.");
     }
-}
+}dd
 
-function joinChatRoom(orderId) {
+function enterChatRoom(orderId) {
     var password = prompt("채팅방 비밀번호를 입력하세요:");
-    if (password != null && password != "") {
-        window.location.href = '${pageContext.request.contextPath}/chatRoom/join?orderId=' + orderId + '&password=' + password;
+    if (password) {
+        var form = document.createElement("form");
+        form.method = "POST";
+        form.action = "${pageContext.request.contextPath}/chatRoom/enter";
+
+        var orderIdInput = document.createElement("input");
+        orderIdInput.type = "hidden";
+        orderIdInput.name = "orderId";
+        orderIdInput.value = orderId;
+        form.appendChild(orderIdInput);
+
+        var passwordInput = document.createElement("input");
+        passwordInput.type = "hidden";
+        passwordInput.name = "password";
+        passwordInput.value = password;
+        form.appendChild(passwordInput);
+
+        document.body.appendChild(form);
+        form.submit();
     } else {
         alert("비밀번호를 입력해주세요.");
     }
 }
 
-function accept(){
+function accept(orderId){
     alert('수락되었습니다.');
-    location.href = "${contextPath}"
+    $.ajax({
+        url: '${pageContext.request.contextPath}/chatRoom/password',
+        type: 'GET',
+        data: { orderId: orderId },
+        success: function(response) {
+            alert('룸 비밀번호: ' + response);
+        },
+        error: function(xhr, status, error) {
+            alert("비밀번호를 가져오는 중 오류가 발생했습니다: " + error);
+        }
+    });
+    window.location.href = "${contextPath}/order/orderAccept?orderNo=${order.orderNo}"
+}
+
+function orderEnd() {
+	window.location.href = "${contextPath}/order/orderEnd?orderNo=${order.orderNo}";
+}
+
+function buttonSelction() {
+	
+		var userRole = "${sessionScope.loginUser.role}";
+		var orderStatus = "${order.orderStatus}";
+		var orderRiderNo = ${order.riderNo};
+		
+		var buttons="";
+		$(".comments-actions").html(buttons);
+		
+		if(userRole == "rider"){
+			$.ajax({
+		        url : "${pageContext.request.contextPath}/order/riderOrderSelectAjax",
+		        data : {
+		        	orderRiderNo : orderRiderNo
+		        },
+		        success : function(result){
+		        	if(orderRiderNo == 0){
+		        		buttons = (orderRiderNo == result) ? "" : "<button type='button' onclick='accept(${order.orderNo})'>주문 수락</button>";
+		        		$(".comments-actions").html(buttons);
+		        	}
+		        	
+		        	else {
+		        		console.log(result);
+		        		buttons = (orderRiderNo == result) ? "<button type='button' onclick='orderEnd()'>배송 완료</button>" : "";
+		        		$(".comments-actions").html(buttons);
+		        	}
+		        }		        	      
+		    });
+		} 	
+}
+
+function formatDate(timestamp) {
+    const date = new Date(timestamp);
+    const year = date.getFullYear().toString().slice(-2); // Get last 2 digits of year
+    const month = ('0' + (date.getMonth() + 1)).slice(-2); // Months are zero-based
+    const day = ('0' + date.getDate()).slice(-2);
+    return `\${year}-\${month}-\${day}`;
 }
 
 var mapContainer = document.getElementById('map');
+
 var mapOption = {
     center: new kakao.maps.LatLng(33.450701, 126.570667),
     level: 4

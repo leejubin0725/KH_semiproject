@@ -50,9 +50,7 @@
 		CREATE_DATE,
 		ORDER_STATUS,
 		DISTANCE,
-		PRICE,
-		START_DATE,
-		END_DATE
+		PRICE
 		) VALUES (
 		#{orderNo},
 		#{userNo},
@@ -67,9 +65,7 @@
 		SYSDATE,
 		#{orderStatus},
 		#{distance},
-		#{price},
-		SYSDATE,
-		SYSDATE
+		#{price}
 		)
 	</insert>
 
@@ -119,13 +115,6 @@
 		WHERE
 		O.ORDER_NO = #{orderNo}
 		ORDER BY ORDER_NO
-	</select>
-
-	<select id="selectOrderRiderOne" resultType="int">
-		SELECT ORDER_NO
-		FROM
-		ORDERS
-		WHERE RIDER_NO = #{riderNo}
 	</select>
 
 	<select id="selectOrdersImg" resultType="ordersImg">
@@ -217,10 +206,45 @@
 		<set>
 			RIDER_NO = #{riderNo},
 			ORDER_STATUS = #{orderStatus},
-			<if test="orderStatus eq '배달중'">START_DATE = #{startDate}</if>
-			<if test="orderStatus eq '배달완료'">END_DATE = #{endDate}</if>
+			<if test="orderStatus eq '배달중'">START_DATE = SYSDATE</if>
+			<if test="orderStatus eq '배달완료'">END_DATE = SYSDATE</if>
 		</set>
 		WHERE ORDER_NO = #{orderNo}
 	</update>
+	
+	<select id="OrderRiderCount" resultType="int">
+		SELECT COUNT(*)
+		FROM ORDERS
+		WHERE
+		(RIDER_NO = #{riderNo})
+		AND
+		(ORDER_STATUS <![CDATA[<>]]> '배달완료')
+	</select>
+	
+	<select id="selectRiderOrderList" resultType="Order">
+		SELECT
+		ORDER_NO,
+		RIDER_NO,
+		U.USER_NO,
+		U.NICKNAME AS WRITER,
+		ORDER_TITLE,
+		ORDER_CONTENT,
+		CATEGORY_MAIN,
+		ALERT_FRAGILE,
+		ALERT_VALUABLE,
+		ALERT_URGENT,
+		START_POINT,
+		END_POINT,
+		O.CREATE_DATE,
+		ORDER_STATUS,
+		DISTANCE,
+		PRICE,
+		START_DATE,
+		END_DATE
+		FROM ORDERS O
+		LEFT JOIN USERS U ON (O.USER_NO = U.USER_NO)
+		WHERE U.STATUS = 'Y' AND RIDER_NO = #{riderNo}
+		ORDER BY ORDER_NO
+	</select>
 
 </mapper>

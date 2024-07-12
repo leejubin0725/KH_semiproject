@@ -62,7 +62,7 @@ public class ReportController {
 	 String url = "";
      if(result > 0) {
          ra.addFlashAttribute("alertMsg" , "글 작성 성공");
-         url = "/user/mypage";
+         url = "home";
      } else {
          model.addAttribute("errorMsg" , "게시글 작성 실패");
          url = "common/errorPage";

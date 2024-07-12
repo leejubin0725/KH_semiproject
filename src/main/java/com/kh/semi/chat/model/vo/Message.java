@@ -11,5 +11,6 @@ public class Message {
     private int id;
     private int chatRoomId;
     private int senderId;
+    private String writer;
     private String content;
 }

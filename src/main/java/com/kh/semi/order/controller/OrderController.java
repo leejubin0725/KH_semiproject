@@ -2,7 +2,9 @@ package com.kh.semi.order.controller;
 
 import java.io.File;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -16,7 +18,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,7 +25,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.kh.semi.Inquiry.model.vo.Inquiry;
 import com.kh.semi.common.Utils;
 import com.kh.semi.order.model.service.OrderService;
 import com.kh.semi.order.model.vo.Order;
@@ -160,9 +160,6 @@ public class OrderController {
 		o.setOrderNo(orderNo);
 		o.setRiderNo(rider.getRiderNo());
 		
-		LocalDate localDate = LocalDate.now();
-		o.setStartDate(Date.valueOf(localDate));
-		
 		o.setOrderStatus("배달중");
 		
 		int result = orderService.updateOrderStatus(o);
@@ -195,9 +192,6 @@ public class OrderController {
 		o.setOrderNo(orderNo);
 		o.setRiderNo(rider.getRiderNo());
 		
-		LocalDate localDate = LocalDate.now();
-		o.setEndDate(Date.valueOf(localDate));
-		
 		o.setOrderStatus("배달완료");
 		
 		int result = orderService.updateOrderStatus(o);
@@ -219,12 +213,77 @@ public class OrderController {
 	@GetMapping("/riderOrderSelect")
 	public String riderOrderSelect(
 			@ModelAttribute("loginUser") User loginUser,
+			Model model,
+			RedirectAttributes ra,
 			Order o
 			) {
+
 		Rider rider = userService.selectRiderOne(loginUser.getUserNo());
-		int orderNo = orderService.selectOrderRiderOne(rider.getRiderNo());
 		
-		return "redirect:/order/detailProduct/" + orderNo;
+		List<Order> riderOrders = orderService.selectRiderOrderList(rider.getRiderNo());
+		
+		int orderNo = 0;
+		for(Order temp : riderOrders) {
+			if(temp.getOrderStatus().equals("배달중")) {
+				orderNo = temp.getOrderNo();
+			}
+		}
+		
+		if(orderNo == 0) {
+			ra.addFlashAttribute("alertMsg" , "현재 배달중인 목록이 없습니다.");
+			return "redirect:/user/mypage/";
+		} else {
+			return "redirect:/order/detailProduct/" + orderNo;
+		}
+	
+	}
+	
+	@GetMapping("riderOrderSelectAjax")
+	@ResponseBody
+	public int riderOrderSelectAjax(@ModelAttribute("loginUser") User loginUser,
+			@RequestParam("orderRiderNo") int orderRiderNo) {
+
+		/*
+		 * orderRiderNo 넘어온 상태인데
+		 * null 인경우주문ㅇ을 안 받은 상태
+		 * null 이 아닌 경우 주문을 받은 상태
+		 * 
+		 * 로그인 유저에서 라이더 번호를 뽑아옴
+		 * null 인 경우
+		 * null 이 아닌 경우 - 라이더
+		 * 
+		 * orderRiderNo가 null 이고 , 로그인 라이더가 null - 주문을 못받았고 , 다른 고객인 본 상태 -> 버튼 막기
+		 * orderRiderNo가 null 이고 , 로그인 라이더가 null이 아님 - 주문을 받지 않은 상태 -> 받기 가능 + 유효성 검사
+		 * 
+		 * orderRiderNo null이 아니고 , 로그인 라이더가 null - 주문연결은 됐는데 , 다른 고객인 본 상태 -> 버튼 막기
+		 * orderRiderNo null이 아니고 , 로그인 라이더가 null이 아님
+		 * 
+		 * 1. orderRiderNo == 로그인 라이더 번호 -> 배달중인 상태 -> 배달 완료
+		 * 2. orderRiderNo != 로그인 라이더 번호 -> 배달중인데 , 다른 라이더 봄 -> 막기
+		 * 
+		 * 
+		 * 1. 로그인 라이더가 null 이면 -> 무조건 버튼을 막기
+		 * 2. 로그인 라이더 + 주문 null 상태 -> 유효성 검사를 통해 주문 수락 버튼 보이기
+		 * 3. 로그인 라이더 + 주문 있는 상태 + (주문 라이더 정보와 일치) -> 배송 완료 버튼
+		 * 4. 로그인 라이더 + 주문 있는 상태 + (주문 라이더 정보와 불일치) -> 버튼을 막기
+		 * 5. 배송 완료 상태 - > 버튼을 막기
+		 * 
+		 * 1. status + 로그인 라이더 정보로 거르기 (1,5)
+		 * 2. 주문이 null 이면 , 로그인에서 받아온 유저 번호를 서비스에게 넘겨서 유효성 검사 후 주문 받기
+		 * 3. 주문이 있고 , 라이더와 일치하면 완료
+		 * 4. 주문이 있고 , 라이더와 불일치하면 막기
+		 * 
+		 */
+		
+		Rider rider = userService.selectRiderOne(loginUser.getUserNo());
+		int userRiderNo = rider.getRiderNo();
+		
+		if(orderRiderNo == 0) {
+			return (orderService.OrderRiderCount(userRiderNo) > 0) ? 0 : userRiderNo;
+		} else {
+			return userRiderNo;
+		}
+
 	}
 	
 }

@@ -72,6 +72,11 @@ public class InquiryServiceImpl implements InquiryService{
 		return inquiryDao.selectInquiryImgList();
 	}
 
+	@Override
+	public int updateStatus(int i) {
+		return inquiryDao.updateStatus(i);
+	}
+
 	
 	
 }

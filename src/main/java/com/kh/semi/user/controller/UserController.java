@@ -68,25 +68,19 @@ public class UserController {
    }
 
    @PostMapping("/login")
-   public String login(@ModelAttribute User u, Model model, HttpSession session, RedirectAttributes ra) {
-
-      User loginUser = uService.login(u);
-      String url = "";
-      if (!(loginUser != null && encoder.matches(u.getPassword(), loginUser.getPassword()))) {
-    	  ra.addFlashAttribute("alertMsg", "로그인 실패!");
-    	  url = "redirect:/user/login";
-      } else {
-         ra.addFlashAttribute("alertMsg", "로그인 성공");
-         //model.addAttribute("loginUser", loginUser);
-         session.setAttribute("loginUser", loginUser);
-         
-
-         String nextUrl = (String) session.getAttribute("nextUrl");
-
-         url = "redirect:" + (nextUrl != null ? nextUrl : "/");
-         session.removeAttribute(nextUrl);
-      }
-      return url;
+   public String login(@ModelAttribute User u, Model model, HttpSession session) {
+       User loginUser = uService.login(u);
+       String url = "";
+       if (loginUser.getEmail().equals("admin") || (!(loginUser != null && encoder.matches(u.getPassword(), loginUser.getPassword())))) {
+           model.addAttribute("loginError", "로그인에 실패하셨습니다");
+           url = "/user/login";
+       } else {
+           session.setAttribute("loginUser", loginUser);
+           String nextUrl = (String) session.getAttribute("nextUrl");
+           url = "redirect:" + (nextUrl != null ? nextUrl : "/");
+           session.removeAttribute("nextUrl");
+       }
+       return url;
    }
 
    @GetMapping("/insert")
@@ -241,7 +235,7 @@ public class UserController {
 
    @PostMapping("/updatepw")
    public String updatePassword(@RequestParam("pw1") String pw1, @RequestParam("pw2") String pw2,
-         @SessionAttribute("email") String email) {
+         @SessionAttribute("email") String email, RedirectAttributes ra) {
 
       if (pw1.equals(pw2)) {
          String encPwd = encoder.encode(pw1);
@@ -249,6 +243,7 @@ public class UserController {
 
          if (result >= 1) {
             // 비밀번호 업데이트 성공 시
+            ra.addFlashAttribute("alertMsg", "비밀번호 변경 성공");
             return "redirect:/"; // 성공 페이지로 리다이렉트
          } else {
             // 비밀번호 업데이트 실패 시

@@ -6,15 +6,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>마이페이지</title>
-    <link rel="stylesheet" href="${contextPath }/resources/css/mypage.css">
-    <link rel="stylesheet" href="${contextPath }/resources/css/styles.css">
+    <link rel="stylesheet" href="${contextPath}/resources/css/mypage.css">
+    <link rel="stylesheet" href="${contextPath}/resources/css/styles.css">
 </head>
 <body>
    <%@ include file="/WEB-INF/views/common/header.jsp"%>
    <div class="mypage-body">
       <div class="mypage-container">
          <h1>마이페이지</h1>
-         <form action="${contextPath }/user/update" method="post">
+         <form id="updateForm" action="${contextPath}/user/update" method="post">
             <div class="mypage-form-group">
                <label for="name">이메일:</label> <input type="text" id="email"
                   name="email" value="${loginUser.email}" readonly>
@@ -36,7 +36,7 @@
                   name="address" value="${loginUser.address}">
             </div>
 
-            <button type="submit" class="mypage-button">개인정보 수정</button>
+            <button type="button" class="mypage-button" onclick="confirmUpdate()">개인정보 수정</button>
          </form>
          <c:if test="${sessionScope.loginUser.role == 'regular'}">
          <button class="mypage-button" onclick="redirectToMyPost();">내가 쓴 글</button>
@@ -70,6 +70,12 @@
             if (confirm("정말로 탈퇴하시겠습니까?")) {
                 var contextPath = "${pageContext.request.contextPath}";
                 window.location.href = contextPath + "/user/delete";
+            }
+        }
+
+        function confirmUpdate() {
+            if (confirm("개인정보를 수정하시겠습니까?")) {
+                document.getElementById("updateForm").submit();
             }
         }
         
