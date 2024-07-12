@@ -10,6 +10,7 @@
     width: 100%;
     font-size: 14px;
     z-index: 1000; /* 다른 요소들 위에 표시되도록 함 */
+    margin-top: 20px;
 }
 
 .footer p {
@@ -22,4 +23,5 @@ body {
     padding-bottom: 60px; /* 푸터 높이보다 조금 더 크게 설정 */
     min-height: 100vh; /* 페이지 내용이 적어도 뷰포트 높이만큼 차지하도록 함 */
     position: relative; /* 하위 요소의 절대 위치 기준점 */
+    margin-bottom: 20px; 
 }
