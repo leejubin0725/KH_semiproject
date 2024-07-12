@@ -247,7 +247,7 @@ function buttonSelction() {
 	var orderRiderNo = ${order.riderNo};
 	
 	var buttons="";
-	$(".comments-actions").html(buttons);
+	$(".status-button").html(buttons);
 	
 	if(userRole == "rider"){
 		$.ajax({
@@ -258,13 +258,13 @@ function buttonSelction() {
 	        success : function(result){
 	        	if(orderRiderNo == 0){
 	        		buttons = (orderRiderNo == result) ? "" : "<button type='button' onclick='accept(${order.orderNo})'>주문 수락</button>";
-	        		$(".comments-actions").html(buttons);
+	        		$(".status-button").html(buttons);
 	        	}
 	        	
 	        	else {
 	        		console.log(result);
 	        		buttons = (orderRiderNo == result) ? "<button type='button' onclick='orderEnd()'>배송 완료</button>" : "";
-	        		$(".comments-actions").html(buttons);
+	        		$(".status-button").html(buttons);
 	        	}
 	        }		        	      
 	    });
@@ -345,6 +345,7 @@ function buttonSelction() {
 		<div class="map-buttons">
 			<button class="map-button" onclick="showMap()">지도 보기</button>
 			<button class="map-button" onclick="hideMap()">지도 숨기기</button>
+			<p class="status-button"></p>
 		</div>
 
 		<div class="end-point">주문일자: ${order.startDate}</div>

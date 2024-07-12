@@ -247,6 +247,7 @@ body{
         font-size: 16px;
         padding: 8px 12px; /* 배경색 영역과 텍스트 사이 간격 조정 */
     }
+
 .no-image {
     width: 50%; /* 이미지 없음 영역 전체 너비 */
     height: auto; /* 이미지 없음 영역 자동 높이 설정 */
@@ -258,4 +259,14 @@ body{
     display: flex; /* 자식 요소를 가로로 정렬하기 위한 flex 설정 */
     justify-content: center; /* 가로 정렬을 중앙에 위치시키기 위한 설정 */
     align-items: center;
+}
+
+
+.status-button{
+	margin-right: 50px;
+   padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
 }
