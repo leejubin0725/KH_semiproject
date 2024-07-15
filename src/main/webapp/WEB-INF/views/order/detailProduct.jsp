@@ -64,6 +64,8 @@
 let mapDisplayed = false; // 지도 보기 상태를 관리하는 변수
 let mapInstance = null; // Kakao 지도 인스턴스 변수
 let linePath = []; // 선의 경로를 담을 배열
+let currentRating = 0;
+selectReviewList();
 buttonSelction();
 
 function showMap() {
@@ -257,18 +259,107 @@ function buttonSelction() {
 	        },
 	        success : function(result){
 	        	if(orderRiderNo == 0){
+	        		console.log(result);
 	        		buttons = (orderRiderNo == result) ? "" : "<button type='button' onclick='accept(${order.orderNo})'>주문 수락</button>";
 	        		$(".status-button").html(buttons);
 	        	}
 	        	
 	        	else {
 	        		console.log(result);
-	        		buttons = (orderRiderNo == result) ? "<button type='button' onclick='orderEnd()'>배송 완료</button>" : "";
+	        		if(orderStatus == "배달완료"){
+	        			buttons="";
+	        		} else {
+	        			buttons = (orderRiderNo == result) ? "<button type='button' onclick='orderEnd()'>배송 완료</button>" : "";
+	        		}
+	        		
 	        		$(".status-button").html(buttons);
 	        	}
 	        }		        	      
 	    });
-	} 	
+	}
+}
+
+function setRating(rating) {
+    currentRating = rating;
+
+    const stars = document.querySelectorAll('.star');
+    stars.forEach((star, index) => {
+        if (index < rating) {
+            star.classList.add('checked');
+        } else {
+            star.classList.remove('checked');
+        }
+    });
+}
+
+function insertReview() {
+    const reviewContent = document.querySelector('#reviewContent').value;
+
+    if (!reviewContent.trim()) {
+        alert('리뷰 내용을 입력해주세요.');
+        return;
+    }
+
+    const data = {
+        orderNo: ${order.orderNo},  // 실제 주문 번호로 대체
+        writer: '${sessionScope.loginUser.nickname}',  // 실제 사용자 닉네임으로 대체
+        riderNo : ${order.riderNo},
+        reviewContent: reviewContent,
+        rating: currentRating
+    };
+
+    fetch('${pageContext.request.contextPath}/review/insertReview', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.text())
+    .then(result => {
+        if (result === 'fail') {
+            alert('리뷰 등록 실패');
+        } else {
+            alert('리뷰 등록 성공');
+            document.querySelector('#reviewContent').value = "";
+            selectReviewList();
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('리뷰 등록 중 오류가 발생했습니다.');
+    });
+}
+
+function selectReviewList(){
+    $.ajax({
+        url : "${pageContext.request.contextPath}/review/selectReviewList",
+        method: 'POST',
+        data : {
+            orderNo : ${order.orderNo}
+        },
+        success : function(result){
+            var reviews = "";
+            for(var review of result){
+                reviews += "<tr>";
+                reviews += `<td>\${review.rating}</td>`;
+                reviews += `<td>\${review.writer}</td>`;
+                reviews += `<td>\${review.reviewContent}</td>`;
+                reviews += `<td>\${formatDate(review.createDate)}</td>`;
+                reviews += "</tr>";
+            }
+            $("#reviewArea tbody").html(reviews);
+            $("#rcount").html(result.length);
+        }
+    });
+}
+
+function formatDate(timestamp) {
+    const date = new Date(timestamp);
+    const year = date.getFullYear().toString().slice(-2); // Get last 2 digits of year
+    const month = ('0' + (date.getMonth() + 1)).slice(-2); // Months are zero-based
+    const day = ('0' + date.getDate()).slice(-2);
+    return `\${year}-\${month}-\${day}`;
 }
 
 
@@ -417,93 +508,4 @@ function buttonSelction() {
 
 	<%@ include file="/WEB-INF/views/common/footer.jsp"%>
 </body>
-
-<script>
-selectReviewList();
-let currentRating = 0;
-
-function setRating(rating) {
-    currentRating = rating;
-
-    const stars = document.querySelectorAll('.star');
-    stars.forEach((star, index) => {
-        if (index < rating) {
-            star.classList.add('checked');
-        } else {
-            star.classList.remove('checked');
-        }
-    });
-}
-
-function insertReview() {
-    const reviewContent = document.querySelector('#reviewContent').value;
-
-    if (!reviewContent.trim()) {
-        alert('리뷰 내용을 입력해주세요.');
-        return;
-    }
-
-    const data = {
-        orderNo: ${order.orderNo},  // 실제 주문 번호로 대체
-        writer: '${sessionScope.loginUser.nickname}',  // 실제 사용자 닉네임으로 대체
-        riderNo : ${order.riderNo},
-        reviewContent: reviewContent,
-        rating: currentRating
-    };
-
-    fetch('${pageContext.request.contextPath}/review/insertReview', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-    .then(response => response.text())
-    .then(result => {
-        if (result === 'fail') {
-            alert('리뷰 등록 실패');
-        } else {
-            alert('리뷰 등록 성공');
-            document.querySelector('#reviewContent').value = "";
-            selectReviewList();
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('리뷰 등록 중 오류가 발생했습니다.');
-    });
-}
-
-function selectReviewList(){
-    $.ajax({
-        url : "${pageContext.request.contextPath}/review/selectReviewList",
-        method: 'POST',
-        data : {
-            orderNo : ${order.orderNo}
-        },
-        success : function(result){
-            var reviews = "";
-            for(var review of result){
-                reviews += "<tr>";
-                reviews += `<td>\${review.rating}</td>`;
-                reviews += `<td>\${review.writer}</td>`;
-                reviews += `<td>\${review.reviewContent}</td>`;
-                reviews += `<td>\${formatDate(review.createDate)}</td>`;
-                reviews += "</tr>";
-            }
-            $("#reviewArea tbody").html(reviews);
-            $("#rcount").html(result.length);
-        }
-    });
-}
-
-function formatDate(timestamp) {
-    const date = new Date(timestamp);
-    const year = date.getFullYear().toString().slice(-2); // Get last 2 digits of year
-    const month = ('0' + (date.getMonth() + 1)).slice(-2); // Months are zero-based
-    const day = ('0' + date.getDate()).slice(-2);
-    return `\${year}-\${month}-\${day}`;
-}
-	
-</script>
 </html>

@@ -9,28 +9,28 @@
 		<selectKey keyProperty="reportId" resultType="int"
 			order="BEFORE">
 			SELECT SEQ_RENO.NEXTVAL FROM DUAL
-	</selectKey>
-	
-	INSERT INTO REPORTS
-	(
+		</selectKey>
+
+		INSERT INTO REPORTS
+		(
 		REPORT_ID,
 		NICKNAME,
-		TITLE,
 		CONTENT,
 		REPORT_DATE
-	) VALUES
-	(
+		) VALUES
+		(
 		#{reportId},
 		#{nickName},
-		#{title},
 		#{content},
 		DEFAULT
-	)
+		)
 	</insert>
-	
+
 	<select id="selectReportList" resultType="Report">
 		SELECT *
 		FROM REPORTS
 	</select>
-	
+
+
+
 </mapper>

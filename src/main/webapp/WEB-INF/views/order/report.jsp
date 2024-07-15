@@ -67,6 +67,16 @@
             border-radius: 5px;
             cursor: pointer;
         }
+        
+         form .btn-mainpage {
+            background-color: #dc3545; /* Red color */
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
         form .btn-submit:hover {
             background-color: #c82333; /* Darker red on hover */
@@ -86,6 +96,7 @@
             </div>
             <div class="button-group">
                 <button type="submit" class="btn-submit">신고 제출</button>
+                <button type="button" class="btn-mainpage" onclick="window.location.href= `${contextPath}/order/noticeboard`;">뒤로 가기</button>
             </div>
         </form>
     </main>

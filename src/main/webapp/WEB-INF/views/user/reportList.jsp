@@ -59,6 +59,21 @@
             border-top: 2px solid rgba(212, 3, 3, 0.767);
             border-radius: 0 0 8px 8px;
         }
+        
+        .main-btn {
+            background-color: #dc3545; /* Red color */
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .btn-submit:hover {
+            background-color: #c82333; /* Darker red on hover */
+        }
+        
     </style>
 </head>
 <body>
@@ -81,7 +96,9 @@
                     </tr>
                 </c:forEach>
             </tbody>
+            
         </table>
+        <button class="main-btn" onclick="window.location.href= `${contextPath}`">메인 화면</button>
         <div class="footer">
             &copy; 2024 신고 목록 서비스. All rights reserved.
         </div>

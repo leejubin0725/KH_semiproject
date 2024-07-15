@@ -17,15 +17,16 @@
 		<div class="form-section">
 			<div class="left-side">
 				<label for="title">제목</label> <input type="text" id="title"
-					placeholder="제목 입력"> <label for="content">내용</label>
-				<textarea id="content" placeholder="내용 입력"></textarea>
+					placeholder="제목 입력" required> <label for="content">내용</label>
+				<textarea id="content" placeholder="내용 입력" required></textarea>
 				<label for="category">대분류</label> <select id="category">
-					<option></option>
-					<option>물건분류1</option>
-					<option>물건분류2</option>
-					<option>물건분류3</option>
-					<option>물건분류4</option>
-					<option>물건분류5</option>
+					<option selected>기타</option>
+					<option>음식 및 식료품</option>
+					<option>생활 용품</option>
+					<option>전자 제품</option>
+					<option>의류</option>
+					<option>화장품</option>
+					<option>책 및 도서류</option>
 				</select>
 				<div class="checkbox-group">
 					<div class="checkbox-label">

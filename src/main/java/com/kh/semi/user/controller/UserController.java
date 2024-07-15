@@ -44,7 +44,9 @@ import com.kh.semi.user.model.vo.User;
 import com.kh.semi.user.model.vo.Vehicle;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/user")
@@ -77,14 +79,22 @@ public class UserController {
   		
   		return "user/reportList";
   	}
-   
-
-   
-   
+  
    @PostMapping("/login")
    public String login(@ModelAttribute User u, Model model, HttpSession session) {
        User loginUser = uService.login(u);
        String url = "";
+       
+       if((loginUser != null) && (loginUser.getEmail().equals("admin")) && (loginUser.getPassword().equals(u.getPassword()))) {
+    	   model.addAttribute("alertMsg", "관리자 접속 완료");
+    	   session.setAttribute("loginUser", loginUser);
+           String nextUrl = (String) session.getAttribute("nextUrl");
+           url = "redirect:" + (nextUrl != null ? nextUrl : "/");
+           session.removeAttribute("nextUrl");
+           
+           return url;
+       }
+       
        if (!(loginUser != null && encoder.matches(u.getPassword(), loginUser.getPassword()))) {
            model.addAttribute("loginError", "로그인에 실패하셨습니다");
            url = "/user/login";
@@ -260,7 +270,7 @@ public class UserController {
          return "/user/changepw"; // 성공 시 이동할 페이지
       } else {
          // 비밀번호가 발견되지 않으면 에러 메시지를 모델에 추가하고 실패 페이지로 이동
-         model.addAttribute("error", "No matching account found.");
+         model.addAttribute("alertMsg", "일치하는 계정이 없습니다.");
          return "user/pwfind"; // 실패 시 이동할 페이지
       }
    }
