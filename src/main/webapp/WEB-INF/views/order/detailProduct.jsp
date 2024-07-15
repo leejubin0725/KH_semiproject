@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
@@ -9,57 +9,76 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>상품 상세 페이지</title>
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/detailProduct.css">
+   href="${pageContext.request.contextPath}/resources/css/detailProduct.css">
 <style>
 .image-box {
-	width: 70%; /* 원하는 너비로 조정 */
-	max-height: 400px; /* 원하는 높이로 조정 */
-	overflow: hidden; /* 넘치는 부분 숨김 */
-	margin: 20px auto; /* 수직 가운데 정렬 */
-	border: 1px solid #ccc; /* 테두리 설정 */
-	border-radius: 20px; /* 둥근 테두리 */
+   width: 70%; /* 원하는 너비로 조정 */
+   max-height: 400px; /* 원하는 높이로 조정 */
+   overflow: hidden; /* 넘치는 부분 숨김 */
+   margin: 20px auto; /* 수직 가운데 정렬 */
+   border: 1px solid #ccc; /* 테두리 설정 */
+   border-radius: 20px; /* 둥근 테두리 */
 }
 
 .image-container {
-	width: 100%;
-	height: 100%;
-	display: flex;
-	justify-content: center; /* 가로 방향 가운데 정렬 */
-	align-items: center; /* 세로 방향 가운데 정렬 */
+   width: 100%;
+   height: 100%;
+   display: flex;
+   justify-content: center; /* 가로 방향 가운데 정렬 */
+   align-items: center; /* 세로 방향 가운데 정렬 */
 }
 
 .image-container img {
-	max-width: 100%; /* 이미지가 부모 너비를 넘지 않도록 */
-	max-height: 100%; /* 이미지가 부모 높이를 넘지 않도록 */
-	display: block; /* 이미지가 inline 속성을 가지지 않도록 */
+   max-width: 100%; /* 이미지가 부모 너비를 넘지 않도록 */
+   max-height: 100%; /* 이미지가 부모 높이를 넘지 않도록 */
+   display: block; /* 이미지가 inline 속성을 가지지 않도록 */
 }
 
 .chat-actions {
-	margin-top: 20px;
-	margin-bottom: 110px;
-	margin-left: 300px;
-	display: flex; /* 버튼들을 가로로 배치하기 위해 flex 속성 추가 */
-	justify-content: flex-start; /* 버튼들을 왼쪽 정렬 */
-	gap: 10px; /* 버튼 사이에 간격 추가 */
+   margin-top: 20px;
+   margin-bottom: 110px;
+   margin-left: 300px;
+   display: flex; /* 버튼들을 가로로 배치하기 위해 flex 속성 추가 */
+   justify-content: flex-start; /* 버튼들을 왼쪽 정렬 */
+   gap: 10px; /* 버튼 사이에 간격 추가 */
 }
 
 .chat-actions button {
-	padding: 10px 20px; /* 위아래 10px, 좌우 20px 여백 설정 */
-	background-color: #28a745; /* 배경색 */
-	color: white; /* 글자색 */
-	border: none;
-	cursor: pointer;
-	border-radius: 5px; /* 버튼을 둥글게 만들기 */
-	transition: background-color 0.3s; /* 배경색 변경 시 부드럽게 전환 */
+   padding: 10px 20px; /* 위아래 10px, 좌우 20px 여백 설정 */
+   background-color: #28a745; /* 배경색 */
+   color: white; /* 글자색 */
+   border: none;
+   cursor: pointer;
+   border-radius: 5px; /* 버튼을 둥글게 만들기 */
+   transition: background-color 0.3s; /* 배경색 변경 시 부드럽게 전환 */
 }
 
 .chat-actions button:hover {
-	background-color: #218838; /* 마우스 호버 시 배경색 변경 */
+   background-color: #218838; /* 마우스 호버 시 배경색 변경 */
+}
+
+.status-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #ff8040;
+    color: #fff;
+    margin-left: 5px;
+    display: inline-block;
+    width: auto; /* 버튼의 너비를 자동으로 설정 */
+    box-sizing: border-box; /* 패딩과 테두리를 포함한 전체 크기를 지정 */
+    text-align: center; /* 텍스트를 가운데 정렬 */
+}
+
+.status-button:hover {
+    background-color: #0056b3;
 }
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript"
-	src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=66e04ef438990e6ab1d5d64f99a79f51&libraries=services"></script>
+   src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=66e04ef438990e6ab1d5d64f99a79f51&libraries=services"></script>
 <script>
 let mapDisplayed = false; // 지도 보기 상태를 관리하는 변수
 let mapInstance = null; // Kakao 지도 인스턴스 변수
@@ -198,30 +217,30 @@ function initializeMap() {
 
 /* 채팅기능 */
 function enterChatRoom(orderId) {
-	    var password = prompt("채팅방 비밀번호를 입력하세요:");
-	    if (password) {
-	        var form = document.createElement("form");
-	        form.method = "POST";
-	        form.action = "${pageContext.request.contextPath}/chatRoom/enter";
+       var password = prompt("채팅방 비밀번호를 입력하세요:");
+       if (password) {
+           var form = document.createElement("form");
+           form.method = "POST";
+           form.action = "${pageContext.request.contextPath}/chatRoom/enter";
 
-	        var orderIdInput = document.createElement("input");
-	        orderIdInput.type = "hidden";
-	        orderIdInput.name = "orderId";
-	        orderIdInput.value = orderId;
-	        form.appendChild(orderIdInput);
+           var orderIdInput = document.createElement("input");
+           orderIdInput.type = "hidden";
+           orderIdInput.name = "orderId";
+           orderIdInput.value = orderId;
+           form.appendChild(orderIdInput);
 
-	        var passwordInput = document.createElement("input");
-	        passwordInput.type = "hidden";
-	        passwordInput.name = "password";
-	        passwordInput.value = password;
-	        form.appendChild(passwordInput);
+           var passwordInput = document.createElement("input");
+           passwordInput.type = "hidden";
+           passwordInput.name = "password";
+           passwordInput.value = password;
+           form.appendChild(passwordInput);
 
-	        document.body.appendChild(form);
-	        form.submit();
-	    } else {
-	        alert("비밀번호를 입력해주세요.");
-	    }
-	}
+           document.body.appendChild(form);
+           form.submit();
+       } else {
+           alert("비밀번호를 입력해주세요.");
+       }
+   }
 
 function accept(orderId){
     alert('수락되었습니다.');
@@ -240,46 +259,46 @@ function accept(orderId){
 }
 
 function orderEnd() {
-	window.location.href = "${contextPath}/order/orderEnd?orderNo=${order.orderNo}";
+   window.location.href = "${contextPath}/order/orderEnd?orderNo=${order.orderNo}";
 }
 
 function buttonSelction() {
-	
-	var userRole = "${sessionScope.loginUser.role}";
-	var orderStatus = "${order.orderStatus}";
-	var orderRiderNo = ${order.riderNo};
-	
-	var buttons="";
-	$(".status-button").html(buttons);
-	
-	if(userRole == "rider"){
-		$.ajax({
-	        url : "${pageContext.request.contextPath}/order/riderOrderSelectAjax",
-	        data : {
-	        	orderRiderNo : orderRiderNo
-	        },
-	        success : function(result){
-	        	if(orderRiderNo == 0){
-	        		console.log("배달이 없는 상태");
-	        		buttons = (orderRiderNo == result) ? "" : "<button type='button' onclick='accept(${order.orderNo})'>주문 수락</button>";
-	        		$(".status-button").html(buttons);
-	        	}
-	        	
-	        	else {
-	        		if(orderStatus != "배달중"){
-	        			console.log("배달 완료 상태");
-	        			buttons="";
-	        		} else {
-	        			console.log("배달이 있는 상태");
-	        			buttons = (orderRiderNo == result) ? "<button type='button' onclick='orderEnd()'>배송 완료</button>" : "";
-	        		}
-	        		
-	        		$(".status-button").html(buttons);
-	        	}
-	        }		        	      
-	    });
-	}
+    var userRole = "${sessionScope.loginUser.role}";
+    var orderStatus = "${order.orderStatus}";
+    var orderRiderNo = ${order.riderNo};
+
+    var buttons = "";
+    if (userRole == "rider") {
+        if (orderStatus == "배달완료") {
+            $(".status-button-container").hide(); // 주문 완료 상태일 때 버튼 숨기기
+        } else {
+            $(".status-button-container").show(); // 그 외의 상태일 때 버튼 표시
+            $.ajax({
+                url: "${pageContext.request.contextPath}/order/riderOrderSelectAjax",
+                data: {
+                    orderRiderNo: orderRiderNo
+                },
+                success: function(result) {
+                    if (orderRiderNo == 0) {
+                        console.log("배달이 없는 상태");
+                        buttons = (orderRiderNo == result) ? "" : "<button class='status-button' type='button' onclick='accept(${order.orderNo})'>주문 수락</button>";
+                    } else {
+                        if (orderStatus != "배달중") {
+                            console.log("배달 완료 상태");
+                        } else {
+                            console.log("배달이 있는 상태");
+                            buttons = (orderRiderNo == result) ? "<button class='status-button' type='button' onclick='orderEnd()'>배송 완료</button>" : "";
+                        }
+                    }
+                    $(".status-button-container").html(buttons);
+                }
+            });
+        }
+    } else {
+        $(".status-button-container").hide(); // 라이더가 아닐 때 버튼 숨기기
+    }
 }
+
 
 function setRating(rating) {
     currentRating = rating;
@@ -334,7 +353,8 @@ function insertReview() {
 }
 
 function selectReviewList(){
-	var orderStatus = "${order.orderStatus}";
+   var orderStatus = "${order.orderStatus}";
+   var userRole = "${sessionScope.loginUser.role}"
     $.ajax({
         url : "${pageContext.request.contextPath}/review/selectReviewList",
         method: 'POST',
@@ -342,34 +362,35 @@ function selectReviewList(){
             orderNo : ${order.orderNo}
         },
         success : function(result){
-        	var reviews = "";
-        	if(result.length > 0){
-        		 for(var review of result){
+           var reviews = "";
+           if(result.length > 0){
+               for(var review of result){
                      reviews += `<td>\${review.rating}</td>`;
                      reviews += `<td>\${review.writer}</td>`;
                      reviews += `<td>\${review.reviewContent}</td>`;
                      reviews += `<td>\${formatDate(review.createDate)}</td>`;
                  }
-        	} else {
-        		if(orderStatus == '배달완료'){
-        			reviews += "<div style='display: flex; align-items: center'>";
-        			reviews += "<div class='rating' style='margin-right: 20px;'>";
-        			reviews += "<span class='star' onclick='setRating(1)'>★</span>";
-        			reviews += "<span class='star' onclick='setRating(2)'>★</span>";
-        			reviews += "<span class='star' onclick='setRating(3)'>★</span>";
-        			reviews += "<span class='star' onclick='setRating(4)'>★</span>";
-        			reviews += "<span class='star' onclick='setRating(5)'>★</span>";
-        			reviews += "</div>";
-        			reviews += "<input type='text' id='reviewContent' style='flex-grow: 1; padding: 3px; margin-right: 4px' />";
-        			reviews += "<button type='button' onclick='insertReview()'>댓글 달기</button>";
-        			reviews += "</div>";
-        		
-        		}else if(orderStatus == '배달중') {
-        			reviews += "<p>배달중입니다.</p>";
-        		}else {
-        			reviews += "<p>주문이 완료 되었습니다. 배달을 기다리는 중입니다.</p>";
-        		}
-        	}
+           } else {
+              if(orderStatus == '배달완료' && userRole != 'rider'){
+                 reviews += "<div style='display: flex; align-items: center'>";
+                 reviews += "<div class='rating' style='margin-right: 20px;'>";
+                 reviews += "<span class='star' onclick='setRating(1)'>★</span>";
+                 reviews += "<span class='star' onclick='setRating(2)'>★</span>";
+                 reviews += "<span class='star' onclick='setRating(3)'>★</span>";
+                 reviews += "<span class='star' onclick='setRating(4)'>★</span>";
+                 reviews += "<span class='star' onclick='setRating(5)'>★</span>";
+                 reviews += "</div>";
+                 reviews += "<td></td>";
+                 reviews += "<input type='text' id='reviewContent' style='flex-grow: 1; padding: 3px; margin-right: 4px' />";
+                 reviews += "<button type='button' onclick='insertReview()'>댓글 달기</button>";
+                 reviews += "</div>";
+              
+              }else if(orderStatus == '배달중') {
+                 reviews += "<p>배달중입니다.</p>";
+              }else {
+                 reviews += "<p>주문이 완료 되었습니다.</p>";
+              }
+           }
             
            
             $("#reviewArea tbody tr").html(reviews);
@@ -390,102 +411,102 @@ function formatDate(timestamp) {
 </head>
 <body>
 
-	<%@ include file="/WEB-INF/views/common/header.jsp"%>
-	<c:if test="${not empty errorMessage}">
-		<script>
+   <%@ include file="/WEB-INF/views/common/header.jsp"%>
+   <c:if test="${not empty errorMessage}">
+      <script>
        alert("${errorMessage}");
     </script>
-	</c:if>
-	<c:set var="orderImageUploadPath" value="/resources/images/Orders/"></c:set>
-	<div class="frame">
-		<div class="image-box">
-			<div class="image-container">
-				<c:choose>
-					<c:when test="${not empty order.ordersImg.changeName}">
-						<img
-							src="${contextPath}${orderImageUploadPath}${order.ordersImg.changeName}"
-							alt="Main Image">
-					</c:when>
-					<c:otherwise>
-						<div class="no-image">
-							<img
-								src="${pageContext.request.contextPath}/resources/images/no-image.png"
-								alt="No Image">
-						</div>
-					</c:otherwise>
-				</c:choose>
-			</div>
-		</div>
-		<div class="product-box">
-			<h1 class="product-title">${order.orderTitle}</h1>
-		</div>
-		<div class="author-nickname">${order.writer}</div>
-		<p class="product-description">${order.orderContent}</p>
-		<div id="map"></div>
-		<!-- 지도를 표시할 div -->
-		<div class="price">배송비: ${order.price}원</div>
+   </c:if>
+   <c:set var="orderImageUploadPath" value="/resources/images/Orders/"></c:set>
+   <div class="frame">
+      <div class="image-box">
+         <div class="image-container">
+            <c:choose>
+               <c:when test="${not empty order.ordersImg.changeName}">
+                  <img
+                     src="${contextPath}${orderImageUploadPath}${order.ordersImg.changeName}"
+                     alt="Main Image">
+               </c:when>
+               <c:otherwise>
+                  <div class="no-image">
+                     <img
+                        src="${pageContext.request.contextPath}/resources/images/no-image.png"
+                        alt="No Image">
+                  </div>
+               </c:otherwise>
+            </c:choose>
+         </div>
+      </div>
+      <div class="product-box">
+         <h1 class="product-title">${order.orderTitle}</h1>
+      </div>
+      <div class="author-nickname">${order.writer}</div>
+      <p class="product-description">${order.orderContent}</p>
+      <div id="map"></div>
+      <!-- 지도를 표시할 div -->
+      <div class="price">배송비: ${order.price}원</div>
 
-		<div class="alert">
-			<c:if test="${order.alertFragile == 'Y'}">
-				<p>
-					<input type="checkbox" id="fragileCheckbox" checked disabled>
-					<span style="color: black;">파손 주의</span>
-				</p>
-			</c:if>
-			<c:if test="${order.alertValuable == 'Y'}">
-				<p>
-					<input type="checkbox" id="valuableCheckbox" checked disabled>
-					<span style="color: black;">귀중품 주의</span>
-				</p>
-			</c:if>
-			<c:if test="${order.alertUrgent == 'Y'}">
-				<p>
-					<input type="checkbox" id="urgentCheckbox" checked disabled>
-					긴급 배송 요청
-				</p>
-			</c:if>
-		</div>
+      <div class="alert">
+         <c:if test="${order.alertFragile == 'Y'}">
+            <p>
+               <input type="checkbox" id="fragileCheckbox" checked disabled>
+               <span style="color: black;">파손 주의</span>
+            </p>
+         </c:if>
+         <c:if test="${order.alertValuable == 'Y'}">
+            <p>
+               <input type="checkbox" id="valuableCheckbox" checked disabled>
+               <span style="color: black;">귀중품 주의</span>
+            </p>
+         </c:if>
+         <c:if test="${order.alertUrgent == 'Y'}">
+            <p>
+               <input type="checkbox" id="urgentCheckbox" checked disabled>
+               긴급 배송 요청
+            </p>
+         </c:if>
+      </div>
 
-		<div class="delivery-info">
-			출발 위치: ${order.startPoint}<br />배송 거리: ${order.distance}km<br /> <br>수령
-			위치: ${order.endPoint}
-		</div>
+      <div class="delivery-info">
+         출발 위치: ${order.startPoint}<br />배송 거리: ${order.distance}km<br /> <br>수령
+         위치: ${order.endPoint}
+      </div>
 
-		<div
-			class="status-info ${order.orderStatus == '대기중' ? 'status-waiting' : (order.orderStatus == '배달중' ? 'status-in-progress' : 'status-completed')}">
-			${order.orderStatus == '대기중' ? '대기중' : (order.orderStatus == '배달중' ? '배달중' : '배달완료')}
-		</div>
+      <div
+         class="status-info ${order.orderStatus == '대기중' ? 'status-waiting' : (order.orderStatus == '배달중' ? 'status-in-progress' : 'status-completed')}">
+         ${order.orderStatus == '대기중' ? '대기중' : (order.orderStatus == '배달중' ? '배달중' : '배달완료')}
+      </div>
 
-		<div class="map-buttons">
-			<button class="map-button" onclick="showMap()">지도 보기</button>
-			<button class="map-button" onclick="hideMap()">지도 숨기기</button>
-			<button class="status-button"></button>
-		</div>
+      <div class="map-buttons">
+          <button class="map-button" onclick="showMap()">지도 보기</button>
+          <button class="map-button" onclick="hideMap()">지도 숨기기</button>
+          <div class="status-button-container"></div>
+      </div>
 
-		<div class="end-point">주문일자: ${order.startDate}</div>
+      <div class="end-point">주문일자: ${order.startDate}</div>
 
-		<table id="reviewArea" class="comments-table">
-			<thead>
-				<tr>
-					<th>별점</th>
-					<th>글쓴이</th>
-					<th>댓글 내용</th>
-					<th>작성일</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-				</tr>
-			</tbody>
-		</table>
-		<c:if test="${sessionScope.loginUser.userNo == order.userNo || sessionScope.loginUser.role == 'rider'}">
-		<div class="chat-actions">
+      <table id="reviewArea" class="comments-table">
+         <thead>
+            <tr>
+               <th>별점</th>
+               <th>글쓴이</th>
+               <th>댓글 내용</th>
+               <th>작성일</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+            </tr>
+         </tbody>
+      </table>
+      <c:if test="${sessionScope.loginUser.userNo == order.userNo || sessionScope.loginUser.role == 'rider'}">
+      <div class="chat-actions">
 
-			<button onclick="enterChatRoom(${order.orderNo})">채팅방</button>
-		</div>
-		</c:if>
-	</div>
+         <button onclick="enterChatRoom(${order.orderNo})">채팅방</button>
+      </div>
+      </c:if>
+   </div>
 
-	<%@ include file="/WEB-INF/views/common/footer.jsp"%>
+   <%@ include file="/WEB-INF/views/common/footer.jsp"%>
 </body>
 </html>
