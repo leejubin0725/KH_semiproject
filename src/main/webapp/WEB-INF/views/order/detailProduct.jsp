@@ -65,6 +65,7 @@ let mapDisplayed = false; // 지도 보기 상태를 관리하는 변수
 let mapInstance = null; // Kakao 지도 인스턴스 변수
 let linePath = []; // 선의 경로를 담을 배열
 let currentRating = 0;
+
 selectReviewList();
 buttonSelction();
 
@@ -259,16 +260,17 @@ function buttonSelction() {
 	        },
 	        success : function(result){
 	        	if(orderRiderNo == 0){
-	        		console.log(result);
+	        		console.log("배달이 없는 상태");
 	        		buttons = (orderRiderNo == result) ? "" : "<button type='button' onclick='accept(${order.orderNo})'>주문 수락</button>";
 	        		$(".status-button").html(buttons);
 	        	}
 	        	
 	        	else {
-	        		console.log(result);
-	        		if(orderStatus == "배달완료"){
+	        		if(orderStatus != "배달중"){
+	        			console.log("배달 완료 상태");
 	        			buttons="";
 	        		} else {
+	        			console.log("배달이 있는 상태");
 	        			buttons = (orderRiderNo == result) ? "<button type='button' onclick='orderEnd()'>배송 완료</button>" : "";
 	        		}
 	        		
@@ -332,6 +334,7 @@ function insertReview() {
 }
 
 function selectReviewList(){
+	var orderStatus = "${order.orderStatus}";
     $.ajax({
         url : "${pageContext.request.contextPath}/review/selectReviewList",
         method: 'POST',
@@ -339,17 +342,37 @@ function selectReviewList(){
             orderNo : ${order.orderNo}
         },
         success : function(result){
-            var reviews = "";
-            for(var review of result){
-                reviews += "<tr>";
-                reviews += `<td>\${review.rating}</td>`;
-                reviews += `<td>\${review.writer}</td>`;
-                reviews += `<td>\${review.reviewContent}</td>`;
-                reviews += `<td>\${formatDate(review.createDate)}</td>`;
-                reviews += "</tr>";
-            }
-            $("#reviewArea tbody").html(reviews);
-            $("#rcount").html(result.length);
+        	var reviews = "";
+        	if(result.length > 0){
+        		 for(var review of result){
+                     reviews += `<td>\${review.rating}</td>`;
+                     reviews += `<td>\${review.writer}</td>`;
+                     reviews += `<td>\${review.reviewContent}</td>`;
+                     reviews += `<td>\${formatDate(review.createDate)}</td>`;
+                 }
+        	} else {
+        		if(orderStatus == '배달완료'){
+        			reviews += "<div style='display: flex; align-items: center'>";
+        			reviews += "<div class='rating' style='margin-right: 20px;'>";
+        			reviews += "<span class='star' onclick='setRating(1)'>★</span>";
+        			reviews += "<span class='star' onclick='setRating(2)'>★</span>";
+        			reviews += "<span class='star' onclick='setRating(3)'>★</span>";
+        			reviews += "<span class='star' onclick='setRating(4)'>★</span>";
+        			reviews += "<span class='star' onclick='setRating(5)'>★</span>";
+        			reviews += "</div>";
+        			reviews += "<input type='text' id='reviewContent' style='flex-grow: 1; padding: 3px; margin-right: 4px' />";
+        			reviews += "<button type='button' onclick='insertReview()'>댓글 달기</button>";
+        			reviews += "</div>";
+        		
+        		}else if(orderStatus == '배달중') {
+        			reviews += "<p>배달중입니다.</p>";
+        		}else {
+        			reviews += "<p>주문이 완료 되었습니다. 배달을 기다리는 중입니다.</p>";
+        		}
+        	}
+            
+           
+            $("#reviewArea tbody tr").html(reviews);
         }
     });
 }
@@ -436,7 +459,7 @@ function formatDate(timestamp) {
 		<div class="map-buttons">
 			<button class="map-button" onclick="showMap()">지도 보기</button>
 			<button class="map-button" onclick="hideMap()">지도 숨기기</button>
-			<p class="status-button"></p>
+			<button class="status-button"></button>
 		</div>
 
 		<div class="end-point">주문일자: ${order.startDate}</div>
@@ -452,50 +475,7 @@ function formatDate(timestamp) {
 			</thead>
 			<tbody>
 				<tr>
-					<td colspan="4">
-						<c:choose>
-								<c:when test="${order.orderStatus == '배달완료'}">
-									<div style="display: flex; align-items: center;">
-										<div class="rating" style="margin-right: 20px;">
-											<span class="star" onclick="setRating(1)">★</span> <span
-												class="star" onclick="setRating(2)">★</span> <span
-												class="star" onclick="setRating(3)">★</span> <span
-												class="star" onclick="setRating(4)">★</span> <span
-												class="star" onclick="setRating(5)">★</span>
-										</div>
-										<input type="text" id="reviewContent"
-											style="flex-grow: 1; padding: 3px; margin-right: 4px" />
-										<button type="button" onclick="insertReview()">댓글 달기</button>
-									</div>
-								</c:when>
-								<c:when test="${order.orderStatus == '배달중'}">
-									<p>배달중입니다.</p>
-								</c:when>
-								<c:otherwise>
-									<p>주문이 완료 되었습니다.</p>
-								</c:otherwise>
-	  					</c:choose>
-					</td>
 				</tr>
-				<tr>
-					<td colspan="4">
-						<div class="comments-actions"></div>
-					</td>
-				</tr>
-
-				<c:forEach var="review" items="${review.reviewList}">
-					<tr id="review-${review.reviewNo}">
-						<td>${review.rating}</td>
-						<td>${review.writer}</td>
-						<td>${review.reviewContent}</td>
-						<td>${review.createDate}</td>
-						<td><c:if
-								test="${sessionScope.loginUser.userId == review.writerId || sessionScope.loginUser.role == 'admin'}">
-								<button onclick="updateReview(${review.reviewNo})">수정</button>
-								<button onclick="deleteReview(${review.reviewNo})">삭제</button>
-							</c:if></td>
-					</tr>
-				</c:forEach>
 			</tbody>
 		</table>
 		<c:if test="${sessionScope.loginUser.userNo == order.userNo || sessionScope.loginUser.role == 'rider'}">
