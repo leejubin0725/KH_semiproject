@@ -106,12 +106,22 @@ public class UserController {
        }
        return url;
    }
+   
+   @GetMapping("/signup")
+   public String signup() {
+      return "/user/signup";
+   }
 
    @GetMapping("/insert")
    public String insertPage() {
       return "/user/signup";
    }
 
+   @GetMapping("/personagree")
+   public String personagree() {
+      return "/user/personagree";
+   }
+   
    @PostMapping("/insert")
    public String insert(@ModelAttribute User u, Model model, @RequestParam("vehicle") Object vehicle,
          RedirectAttributes ra) {

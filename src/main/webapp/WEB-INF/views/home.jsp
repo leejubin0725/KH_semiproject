@@ -70,7 +70,7 @@
     changeSlide();
 
     // 5초마다 changeSlide 함수 호출
-    setInterval(changeSlide, 5000);
+    setInterval(changeSlide,2000);
         function noticeboard(){
             location.href = '${contextPath}/order/noticeboard';
         }

@@ -42,7 +42,7 @@
                     </c:when>
                     <c:otherwise>
                         <span><a href="${contextPath}/user/login" >로그인</a></span>
-                        <span><a href="${contextPath}/user/insert">회원가입</a></span>
+              <span><a href="${contextPath}/user/personagree">회원가입</a></span>
                     </c:otherwise>
                 </c:choose>
             </div>

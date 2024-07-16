@@ -8,14 +8,14 @@
 }
 
 .container {
-  	width:100%;
+     width:100%;
  
     padding: 0 15px;
     border-radius: 8px;
 }
 
 .dropdown-container{
-	margin-left: 5%;
+   margin-left: 5%;
 }
 
 .container h2 {
@@ -30,7 +30,7 @@ table {
     margin-top: 20px;
     border-radius: 20px;
     border-spacing: 0;
- 	margin : auto;
+    margin : auto;
 }
 
 thead {
@@ -98,6 +98,7 @@ tbody tr:hover {
     display: flex;
     justify-content: flex-end;
     gap: 10px; /* 버튼들 사이에 간격을 두고 싶으면 사용 */
+    margin-right: 83px;
 }
 
 .btn,
@@ -190,7 +191,7 @@ tbody tr td:nth-child(4) {
 
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: #f0f0f0;
+
 }
 
 .dropdown-container {

@@ -44,11 +44,11 @@ public class InquiryController {
         List<InquiryCategory> inquiryCategoryList = iService.inquiryCategoryList();
         
         if(inquiryCategoryList.isEmpty()) {
-        	iService.initCategory(new InquiryCategory(1,"분류1"));
-        	iService.initCategory(new InquiryCategory(2,"분류2"));
-        	iService.initCategory(new InquiryCategory(3,"분류3"));
-        	iService.initCategory(new InquiryCategory(4,"분류4"));
-        	iService.initCategory(new InquiryCategory(5,"분류5"));
+        	iService.initCategory(new InquiryCategory(1,"회원서비스"));
+        	iService.initCategory(new InquiryCategory(2,"취소"));
+        	iService.initCategory(new InquiryCategory(3,"지연배송"));
+        	iService.initCategory(new InquiryCategory(4,"환불"));
+        	iService.initCategory(new InquiryCategory(5,"기타"));
         }
         
         application.setAttribute("inquiryList" , inquiryList);

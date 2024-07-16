@@ -57,6 +57,7 @@
             stompClient.send("/app/sendMessage", {}, JSON.stringify({
                 'senderId': from,
                 'content': text,
+                'writer' : '${nickName}',
                 'chatRoomId': chatRoomId // 채팅방 ID 추가
             }));
 
@@ -67,7 +68,7 @@
         function showMessage(message) {
             var response = document.getElementById('messages');
             var li = document.createElement('li');
-            li.appendChild(document.createTextNode("${nickName}" + ": " + message.content));
+            li.appendChild(document.createTextNode(`\${message.writer}` + ": " + message.content));
      
             response.appendChild(li);
             scrollToBottom();
