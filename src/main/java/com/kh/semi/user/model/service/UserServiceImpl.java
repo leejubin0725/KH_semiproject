@@ -69,6 +69,11 @@ public class UserServiceImpl implements UserService {
    public List<Order> selectMyPostList(int userNo) {
 	   return dao.selectMyPostList(userNo);
    }
+   
+   @Override
+	public Rider selectRider(int riderNo) {
+		return dao.selectRider(riderNo);
+	}
 
 	@Override
 	public Rider selectRiderOne(int userNo) {
@@ -79,4 +84,15 @@ public class UserServiceImpl implements UserService {
 	public int deleteUser(int userNo) {
 		return dao.deleteUser(userNo);
 	}
+
+	@Override
+	public int updateRiderRating(Rider rider) {
+		return dao.updateRiderRating(rider);
+	}
+	
+	   @Override
+	   public int nncheck(String nickname) {
+	      return dao.nnCheck(nickname);
+	   } 
+
 }

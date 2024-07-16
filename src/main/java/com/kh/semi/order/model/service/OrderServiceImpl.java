@@ -1,12 +1,14 @@
 package com.kh.semi.order.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kh.semi.common.model.vo.PageInfo;
 import com.kh.semi.order.model.dao.OrderDao;
 import com.kh.semi.order.model.vo.Order;
 import com.kh.semi.order.model.vo.OrdersImg;
@@ -40,10 +42,6 @@ public class OrderServiceImpl implements OrderService {
 		return result;
 	}
 
-	@Override
-	public List<Order> selectOrderList() {
-		return orderDao.selectOrderList();
-	}
 
 	@Override
 	public Order selectOrderOne(int orderNo) {
@@ -91,5 +89,22 @@ public class OrderServiceImpl implements OrderService {
 	public List<Order> selectRiderOrderList(int riderNo) {
 		return orderDao.selectRiderOrderList(riderNo);
 	}
+
+	@Override
+	public int OrderRiderCountComplete(int riderNo) {
+		return orderDao.OrderRiderCountComplete(riderNo);
+	}
+
+
+	   @Override
+	   public int selectListCount(Map<String, Object> paramMap) {
+	      return orderDao.selectOrderListConut(paramMap);
+	   }
+
+	   @Override
+	   public List<Order> selectOrderList(PageInfo pi) {
+	      return orderDao.selectOrderList(pi);
+	   }
+
 	
 }

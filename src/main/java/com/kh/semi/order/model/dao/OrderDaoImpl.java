@@ -1,12 +1,33 @@
 package com.kh.semi.order.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
+import org.apache.ibatis.session.SqlSession;
+import java.util.List;
+import java.util.Map;
+
+
+
+import com.kh.semi.common.model.vo.PageInfo;
+import com.kh.semi.order.model.vo.Order;
+import com.kh.semi.order.model.vo.OrdersImg;import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.kh.semi.common.model.vo.PageInfo;
 import com.kh.semi.order.model.vo.Order;
 import com.kh.semi.order.model.vo.OrdersImg;
+
+import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.session.RowBounds;
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Repository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,11 +40,6 @@ public class OrderDaoImpl implements OrderDao{
 	@Override
 	public int insertOrder(Order o) {
 		return sqlSession.insert("Orders.insertOrder", o);
-	}
-
-	@Override
-	public List<Order> selectOrderList() {
-		return sqlSession.selectList("Orders.selectOrderList");
 	}
 
 	@Override
@@ -76,4 +92,25 @@ public class OrderDaoImpl implements OrderDao{
 		return sqlSession.selectList("Orders.selectRiderOrderList" , riderNo);
 	}
 
+	@Override
+	public int OrderRiderCountComplete(int riderNo) {
+		return sqlSession.selectOne("Orders.OrderRiderCountComplete" , riderNo);
+	}
+
+	@Override
+   public int selectOrderListConut(Map<String, Object> paramMap) {
+      return sqlSession.selectOne("Orders.selectOrderListConut", paramMap);
+   }
+
+
+	@Override
+	public List<Order> selectOrderList(PageInfo pi) {
+		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit();
+		int limit  = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return sqlSession.selectList("Orders.selectOrderList", pi, rowBounds);
+	}
+
+	
 }

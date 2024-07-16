@@ -25,8 +25,7 @@
 		FROM ORDERS O
 		LEFT JOIN USERS U ON (O.USER_NO = U.USER_NO)
 		WHERE U.STATUS = 'Y'
-		ORDER BY
-		ORDER_NO
+		ORDER BY ORDER_NO DESC
 	</select>
 
 	<insert id="insertOrder" parameterType="Order"
@@ -169,7 +168,7 @@
 		FROM ORDERS O
 		LEFT JOIN USERS U ON (O.USER_NO = U.USER_NO)
 		LEFT JOIN ORDERS_IMG OI ON (O.ORDER_NO = OI.ORDER_NO)
-		WHERE ALERT_URGENT = 'Y'
+		WHERE ALERT_URGENT = 'Y' AND ORDER_STATUS LIKE '대기중'
 		ORDER BY O.CREATE_DATE ASC)
 		WHERE ROWNUM <![CDATA[<=]]>
 		3
@@ -221,6 +220,15 @@
 		(ORDER_STATUS <![CDATA[<>]]> '배달완료')
 	</select>
 	
+	<select id="OrderRiderCountComplete" resultType="int">
+		SELECT COUNT(*)
+		FROM ORDERS
+		WHERE
+		(RIDER_NO = #{riderNo})
+		AND
+		(ORDER_STATUS <![CDATA[LIKE]]> '배달완료')
+	</select>
+	
 	<select id="selectRiderOrderList" resultType="Order">
 		SELECT
 		ORDER_NO,
@@ -246,5 +254,14 @@
 		WHERE U.STATUS = 'Y' AND RIDER_NO = #{riderNo}
 		ORDER BY ORDER_NO
 	</select>
-
+	
+	<select id="selectOrderListConut" resultType="int">
+      SELECT COUNT(*)
+      FROM ORDERS O
+      LEFT JOIN USERS U ON (O.USER_NO = U.USER_NO)
+      WHERE U.STATUS = 'Y'
+      ORDER BY
+      ORDER_NO
+   </select>
+	
 </mapper>

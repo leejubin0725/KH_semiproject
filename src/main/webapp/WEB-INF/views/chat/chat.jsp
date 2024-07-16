@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-    <title>Chat Room</title>
+    <title>채팅방</title>
     <link rel="stylesheet" type="text/css" href="${contextPath }/resources/css/chat.css">
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.6.1/dist/sockjs.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
@@ -14,7 +14,7 @@
     <div class="chat-container">
         <div class="chat-header">
             Chat Room
-            <button class="exit-button" onclick="exitChat()">나가기</button>
+            <button class="exit-button" onclick="exitChat()">X</button>
         </div>
         <div id="chat">
             <ul id="messages">
@@ -57,6 +57,7 @@
             stompClient.send("/app/sendMessage", {}, JSON.stringify({
                 'senderId': from,
                 'content': text,
+                'writer' : '${nickName}',
                 'chatRoomId': chatRoomId // 채팅방 ID 추가
             }));
 
@@ -67,7 +68,7 @@
         function showMessage(message) {
             var response = document.getElementById('messages');
             var li = document.createElement('li');
-            li.appendChild(document.createTextNode("${nickName}" + ": " + message.content));
+            li.appendChild(document.createTextNode(`\${message.writer}` + ": " + message.content));
      
             response.appendChild(li);
             scrollToBottom();

@@ -19,7 +19,7 @@
 
             <div class="form-group">
                 <label for="content">상세 내용</label>
-                <textarea id="content" name="content" placeholder="내용 입력"></textarea>
+                <textarea id="content" name="content" placeholder="내용 입력" style="resize: none;"></textarea>
             </div>
 
             <div class="form-group">
@@ -31,7 +31,7 @@
                 <label for="category">대분류</label>
                 <select id="category" name="category">
                     <c:forEach items="${inquiryCategoryList}" var="categoryList">
-                    	<option>${categoryList.categoryName}</option>
+                       <option>${categoryList.categoryName}</option>
                     </c:forEach>
                 </select>
             </div>

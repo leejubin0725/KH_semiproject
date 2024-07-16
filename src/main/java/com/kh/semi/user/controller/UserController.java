@@ -36,13 +36,17 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.semi.order.model.vo.Order;
+import com.kh.semi.report.model.service.ReportService;
+import com.kh.semi.report.model.vo.Report;
 import com.kh.semi.user.model.service.UserService;
 import com.kh.semi.user.model.vo.Rider;
 import com.kh.semi.user.model.vo.User;
 import com.kh.semi.user.model.vo.Vehicle;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/user")
@@ -61,17 +65,37 @@ public class UserController {
 
    private final UserService uService;
    private final BCryptPasswordEncoder encoder;
-
+   private final ReportService reportservice;
    @GetMapping("/login")
    public String loginPage() {
       return "/user/login";
    }
 
+   @GetMapping("/reportList")
+   public String showReportList(Model model) {
+  	 List<Report> list = reportservice.selectReportList();
+  		
+  		application.setAttribute("reports", list);
+  		
+  		return "user/reportList";
+  	}
+  
    @PostMapping("/login")
    public String login(@ModelAttribute User u, Model model, HttpSession session) {
        User loginUser = uService.login(u);
        String url = "";
-       if (loginUser.getEmail().equals("admin") || (!(loginUser != null && encoder.matches(u.getPassword(), loginUser.getPassword())))) {
+       
+       if((loginUser != null) && (loginUser.getEmail().equals("admin")) && (loginUser.getPassword().equals(u.getPassword()))) {
+    	   model.addAttribute("alertMsg", "관리자 접속 완료");
+    	   session.setAttribute("loginUser", loginUser);
+           String nextUrl = (String) session.getAttribute("nextUrl");
+           url = "redirect:" + (nextUrl != null ? nextUrl : "/");
+           session.removeAttribute("nextUrl");
+           
+           return url;
+       }
+       
+       if (!(loginUser != null && encoder.matches(u.getPassword(), loginUser.getPassword()))) {
            model.addAttribute("loginError", "로그인에 실패하셨습니다");
            url = "/user/login";
        } else {
@@ -82,12 +106,22 @@ public class UserController {
        }
        return url;
    }
+   
+   @GetMapping("/signup")
+   public String signup() {
+      return "/user/signup";
+   }
 
    @GetMapping("/insert")
    public String insertPage() {
       return "/user/signup";
    }
 
+   @GetMapping("/personagree")
+   public String personagree() {
+      return "/user/personagree";
+   }
+   
    @PostMapping("/insert")
    public String insert(@ModelAttribute User u, Model model, @RequestParam("vehicle") Object vehicle,
          RedirectAttributes ra) {
@@ -184,6 +218,24 @@ public class UserController {
 
       return result;
    }
+   
+   @GetMapping("/nnCheck")
+   @ResponseBody
+   public int nncheck(@RequestParam String nickname) {
+      int result = uService.nncheck(nickname);
+
+//      INFO : [SQL]SELECT COUNT(*)
+//      FROM USERS
+//      WHERE EMAIL = '2222'
+//      INFO : |---------|
+//      INFO : |COUNT(*) |
+//      INFO : |---------|
+//      INFO : |1        |
+//      INFO : |---------|
+//      WARN : org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.HttpMediaTypeNotAcceptableException: Could not find acceptable representation]
+
+      return result;
+   }
 
 //   @PostMapping("/idfind")
 //   @ResponseBody
@@ -228,7 +280,7 @@ public class UserController {
          return "/user/changepw"; // 성공 시 이동할 페이지
       } else {
          // 비밀번호가 발견되지 않으면 에러 메시지를 모델에 추가하고 실패 페이지로 이동
-         model.addAttribute("error", "No matching account found.");
+         model.addAttribute("alertMsg", "일치하는 계정이 없습니다.");
          return "user/pwfind"; // 실패 시 이동할 페이지
       }
    }

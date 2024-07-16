@@ -4,6 +4,12 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="user">
 
+   <select id="nnCheck" resultType="int">
+      SELECT Count(*)
+      FROM USERS
+      WHERE nickname = #{nickname}
+   </select> 
+
    <insert id="insertUser">
       <selectKey keyProperty="userNo" resultType="int"
          order="BEFORE">
@@ -189,7 +195,18 @@
 		FROM RIDERS
 		WHERE USER_NO = #{userNo}
 	</select>
+	
+	<select id="selectRider" resultType="Rider">
+		SELECT *
+		FROM RIDERS
+		WHERE RIDER_NO = #{riderNo}
+	</select>
 
-
+	<update id="updateRiderRating">
+		 UPDATE RIDERS
+	     SET
+	     GRADE = #{grade}
+	     WHERE RIDER_NO = #{riderNo}
+	</update>
 
 </mapper>

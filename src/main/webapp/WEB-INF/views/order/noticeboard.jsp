@@ -3,86 +3,40 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="description" content="Figma htmlGenerator">
     <meta name="author" content="htmlGenerator">
     <link href="https://fonts.googleapis.com/css?family=Sigmar+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/styles.css">
-    
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/noticeboard.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     <style>
-    
-    
-  
-        #middle-img {
-            width: 100%; /* 이미지의 가로 크기를 컨테이너의 100%로 설정 */
-            max-width: 1500px; /* 이미지의 최대 가로 크기를 1500px로 설정 */
-            height: auto; /* 이미지의 세로 비율을 유지하면서 크기 조정 */
-            display: block;
-            margin: 0 auto 20px; /* 이미지가 가운데 정렬되고 아래 여백 추가 */
-            border-radius: 8px;
-        }
+       .dropdown-content {
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 149px; /* 드롭다운 버튼과 동일한 너비 조정 */
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
 
-        .container {
-         max-width: 1500px; /* 이미지와 동일한 최대 가로 크기 설정 */
-            margin: 0 auto; /* 가운데 정렬 */
-            padding: 0 15px; /* 좌우 여백 추가 */
-            border-radius: 8px;
-        }
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
 
-        .container h2 {
-            margin-top: 0; /* h2 태그의 위쪽 여백 제거 */
-          
-        }
+    .dropdown-content a:hover {
+        background-color: #f1f1f1;
+    }
 
-        .custom-button {
-            display: block;
-            width: 150px;
-            padding: 10px 20px;
-            margin: 5px 5px 20px auto; /* 위쪽 5px, 오른쪽 5px, 아래쪽 20px */
-            font-size: 16px;
-            font-weight: bold; /* 텍스트 굵기 추가 */
-            color: #fff;
-            background-color: #007bff;
-            border: none;
-            border-radius: 5px;
-            text-align: center; /* 텍스트 가운데 정렬 */
-            cursor: pointer;
-            
-        }
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
 
-
-        .custom-button:hover {
-            background-color: #0056b3;
-        }
-
-        .no-orders {
-            text-align: center;
-            font-size: 18px;
-            color: #888;
-            margin-top: 20px;
-        }
-        .red-button {
-    display: block;
-    width: 150px;
-    padding: 10px 20px;
-    margin-right:100px;
-   margin: 5px 5px 20px auto; /* 수정된 부분: 오른쪽 마진을 0으로 변경, 왼쪽 마진을 auto로 설정 */
-    font-size: 16px;
-    font-weight: bold;
-    color: #fff;
-    background-color: #dc3545; /* Red color */
-    border: none;
-    border-radius: 5px;
-    text-align: center;
-    cursor: pointer;
-}
-
-.red-button:hover {
-    background-color: #c82333; /* Darker red on hover */
-}
+    .dropdown:hover .dropbtn {
+        background-color: #3e8e41;
+    }
     </style>
 </head>
 <body>
@@ -92,12 +46,36 @@
     
     <div class="container">
         <h2>배달 요청</h2>
+        <div class="container">
+            <div class="dropdown-container">
+                <div class="dropdown">
+                    <button class="dropbtn">대분류 지역 선택</button>
+                    <div class="dropdown-content">
+                        <a href="#" data-location="전체">전체</a>
+                        <a href="#" data-location="서울">서울</a>
+                        <a href="#" data-location="경기">경기</a>
+                        <a href="#" data-location="인천">인천</a>
+                        <a href="#" data-location="부산">부산</a>
+                        <a href="#" data-location="충청">충청</a>
+                        <a href="#" data-location="경상">경상</a>
+                        <a href="#" data-location="전라">경상</a>
+                        <a href="#" data-location="대구">대구</a>
+
+                        <!-- 필요한 대분류 지역 항목들을 추가 -->
+                    </div>
+                </div>
+            </div>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="시작위치 검색">
+                <button id="searchButton">검색</button>
+            </div>
+        </div>
         <table>
             <thead>
                 <tr>
                     <th>No</th>
                     <th>제목</th>
-                    <th>글쓴이</th>
+                    <th>작성자 닉네임</th>
                     <th>라이더</th>
                     <th>시작위치</th>
                     <th>도착위치</th>
@@ -112,33 +90,129 @@
                     </tr>
                 </c:if>
                 <c:forEach items="${list}" var="order">
-                   <tr class="clickable-row" onclick="movePage(${order.orderNo})">
-                         <td>${order.orderNo}</td>
-                       <td>${order.orderTitle}</td>
-                       <td>${order.writer}</td>
-                       <td><span class="rider-status">${order.orderStatus}</span></td>
-                       <td>${order.startPoint}</td>
-                       <td>${order.endPoint}</td>
-                         <td>${order.createDate}</td>
-                         <td>${order.price}원</td>
-                   </tr>
+                    <tr class="clickable-row" data-url="${contextPath}/order/detailProduct/${order.orderNo}">
+                        <td>${order.orderNo}</td>
+                        <td>${order.orderTitle}</td>
+                        <td>${order.writer}</td>
+                        <td>
+                            <span class="status-circle ${order.orderStatus == '대기중' ? 'status-waiting' : (order.orderStatus == '배달중' ? 'status-in-progress' : 'status-completed')}">
+                                ${order.orderStatus == '대기중' ? '대기중' : (order.orderStatus == '배달중' ? '배달중' : '배달완료')}
+                            </span>
+                        </td>
+                        <td>${order.startPoint}</td>
+                        <td>${order.endPoint}</td>
+                        <td>${order.createDate}</td>
+                        <td>${order.price}원</td>
+                    </tr>
                 </c:forEach>      
             </tbody>
         </table>
-        <c:if test="${sessionScope.loginUser.role == 'regular'}">
-        <button class="custom-button" id="customButton">배달 요청하기</button>
-        </c:if>
-          <c:if test="${sessionScope.loginUser.role == 'regular'}">
-        <button onclick="submitReport()" class="custom-button red-button" id="reportButton">신고하기</button>
-           </c:if>
+        <div class="btn-container">
+            <c:if test="${sessionScope.loginUser.role == 'regular'}">
+                <button class="custom-button" id="customButton">배달 요청하기</button>
+            </c:if>
+            <c:if test="${sessionScope.loginUser.role == 'regular'}">
+                <button onclick="submitReport()" class="red-button" id="reportButton">신고하기</button>
+            </c:if>
+        </div>
     </div>
+    
+    <c:set var="url" value="${noticeboard }?currentPage=" />
+	   <div id="pagingArea">
+	       <ul class="pagination">
+	           <!-- 이전 페이지 링크 -->
+	           <c:if test="${pi.currentPage eq 1}">
+	               <li class="page-item disabled">
+	                   <span class='page-link'>이전</span>
+	               </li>
+	           </c:if>
+	           <c:if test="${pi.currentPage ne 1}">
+	               <li class="page-item">
+	                   <a class='page-link' href="${url}${pi.currentPage - 1}${sParam}">이전</a>
+	               </li>
+	           </c:if>
+	   
+	           <!-- 페이지 번호 링크 -->
+	           <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}">
+	               <li class="page-item ${i eq pi.currentPage ? 'active' : ''}">
+	                   <a class="page-link" href="${url}${i}${sParam}">${i}</a>
+	               </li>
+	           </c:forEach>
+	   
+	           <!-- 다음 페이지 링크 -->
+	           <c:if test="${pi.currentPage eq pi.maxPage}">
+	               <li class="page-item disabled">
+	                   <span class='page-link'>다음</span>
+	               </li>
+	           </c:if>
+	           <c:if test="${pi.currentPage ne pi.maxPage}">
+	               <li class="page-item">
+	                   <a class='page-link' href="${url}${pi.currentPage + 1}${sParam}">다음</a>
+	               </li>
+	           </c:if>
+	       </ul>
+	   </div>
 
     <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 
     <script>
-    function submitReport(){
-    	location.href = "${contextPath}/report/report/"
-    }
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdownLinks = document.querySelectorAll('.dropdown-content a');
+            const searchInput = document.getElementById('searchInput');
+            const searchButton = document.getElementById('searchButton');
+
+            dropdownLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const selectedLocation = this.getAttribute('data-location'); // 선택된 지역 이름
+
+                    // 모든 행을 가져와서 처리
+                    const tableRows = document.querySelectorAll('tbody tr');
+
+                    // "전체" 선택 시 모든 행 보이기
+                    if (selectedLocation === '전체') {
+                        tableRows.forEach(row => {
+                            row.style.display = '';
+                        });
+                    } else {
+                        // 선택된 지역에 해당하는 행만 표시
+                        tableRows.forEach(row => {
+                            const startPointCell = row.querySelector('td:nth-child(5)');
+                            if (startPointCell.textContent.includes(selectedLocation)) {
+                                row.style.display = ''; // 행 보이기
+                            } else {
+                                row.style.display = 'none'; // 행 숨기기
+                            }
+                        });
+                    }
+                });
+            });
+
+            searchButton.addEventListener('click', function() {
+                const searchText = searchInput.value.trim().toLowerCase(); // 입력된 검색어
+
+                // 모든 행을 가져와서 처리
+                const tableRows = document.querySelectorAll('tbody tr');
+
+                tableRows.forEach(row => {
+                    const startPointCell = row.querySelector('td:nth-child(5)');
+                    const orderTitleCell = row.querySelector('td:nth-child(2)');
+                    const startPointText = startPointCell.textContent.trim().toLowerCase();
+                    const orderTitleText = orderTitleCell.textContent.trim().toLowerCase();
+
+                    if (startPointText.includes(searchText) || orderTitleText.includes(searchText)) {
+                        row.style.display = ''; // 행 보이기
+                    } else {
+                        row.style.display = 'none'; // 행 숨기기
+                    }
+                });
+            });
+        });
+
+        function submitReport() {
+            location.href = "${contextPath}/report/report/";
+        }
+
         document.querySelectorAll('tbody tr').forEach(row => {
             row.addEventListener('click', function(event) {
                 // 클릭된 요소가 라이더 상태 버튼이 아닌 경우에만 페이지 이동
@@ -152,24 +226,10 @@
             });
         });
 
-        // 라이더 상태 버튼에 대한 별도의 이벤트 리스너
-        document.querySelectorAll('.rider-status').forEach(button => {
-            button.addEventListener('click', function(event) {
-                event.stopPropagation(); // 이벤트 버블링 방지
-                console.log('Rider status button clicked');
-                // 여기에 라이더 상태 버튼 클릭 시 수행할 동작을 추가하세요
-            });
-        });
-
         // 새로운 버튼에 대한 이벤트 리스너
         document.getElementById('customButton').addEventListener('click', function() {
-            const url = 'orderInsert'; // URL을 설정하세요
-            window.location.href = url;
+            window.location.href = "${contextPath}/order/orderInsert";
         });
-        
-        function movePage(ono) {
-          location.href = "${contextPath}/order/detailProduct/" + ono
-       }
     </script>
 </body>
 </html>

@@ -63,7 +63,7 @@
 
         function redirectToReports() {
             var contextPath = "${pageContext.request.contextPath}";
-            window.location.href = contextPath + "/user/reports";
+            window.location.href = contextPath + "/user/reportList";
         }
 
         function confirmDelete() {

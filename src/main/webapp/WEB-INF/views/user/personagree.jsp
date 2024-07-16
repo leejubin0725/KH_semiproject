@@ -6,8 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>개인정보 수집 동의</title>
-    <link rel="stylesheet" href="${contextPath }/resources/css/personagreeStyle.css">
-   
+    <link rel="stylesheet" href="${contextPath}/resources/css/personagreeStyle.css">
 </head>
 <body>
     <div class="container">
@@ -16,7 +15,6 @@
         <button id="openModalBtn">개인정보 수집에 동의합니다</button>
     </div>
 
-   
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -40,11 +38,36 @@
                 
                 위와 같은 내용에 대해 동의하시면, 아래의 동의 버튼을 클릭해 주세요.<br><br> 동의하지 않을 경우 서비스 이용에 제한을 받을 수 있습니다.</p>
             <p>동의하시면 아래 버튼을 클릭해 주세요.</p>
-            <button id="agreeBtn" style="text-decoration: none; color: inherit;"> 동의합니다</button>
+            <button id="agreeBtn" style="text-decoration: none; color: inherit;" onclick="agree()"> 동의합니다</button>
         </div>
     </div>
 
-	<script src="${contextPath }/resources/js/person-agree.js"></script>
-    
+    <script>
+        // Modal 열기 버튼 클릭 시 동작
+        var openModalBtn = document.getElementById("openModalBtn");
+        var modal = document.getElementById("myModal");
+        var span = document.getElementsByClassName("close")[0];
+
+        openModalBtn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        // 모달 닫기 버튼(X) 클릭 시 동작
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // 모달 외부 클릭 시 동작
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // 동의 버튼 클릭 시 동작
+        function agree() {
+            location.href = '${contextPath}/user/signup';
+        }
+    </script>
 </body>
 </html>

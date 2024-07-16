@@ -31,18 +31,37 @@
     position: absolute; /* 절대 위치로 설정하여 오른쪽 끝에 고정 */
     right: 2%;
 }
-body{
-	margin-top: 87px;
+
+body {
+    margin-top: 87px;
 }
+
 .headerNav2 a {
     font-size: 16px; /* 예시로 16px로 설정 */
-     font-weight: bold;
+    font-weight: bold;
 }
 .headerLogo {
+    z-index: 1200; /* 다른 요소들 위에 표시되도록 설정 */
     position: absolute; /* 절대 위치 지정 */
-    top:-3px; /* 위쪽 여백 설정 */
+    top: -3px; /* 위쪽 여백 설정 */
     left: 350px; /* 왼쪽 여백 설정 */
     width: 90px; /* 로고 너비 설정 */
     height: auto; /* 자동 높이 설정 */
-   
 }
+
+.headerLogo:hover {
+    cursor: pointer; /* 호버 시 포인터 커서 표시 */
+}
+
+
+
+.headerNav a, .headerNav2 a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s ease; /* 색상 변화에 대한 트랜지션 추가 */
+}
+
+.headerNav a:hover, .headerNav2 a:hover {
+    color: #007BFF; /* 호버 시 변경할 색상 */
+}
+

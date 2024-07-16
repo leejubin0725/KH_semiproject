@@ -36,12 +36,12 @@ body {
 .exit-button {
     position: absolute;
     right: 5px;
-    width: 70px;
+    width: 30px;
     height:30px;
     background-color: #ff4d4d;
     color: #fff;
     border: none;
-    border-radius: 20px;
+    border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
 }
@@ -73,6 +73,7 @@ body {
     margin-bottom: 10px;
     border-radius: 12px;
     background-color: #f0f0f0; /* 메시지 배경색 */
+    word-wrap: break-word;
 }
 
 .chat-inputs {

@@ -5,8 +5,18 @@
 <mapper namespace="inquiry">
 
 	<select id="inquiryList" resultType="Inquiry">
-		SELECT *
-		FROM INQUIRIES
+		SELECT
+			INQUIRY_NO,
+			U.USER_NO,
+			U.NICKNAME AS WRITER,
+			CATEGORY_NO,
+			TITLE,
+			CONTENT,
+			INQUIRY_STATUS,
+			I.CREATE_DATE,
+			I.UPDATE_DATE
+		FROM INQUIRIES I
+		JOIN USERS U ON (U.USER_NO = I.USER_NO)
 	</select>
 	
 	<insert id="initCategory" parameterType="InquiryCategory">

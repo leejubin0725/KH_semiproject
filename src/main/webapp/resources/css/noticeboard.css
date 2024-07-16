@@ -1,0 +1,307 @@
+#middle-img {
+    width: 100%;
+    max-width: 1500px;
+    height: auto;
+    display: block;
+    margin: 0 auto 20px;
+    border-radius: 8px;
+}
+
+.container {
+     width:100%;
+ 
+    padding: 0 15px;
+    border-radius: 8px;
+}
+
+.dropdown-container{
+   margin-left: 5%;
+}
+
+.container h2 {
+    margin-top: 0;
+    margin-left: 6%;
+    margin-bottom: 10px;
+}
+
+table {
+  
+    width: 90%;
+    margin-top: 20px;
+    border-radius: 20px;
+    border-spacing: 0;
+    margin : auto;
+}
+
+thead {
+    background-color: #86C1C6;
+    color: #fff;
+    font-weight: bold;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border: 2px solid #000;
+}
+
+th {
+    position: relative;
+    padding: 12px;
+    text-align: center;
+}
+
+th::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: white;
+}
+
+table th:first-child {
+    border-top-left-radius: 20px;
+}
+
+table th:last-child {
+    border-top-right-radius: 20px;
+}
+
+table th,
+table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+}
+
+table td:first-child,
+table th:first-child {
+    border-left: none;
+}
+
+table td:last-child,
+table th:last-child {
+    border-right: none;
+}
+
+tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+.no-orders {
+    text-align: center;
+    font-size: 18px;
+    color: #888;
+    margin-top: 20px;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px; /* 버튼들 사이에 간격을 두고 싶으면 사용 */
+    margin-right: 83px;
+}
+
+.btn,
+.custom-button,
+.red-button {
+    box-sizing: border-box;
+    appearance: none;
+    background-color: transparent;
+    border: 2px solid #dc3545; /* Red color */
+    border-radius: 0.6em;
+    color: #dc3545; /* Red color */
+    cursor: pointer;
+    display: inline-block;
+    width: 150px;
+    padding: 10px 20px;
+    margin: 5px; /* 오른쪽 정렬을 위해 auto 제거 */
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+    transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn:hover,
+.custom-button:hover,
+.red-button:hover {
+    background-color: #c82333; /* Darker red on hover */
+    border-color: #c82333; /* Darker red border on hover */
+    color: #fff; /* White text on hover */
+}
+
+.custom-button {
+    border: 2px solid #007bff; /* Blue color */
+    color: #007bff; /* Blue color */
+}
+
+.custom-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    border-color: #0056b3; /* Darker blue border on hover */
+}
+
+.red-button {
+    border: 2px solid #dc3545; /* Red color as per your original style */
+    color: #dc3545; /* Red color */
+}
+
+.status-circle {
+    display: inline-block;
+    width: 68px;
+    height: 30px;
+    border-radius: 15px;
+    margin-right: 10px;
+    text-align: center;
+    line-height: 30px;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.status-waiting {
+    background-color: #f0ad4e;
+}
+
+.status-in-progress {
+    background-color: #5bc0de;
+}
+
+.status-completed {
+    background-color: #5cb85c;
+}
+
+/* Center the fourth td in each row */
+tbody tr td:nth-child(4) {
+    position: relative;
+}
+
+/* Resetting default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+
+}
+
+.dropdown-container {
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    border: 1px solid #ccc;
+    background-color: #f5f5f5;
+    color: #333;
+    padding: 12px 20px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    z-index: 1;
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 12px 16px;
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+}
+
+.dropdown-content a:hover {
+    background-color: #f9f9f9;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.search-container {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 20px;
+}
+
+.search-container input[type=text] {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 300px;
+    margin-right: 10px;
+    padding-top: 16px; /* 시작 위치와 동일한 높이에 맞추기 위해 추가 */
+}
+
+.search-container button {
+    padding: 12px 20px;
+    border: 1px solid #ccc;
+    background-color: #f5f5f5;
+    color: #333;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.search-container button:hover {
+    background-color: #e5e5e5;
+}
+
+ .pagination {
+        display: flex;
+        justify-content: center;
+        list-style-type: none;
+        padding: 0;
+        margin-top: 30px;
+}
+
+.pagination .page-item {
+    margin: 0 5px;
+}
+
+.pagination .page-link {
+    display: block;
+    padding: 8px 16px;
+    text-decoration: none;
+    color: #007bff;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+.pagination .page-item.disabled .page-link {
+    pointer-events: none;
+    cursor: not-allowed;
+    color: #6c757d;
+    background-color: #fff;
+    border-color: #dee2e6;
+}
