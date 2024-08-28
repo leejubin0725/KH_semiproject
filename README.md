@@ -14,8 +14,7 @@ Delimate는 사용자와 배달원을 매칭하여 개인 간(P2P) 거래를 중
 	•	효율적이고 직관적인 사용자 인터페이스 제공
 
 ## 사용 기술 및 개발 환경
-
-운영체제: Windows 10
+• 운영체제: Windows 10
 	•	프로그래밍 언어: JAVA, HTML5, Javascript, CSS3
 	•	프레임워크 및 라이브러리: Spring MVC, JSP, MyBatis, Lombok
 	•	데이터베이스: Oracle DB
